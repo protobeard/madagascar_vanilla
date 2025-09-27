@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+    <name>Madagascar Vanilla</name>
+    <author>protobeard</author>
+    <packageId>protobeard.madagascarvanilla</packageId>
+    <supportedVersions>
+        <li>1.6</li>
+    </supportedVersions>
+    <modDependencies>
+        <li>
+            <packageId>Ludeon.RimWorld.Royalty</packageId>
+            <displayName>Royalty</displayName>
+        </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Ideology</packageId>
+            <displayName>Ideology</displayName>
+        </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Biotech</packageId>
+            <displayName>Biotech</displayName>
+        </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Anomaly</packageId>
+            <displayName>Anomaly</displayName>
+        </li>
+        <li>
+            <packageId>Ludeon.RimWorld.Odyssey</packageId>
+            <displayName>Odyssey</displayName>
+        </li>
+    </modDependencies>
+    <loadAfter>
+        <li>Ludeon.RimWorld.Royalty</li>
+        <li>Ludeon.RimWorld.Ideology</li>
+        <li>Ludeon.RimWorld.Biotech</li>
+        <li>Ludeon.RimWorld.Anomaly</li>
+        <li>Ludeon.RimWorld.Odyssey</li>
+    </loadAfter>
+    <description>
+        Play like protobeard!
+
+        Changes default values of various things to be the way I like them. Mostly intended to make starting new colonies less of a chore:
+            * Set the default drug policy on pawns to "No drugs" instead of the vanilla default of "Social drugs".
+
+        Adds a few features to fix things I find anoying:
+            * Allows devilstrand to be grown in hydroponic basins.
+            * Doubles the base speed of Gauranlen pruning.
+    </description>
+</ModMetaData>

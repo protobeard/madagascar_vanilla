@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    So this is a bit hacky. Rimworld designates the default drug policy as the first one returned in it's list of policies,
+    rather than having a specific flag for the default. When assigning a new policy as the default in code, it actually reorders the
+    list. Not how I would have done things.
+
+    So, to change the default on a new game to be "NoDrugs", I remove "SocialDrugs", which is the first defined in DrugPolicyDefs.xml, then
+    re-add it after "NoDrugs", which happens to be the second defined in DrugPolicyDefs.xml
+ -->
+<Patch>
+    <Operation Class="PatchOperationRemove">
+        <xpath>*/DrugPolicyDef[defName = "SocialDrugs"]</xpath>
+    </Operation>
+
+    <Operation Class="PatchOperationInsert">
+        <xpath>*/DrugPolicyDef[defName = "NoDrugs"]</xpath>
+        <order>Append</order>
+        <value>
+            <DrugPolicyDef>
+                <defName>SocialDrugs</defName>
+                <label>social drugs</label>
+                <entries>
+                    <li>
+                        <drug>Beer</drug>
+                        <allowedForJoy>true</allowedForJoy>
+                    </li>
+                    <li>
+                        <drug>SmokeleafJoint</drug>
+                        <allowedForJoy>true</allowedForJoy>
+                    </li>
+                </entries>
+            </DrugPolicyDef>
+        </value>
+    </Operation>
+
+</Patch>
