@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <modId>protobeard.madagascarvanilla</modId>
+        <label>Madagascar Vanilla</label>
+        <settings>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Any changes require a restart to take effect.</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Stand Your Ground</text>
+                <tooltip>Set default pawn hostility response (vanilla is Flee).</tooltip>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>hostilityResponse</key>
+                <defaultValue>Flee</defaultValue>
+                <buttons>
+                    <li>
+                        <value>Ignore</value>
+                        <label>Ignore</label>
+                        </li>
+                    <li>
+                        <value>Attack</value>
+                        <label>Attack</label>
+                    </li>
+                    <li>
+                        <value>Flee</value>
+                        <label>Flee</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+
+
+            <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
+            <li Class="XmlExtensions.Setting.ResetSettings" />
+
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

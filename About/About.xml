@@ -27,6 +27,12 @@
             <packageId>Ludeon.RimWorld.Odyssey</packageId>
             <displayName>Odyssey</displayName>
         </li>
+        <li>
+            <packageId>imranfish.xmlextensions</packageId>
+            <displayName>XML Extensions</displayName>
+            <downloadUrl>https://github.com/15adhami/XmlExtensions/releases</downloadUrl>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2574315206</steamWorkshopUrl>
+        </li>
     </modDependencies>
     <loadAfter>
         <li>Ludeon.RimWorld.Royalty</li>
@@ -34,6 +40,7 @@
         <li>Ludeon.RimWorld.Biotech</li>
         <li>Ludeon.RimWorld.Anomaly</li>
         <li>Ludeon.RimWorld.Odyssey</li>
+        <li>imranfish.xmlextensions</li>
     </loadAfter>
     <description>
         Play like protobeard!

@@ -49,6 +49,9 @@
         <Reference Include="UnityEngine.CoreModule">
           <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="XmlExtensions">
+          <HintPath>..\..\resources\Frameworks\XML Extensions - 2574315206\1.6\Assemblies\XmlExtensions.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MadagascarVanillaSettings.cs" />
