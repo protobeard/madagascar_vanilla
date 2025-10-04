@@ -18,6 +18,7 @@
             <li Class="XmlExtensions.Setting.Text">
                 <text>Stand Your Ground</text>
                 <tooltip>Set default pawn hostility response (vanilla is Flee).</tooltip>
+                <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.RadioButtons">
@@ -90,9 +91,25 @@
                 <defaultValue>false</defaultValue>
             </li>
 
+
             <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Areas</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Comma separated list of areas to start a new game with (e.g., "Work,Inside,Safe"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</text>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Textbox">
+                <key>startingAreasList</key>
+                <label>Starting Areas:</label>
+            </li>
 
 
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Gap"/>
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
             <li Class="XmlExtensions.Setting.ResetSettings" />
