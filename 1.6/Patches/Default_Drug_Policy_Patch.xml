@@ -8,29 +8,39 @@
     re-add it after "NoDrugs", which happens to be the second defined in DrugPolicyDefs.xml
  -->
 <Patch>
-    <Operation Class="PatchOperationRemove">
-        <xpath>*/DrugPolicyDef[defName = "SocialDrugs"]</xpath>
-    </Operation>
 
-    <Operation Class="PatchOperationInsert">
-        <xpath>*/DrugPolicyDef[defName = "NoDrugs"]</xpath>
-        <order>Append</order>
-        <value>
-            <DrugPolicyDef>
-                <defName>SocialDrugs</defName>
-                <label>social drugs</label>
-                <entries>
-                    <li>
-                        <drug>Beer</drug>
-                        <allowedForJoy>true</allowedForJoy>
-                    </li>
-                    <li>
-                        <drug>SmokeleafJoint</drug>
-                        <allowedForJoy>true</allowedForJoy>
-                    </li>
-                </entries>
-            </DrugPolicyDef>
-        </value>
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>drugPolicy</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationRemove">
+                <xpath>*/DrugPolicyDef[defName = "SocialDrugs"]</xpath>
+            </Operation>
+
+            <Operation Class="PatchOperationInsert">
+                <xpath>*/DrugPolicyDef[defName = "NoDrugs"]</xpath>
+                <order>Append</order>
+                <value>
+                    <DrugPolicyDef>
+                        <defName>SocialDrugs</defName>
+                        <label>social drugs</label>
+                        <entries>
+                            <li>
+                                <drug>Beer</drug>
+                                <allowedForJoy>true</allowedForJoy>
+                            </li>
+                            <li>
+                                <drug>SmokeleafJoint</drug>
+                                <allowedForJoy>true</allowedForJoy>
+                            </li>
+                        </entries>
+                    </DrugPolicyDef>
+                </value>
+            </Operation>
+
+        </caseTrue>
     </Operation>
 
 </Patch>
