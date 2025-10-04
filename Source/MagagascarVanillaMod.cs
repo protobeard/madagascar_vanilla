@@ -5,7 +5,7 @@ namespace MadagascarVanilla
 {
     public class MadagascarVanillaMod : Mod
     {
-        public const string modId = "protobeard.madagascarvanilla";
+        public const string modId = "com.protobeard.madagascarvanilla";
         public static MadagascarVanillaSettings settings;
         
         public MadagascarVanillaMod(ModContentPack content) : base(content) {

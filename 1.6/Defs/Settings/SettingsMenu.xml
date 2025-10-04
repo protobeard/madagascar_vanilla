@@ -2,7 +2,7 @@
 <Defs>
 
     <XmlExtensions.SettingsMenuDef>
-        <modId>protobeard.madagascarvanilla</modId>
+        <modId>com.protobeard.madagascarvanilla</modId>
         <label>Madagascar Vanilla</label>
         <settings>
 
@@ -43,6 +43,7 @@
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Acceptable Quest Rewards</text>
+                <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
@@ -64,8 +65,8 @@
             <li Class="XmlExtensions.Setting.Text">
                 <text>Plant Changes</text>
                 <tooltip>All of these are off by default in vanilla.</tooltip>
+                <anchor>Middle</anchor>
             </li>
-            <li Class="XmlExtensions.Setting.GapLine"/>
 
 
             <li Class="XmlExtensions.Setting.Checkbox">

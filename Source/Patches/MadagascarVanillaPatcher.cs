@@ -9,7 +9,7 @@ namespace MadagascarVanilla.Patches
     {
         static HarmonyPatches()
         {
-            Harmony harmony = new Harmony("com.protobeard.madagascar_vanilla");
+            Harmony harmony = new Harmony(MadagascarVanillaMod.modId);
             Harmony.DEBUG = false;
             harmony.PatchAll();
             Log.Message("Initializing Madagascar Vanilla");

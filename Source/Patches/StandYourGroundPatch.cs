@@ -11,6 +11,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(PawnComponentsUtility.AddAndRemoveDynamicComponents))]
     public static class StandYourGroundPatch
     {
+        private const string HostilityRewardsPreference = "hostilityResponse";
         // by performing the same checks as AddAndRemoveDynamicComponents does, instead of it
         // creating the PlayerSettings when they are null, we should be doing so (and thus preventing it from ever doing so)
         // we can then change the hostilityResponse (or other values "set" in the constructor) without having to actually
@@ -26,14 +27,14 @@ namespace MadagascarVanilla.Patches
         //    pawn.playerSettings = new Pawn_PlayerSettings(pawn);
         public static void Prefix(ref Pawn pawn)
         {
-             bool pawn_faction_is_player = pawn.Faction != null && pawn.Faction.IsPlayer;
-             bool pawn_host_faction_is_player = pawn.HostFaction != null && pawn.HostFaction.IsPlayer;
+             bool pawnFactionIsPlayer = pawn.Faction != null && pawn.Faction.IsPlayer;
+             bool pawnHostFactionIsPlayer = pawn.HostFaction != null && pawn.HostFaction.IsPlayer;
     
-             if ((pawn_faction_is_player || pawn_host_faction_is_player || pawn.IsOnHoldingPlatform) && pawn.playerSettings == null)
+             if ((pawnFactionIsPlayer || pawnHostFactionIsPlayer || pawn.IsOnHoldingPlatform) && pawn.playerSettings == null)
              {
                  pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                  
-                 string hostilityResponse = (SettingsManager.GetSetting("protobeard.madagascarvanilla", "hostilityResponse"));
+                 string hostilityResponse = (SettingsManager.GetSetting(MadagascarVanillaMod.modId, HostilityRewardsPreference));
                  pawn.playerSettings.hostilityResponse = (HostilityResponseMode) Enum.Parse(typeof(HostilityResponseMode), hostilityResponse);
              }
         }

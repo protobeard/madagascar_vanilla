@@ -2,7 +2,7 @@
 <Patch>
 
     <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>protobeard.madagascarvanilla</modId>
+        <modId>com.protobeard.madagascarvanilla</modId>
         <key>falloutImmuneToxipotatos</key>
         <defaultValue>false</defaultValue>
         <caseTrue>
