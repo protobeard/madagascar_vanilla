@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>protobeard.madagascarvanilla</modId>
+        <key>falloutImmuneToxipotatos</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationAdd">
+                <xpath>/Defs/ThingDef[defName="Plant_Toxipotato"]/plant</xpath>
+                <value>
+                    <dieFromToxicFallout>False</dieFromToxicFallout>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+
+
+</Patch>
+

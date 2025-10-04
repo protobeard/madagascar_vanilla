@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-    <Operation Class="PatchOperationAdd">
-        <xpath>*/ThingDef[defName = "Plant_Devilstrand"]/plant/sowTags</xpath>
-        <value>
-            <li>Hydroponic</li>
-        </value>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>protobeard.madagascarvanilla</modId>
+        <key>hydroponicDevilstrand</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationAdd">
+                <xpath>/Defs/ThingDef[defName="Plant_Devilstrand"]/plant/sowTags</xpath>
+                <value>
+                    <li>Hydroponic</li>
+                </value>
+            </Operation>
+
+        </caseTrue>
     </Operation>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>protobeard.madagascarvanilla</modId>
+        <key>falloutImmuneDevilstrand</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationAdd">
+                <xpath>/Defs/ThingDef[defName="Plant_Devilstrand"]/plant</xpath>
+                <value>
+                    <dieFromToxicFallout>False</dieFromToxicFallout>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
 </Patch>
+

@@ -14,6 +14,7 @@
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
 
+
             <li Class="XmlExtensions.Setting.Text">
                 <text>Stand Your Ground</text>
                 <tooltip>Set default pawn hostility response (vanilla is Flee).</tooltip>
@@ -38,7 +39,36 @@
                 </buttons>
             </li>
 
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Plant Changes</text>
+                <tooltip>All of these are off by default in vanilla.</tooltip>
+            </li>
             <li Class="XmlExtensions.Setting.GapLine"/>
+
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>hydroponicDevilstrand</key>
+                <label>Hydroponic Devilstrand</label>
+                <tooltip>Devilstrand can be grown in hydroponic basins.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>falloutImmuneDevilstrand</key>
+                <label>Toxic Fallout Immune Devilstrand</label>
+                <tooltip>Devilstrand is immune to toxic fallout.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>falloutImmuneToxipotatos</key>
+                <label>Toxic Fallout Immune Toxipotatos</label>
+                <tooltip>Toxipotatos are immune to toxic fallout.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+
 
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
