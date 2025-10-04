@@ -39,6 +39,28 @@
                 </buttons>
             </li>
 
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Acceptable Quest Rewards</text>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>goodwillRewards</key>
+                <label>Allow Goodwill Rewards</label>
+                <tooltip>Set default value of allow goodwill rewards from factions (vanilla is true).</tooltip>
+                <defaultValue>true</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>royalFavorRewards</key>
+                <label>Allow Honor as Reward</label>
+                <tooltip>Set default value of allow honor as reward from factions (vanilla is true).</tooltip>
+                <defaultValue>true</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Plant Changes</text>
                 <tooltip>All of these are off by default in vanilla.</tooltip>

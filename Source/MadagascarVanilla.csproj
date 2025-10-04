@@ -57,7 +57,8 @@
         <Compile Include="MadagascarVanillaSettings.cs" />
         <Compile Include="MagagascarVanillaMod.cs" />
         <Compile Include="Patches\MadagascarVanillaPatcher.cs" />
-        <Compile Include="Patches\StandYourGroundpatch.cs" />
+        <Compile Include="Patches\QuestRewardsPatch.cs" />
+        <Compile Include="Patches\StandYourGroundPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
