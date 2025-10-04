@@ -34,7 +34,7 @@ namespace MadagascarVanilla.Patches
              {
                  pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                  
-                 string hostilityResponse = (SettingsManager.GetSetting(MadagascarVanillaMod.modId, HostilityRewardsPreference));
+                 string hostilityResponse = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HostilityRewardsPreference));
                  pawn.playerSettings.hostilityResponse = (HostilityResponseMode) Enum.Parse(typeof(HostilityResponseMode), hostilityResponse);
              }
         }

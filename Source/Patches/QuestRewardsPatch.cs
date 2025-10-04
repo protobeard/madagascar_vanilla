@@ -17,8 +17,8 @@ namespace MadagascarVanilla.Patches
         // When factions are created, set allowGoodwillRewards/allowRoyalFavorRewards to our preference, rather than vanilla's always true.
         public static void Postfix(Faction __instance)
         {
-            bool goodwillRewards = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.modId, GoodwillRewardsPreference));
-            bool royalFavorRewards = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.modId, RoyalFavorRewardsPreference));
+            bool goodwillRewards = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, GoodwillRewardsPreference));
+            bool royalFavorRewards = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, RoyalFavorRewardsPreference));
             
             __instance.allowGoodwillRewards = goodwillRewards;
             __instance.allowRoyalFavorRewards = royalFavorRewards;
