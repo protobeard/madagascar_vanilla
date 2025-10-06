@@ -186,6 +186,19 @@
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Mechanitor Settings</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableMechRepair</key>
+                <label>Enable Mech Repair by Default</label>
+                <tooltip>Enable automatically repairing colony mechs by default (Vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->

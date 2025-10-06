@@ -58,6 +58,7 @@
         <Compile Include="MadagascarVanillaSettings.cs" />
         <Compile Include="MagagascarVanillaMod.cs" />
         <Compile Include="Patches\MadagascarVanillaPatcher.cs" />
+        <Compile Include="Patches\MechRepairableOn.cs" />
         <Compile Include="Patches\QuestRewardsPatch.cs" />
         <Compile Include="Patches\SchedulePatch.cs" />
         <Compile Include="Patches\StandYourGroundPatch.cs" />
