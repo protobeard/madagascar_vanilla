@@ -23,8 +23,8 @@ namespace MadagascarVanilla.Patches
             if (startingAreasList.Any())
             {
                 // Remove the default Area RimWorld creates ("Area 1")
-                Area defaultArea = __instance.AllAreas.Where<Area>((Func<Area, bool>)(a => a is Area_Allowed)).First();
-                defaultArea.Delete();
+                Area defaultArea = __instance.AllAreas.Where<Area>((Func<Area, bool>)(a => a is Area_Allowed)).FirstOrDefault();
+                defaultArea?.Delete();
 
                 // Create our desired default Areas
                 foreach (string startingAreaName in startingAreasList)
