@@ -212,19 +212,27 @@
                 <anchor>Middle</anchor>
             </li>
 
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>extendOdysseyQuests</key>
-                <label>Extend Odyssey Quests</label>
-                <tooltip>Extend Odyssey quest expirations to 90-120 days (vanilla default is 45-60 days). I like having additional time for Odyssey quests so that I can slowly travel around the world to get to them.</tooltip>
-                <defaultValue>false</defaultValue>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>For 100% worlds it can be nice to have additional time for Odyssey space site quests so that traveling around the world is not as punishing. You can also increase the distance at which these quests are located to further enhance the world traveling vibe (note that grav ship quests are not impacted as they can already appear far away from the colony).</text>
+                <anchor>Left</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Numeric">
                 <key>odysseyQuestExtensionMultipler</key>
-                <label>Multiply Odyssey Quest Expiration Time by X (vanilla default is 1, I'd recommend 2-3)</label>
+                <label>Multiply Odyssey Quest Expiration Time by X (vanilla default is 1, I'd recommend 2-3 for a 100% world)</label>
                 <defaultValue>1</defaultValue>
                 <decimals>0</decimals>
                 <min>1</min>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Range">
+                <key>odysseyQuestRangeExtender</key>
+                <label>Odyssey Quest Generation Distance (vanilla default is 1~3, I'd recommend 1~5 for a 100% world)</label>
+                <defaultValue>1~3</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
+                <max>20</max>
             </li>
 
             <li Class="XmlExtensions.Setting.Numeric">

@@ -57,6 +57,7 @@
         <Compile Include="GeneDefOf.cs" />
         <Compile Include="MadagascarVanillaSettings.cs" />
         <Compile Include="MagagascarVanillaMod.cs" />
+        <Compile Include="Patches\DistantOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\LongerOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\MadagascarVanillaPatcher.cs" />
         <Compile Include="Patches\MechRepairableOn.cs" />
