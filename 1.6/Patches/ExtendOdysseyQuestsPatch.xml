@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
+    <Operation Class="XmlExtensions.UseSetting">
         <modId>com.protobeard.madagascarvanilla</modId>
-        <key>extendOdysseyQuests</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
+        <key>odysseyQuestExtensionMultipler</key>
+        <defaultValue>1</defaultValue>
+        <apply>
 
             <Operation Class="PatchOperationReplace">
                 <xpath>/Defs/QuestScriptDef[defName="OrbitalFugitive" or defName="OpportunitySite_AbandonedPlatform" or defName="OpportunitySite_OrbitalWreck" or defName="OpportunitySite_MechanoidPlatform" or defName="OpportunitySite_Satellite" or defName="Opportunity_SurveySite"]/root/nodes/li[@Class="QuestNode_WorldObjectTimeout"]/delayTicks</xpath>
                 <value>
-                    <delayTicks>$(randInt(90,120)*60000)</delayTicks>
+                    <delayTicks>$(randInt(90,120)*60000*{odysseyQuestExtensionMultipler})</delayTicks>
                 </value>
             </Operation>
 
-        </caseTrue>
+        </apply>
+    </Operation>
+
+    <Operation Class="XmlExtensions.UseSetting">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>odysseyQuestRangeExtender</key>
+        <defaultValue>1~3</defaultValue>
+        <apply>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/QuestScriptDef[defName="OpportunitySite_AbandonedPlatform" or defName="OpportunitySite_OrbitalWreck" or defName="OpportunitySite_MechanoidPlatform" or defName="OpportunitySite_Satellite" or defName="Opportunity_SurveySite"]/root/nodes/li[@Class="QuestNode_Root_Site"]/distanceFromColonyRange</xpath>
+                <value>
+                    <distanceFromColonyRange>{odysseyQuestRangeExtender}</distanceFromColonyRange>
+                </value>
+            </Operation>
+
+        </apply>
     </Operation>
 
 </Patch>
