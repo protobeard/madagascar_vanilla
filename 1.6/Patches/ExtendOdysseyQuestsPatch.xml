@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>extendOdysseyQuests</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/QuestScriptDef[defName="OrbitalFugitive" or defName="OpportunitySite_AbandonedPlatform" or defName="OpportunitySite_OrbitalWreck" or defName="OpportunitySite_MechanoidPlatform" or defName="OpportunitySite_Satellite" or defName="Opportunity_SurveySite"]/root/nodes/li[@Class="QuestNode_WorldObjectTimeout"]/delayTicks</xpath>
+                <value>
+                    <delayTicks>$(randInt(90,120)*60000)</delayTicks>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+</Patch>

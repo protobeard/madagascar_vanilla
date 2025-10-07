@@ -201,8 +201,38 @@
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>nonflammableMechResourceChips</key>
                 <label>Make all Mechanitor Chips Nonflammable</label>
-                <tooltip>Make all mechanitor chips (signal, power focus, nano structuring) non flammable (Vanilla default is only signal chips).</tooltip>
+                <tooltip>Make all mechanitor chips (signal, power focus, nano structuring) non flammable (vanilla default is only signal chips).</tooltip>
                 <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Odyssey Quests</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>extendOdysseyQuests</key>
+                <label>Extend Odyssey Quests</label>
+                <tooltip>Extend Odyssey quest expirations to 90-120 days (vanilla default is 45-60 days). I like having additional time for Odyssey quests so that I can slowly travel around the world to get to them.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Numeric">
+                <key>odysseyQuestExtensionMultipler</key>
+                <label>Multiply Odyssey Quest Expiration Time by X (vanilla default is 1, I'd recommend 2-3)</label>
+                <defaultValue>1</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Numeric">
+                <key>allowXAdditionalGravshipSubquests</key>
+                <label>Allow X Gravship Subquests (vanilla default is 3)</label>
+                <defaultValue>3</defaultValue>
+                <decimals>0</decimals>
+                <min>3</min>
             </li>
 
             <li Class="XmlExtensions.Setting.GapLine"/>
