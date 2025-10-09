@@ -50,13 +50,13 @@ namespace MadagascarVanilla.Patches
         {
             if (pawn == null)
             {
-                Log.Message("pawn is null");
+                //Log.Message("pawn is null");
                 return;
             }
 
             if (pawn.story == null)
             {
-                Log.Message("pawn story is null. don't try to modify schedule");
+                //Log.Message("pawn story is null. don't try to modify schedule");
                 return;
             }
             
@@ -76,7 +76,7 @@ namespace MadagascarVanilla.Patches
 
             if (cache.HaveSetSchedules.Contains(pawn))
             {
-                Log.Message("Pawn is in the cache: " + pawn.Name);
+                //Log.Message("Pawn is in the cache: " + pawn.Name);
                 return;
             }
                 
@@ -84,23 +84,23 @@ namespace MadagascarVanilla.Patches
             if (faction == null || !faction.IsPlayer)
                 return;
 
-            Log.Message("we're in the players faction");
+            //Log.Message("we're in the players faction");
             
             if (def == null || (def.race != null && !def.race.Humanlike))
                 return;
 
-            Log.Message("we're Humanlike");
+            //Log.Message("we're Humanlike");
             
             if (pawn.timetable == null)
                 return;
             
-            Log.Message("we have a timetable");
+            //Log.Message("we have a timetable");
             
-            Log.Message("pawn named: " + pawn.Name);
+            //Log.Message("pawn named: " + pawn.Name);
             
-            Log.Message("pawn has traits: ");
-            foreach(Trait trait in pawn.story.traits.allTraits)
-                Log.Message("trait: " + trait);
+            // Log.Message("pawn has traits: ");
+            // foreach(Trait trait in pawn.story.traits.allTraits)
+            //     Log.Message("trait: " + trait);
             
             if ((initialBodyMasterySchedule && pawn.story.traits.HasTrait(TraitDefOf.BodyMastery)) || 
                 (initialSleepyGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
@@ -141,7 +141,7 @@ namespace MadagascarVanilla.Patches
         //    this.times.Add(index <= 5 || index > 21 ? TimeAssignmentDefOf.Sleep : TimeAssignmentDefOf.Anything);
         private static void SetSchedule(Pawn pawn, ScheduleType type = ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
         {
-            Log.Message("Setting schedule to : " + type);
+            //Log.Message("Setting schedule to : " + type);
             
             bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
             int quickSleeperOffset;
@@ -225,8 +225,8 @@ namespace MadagascarVanilla.Patches
         // Since slaves don't need Joy, we don't want to assign it to them in their schedule. Give them Anything instead.
         private static TimeAssignmentDef JoyOrAnything(Pawn pawn)
         {
-            Log.Message(pawn.Name + " is Slave of colony? " + pawn.IsSlaveOfColony);
-            Log.Message(pawn.Name + " is Slave: " + pawn.IsSlave);
+            //Log.Message(pawn.Name + " is Slave of colony? " + pawn.IsSlaveOfColony);
+            //Log.Message(pawn.Name + " is Slave: " + pawn.IsSlave);
             return pawn.IsSlaveOfColony ? TimeAssignmentDefOf.Anything : TimeAssignmentDefOf.Joy;
         }
     }
