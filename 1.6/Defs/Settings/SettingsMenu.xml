@@ -194,7 +194,7 @@
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableMechRepair</key>
                 <label>Enable Mech Repair by Default</label>
-                <tooltip>Enable automatically repairing colony mechs by default (Vanilla default is false).</tooltip>
+                <tooltip>Enable automatically repairing colony mechs by default (vanilla default is false).</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
@@ -242,6 +242,349 @@
                 <decimals>0</decimals>
                 <min>3</min>
             </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Medical Care Defaults - requires new game to take effect.</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistMedicalSettings</key>
+                <label>Medical Defaults Persist Across Games</label>
+                <tooltip>Persist medical care default settings across games -- can set pawns to Herbal Medicine default once and never worry again (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+
+
+
+
+
+
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>colonistMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>prisonerMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>slaveMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+
+
+
+
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>tameAnimalMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>wildlifeMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+
+
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>friendlyMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>neutralMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>hostileMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>noFactionMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>ghoulMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>entityMedicalDefault</key>
+                <defaultValue>Best</defaultValue>
+                <buttons>
+                    <li>
+                        <value>NoCare</value>
+                        <label>No Care</label>
+                        </li>
+                    <li>
+                        <value>NoMeds</value>
+                        <label>No Meds</label>
+                    </li>
+                    <li>
+                        <value>HerbalOrWorse</value>
+                        <label>Herbal</label>
+                    </li>
+                    <li>
+                        <value>NormalOrWorse</value>
+                        <label>Industrial</label>
+                    </li>
+                    <li>
+                        <value>Best</value>
+                        <label>Glitterworld</label>
+                    </li>
+                </buttons>
+            </li>
+
+
+
+
+
+
+            <li Class="MadagascarVanilla.Settings.MedicalDefaults">
+                <text>Text here</text>
+            </li>
+
+
+
+
+
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>

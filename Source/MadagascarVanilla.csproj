@@ -49,6 +49,12 @@
         <Reference Include="UnityEngine.CoreModule">
           <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+          <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+          <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
         <Reference Include="XmlExtensions">
           <HintPath>..\..\resources\Frameworks\XML Extensions - 2574315206\1.6\Assemblies\XmlExtensions.dll</HintPath>
         </Reference>
@@ -60,12 +66,14 @@
         <Compile Include="Patches\LongerOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\MadagascarVanillaPatcher.cs" />
         <Compile Include="Patches\MechRepairableOn.cs" />
+        <Compile Include="Patches\MedicalDefaultsPatch.cs" />
         <Compile Include="Patches\MoreGravshipSubquests.cs" />
         <Compile Include="Patches\QuestRewardsPatch.cs" />
         <Compile Include="Patches\SchedulePatch.cs" />
         <Compile Include="Patches\StandYourGroundPatch.cs" />
         <Compile Include="Patches\AreasPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Settings\MedicalDefaults.cs" />
         <Compile Include="TraitDefOf.cs" />
         <Compile Include="WorldComponent.cs" />
     </ItemGroup>
