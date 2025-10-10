@@ -18,16 +18,13 @@ namespace MadagascarVanilla.Settings
         public const string ColonistMedicalDefault = "colonistMedicalDefault";
         public const string PrisonerMedicalDefault = "prisonerMedicalDefault";
         public const string SlaveMedicalDefault = "slaveMedicalDefault";
-        
+        public const string GhoulMedicalDefault = "ghoulMedicalDefault";
         public const string TamedAnimalMedicalDefault = "tameAnimalMedicalDefault";
-        public const string WildlifeMedicalDefault = "wildlifeMedicalDefault";
-        
         public const string FriendlyMedicalDefault = "friendlyMedicalDefault";
         public const string NeutralMedicalDefault = "neutralMedicalDefault";
         public const string HostileMedicalDefault = "hostileMedicalDefault";
         public const string NoFactionMedicalDefault = "noFactionMedicalDefault";
-
-        public const string GhoulMedicalDefault = "ghoulMedicalDefault";
+        public const string WildlifeMedicalDefault = "wildlifeMedicalDefault";
         public const string EntityMedicalDefault = "entityMedicalDefault";
         
         // Mod setting name to Playsettings field name
@@ -36,13 +33,13 @@ namespace MadagascarVanilla.Settings
             { ColonistMedicalDefault, "defaultCareForColonist" },
             { PrisonerMedicalDefault, "defaultCareForPrisoner" },
             { SlaveMedicalDefault, "defaultCareForSlave" },
+            { GhoulMedicalDefault, "defaultCareForGhouls" },
             { TamedAnimalMedicalDefault, "defaultCareForTamedAnimal" },
-            { WildlifeMedicalDefault, "defaultCareForWildlife" },
             { FriendlyMedicalDefault, "defaultCareForFriendlyFaction" },
             { NeutralMedicalDefault, "defaultCareForNeutralFaction" },
             { HostileMedicalDefault, "defaultCareForHostileFaction" },
             { NoFactionMedicalDefault, "defaultCareForNoFaction" },
-            { GhoulMedicalDefault, "defaultCareForGhouls" },
+            { WildlifeMedicalDefault, "defaultCareForWildlife" },
             { EntityMedicalDefault, "defaultCareForEntities" },
         };
         
@@ -51,19 +48,21 @@ namespace MadagascarVanilla.Settings
             { ColonistMedicalDefault, ("MedGroupColonists", "MedGroupColonistsDesc") },
             { PrisonerMedicalDefault, ("MedGroupPrisoners", "MedGroupColonistsDesc") },
             { SlaveMedicalDefault, ("MedGroupSlaves", "MedGroupSlavesDesc") },
+            { GhoulMedicalDefault, ("MedGroupGhouls", "MedGroupGhoulsDesc") },
             { TamedAnimalMedicalDefault, ("MedGroupTamedAnimals", "MedGroupTamedAnimalsDesc") },
-            { WildlifeMedicalDefault, ("MedGroupWildlife", "MedGroupWildlifeDesc") },
             { FriendlyMedicalDefault, ("MedGroupFriendlyFaction", "MedGroupFriendlyFactionDesc") },
             { NeutralMedicalDefault, ("MedGroupNeutralFaction", "MedGroupNeutralFactionDesc") },
             { HostileMedicalDefault, ("MedGroupHostileFaction", "MedGroupHostileFactionDesc") },
             { NoFactionMedicalDefault, ("MedGroupNoFaction", "MedGroupNoFactionDesc") },
-            { GhoulMedicalDefault, ("MedGroupGhouls", "MedGroupGhoulsDesc") },
+            
+            { WildlifeMedicalDefault, ("MedGroupWildlife", "MedGroupWildlifeDesc") },
             { EntityMedicalDefault, ("MedGroupEntities", "MedGroupEntitiesDesc") },
         };
 
         private const float VerticalElementSpacing = 10f;
-        private const float RowSpacing = 6;
+        private const float RowSpacing = 6f;
         private const float RowHeight = MedicalCareUtility.CareSetterHeight + RowSpacing;
+        private const float BottomBufferSpacing = 5f;
 
         protected override float CalculateHeight(float width)
         {
@@ -75,20 +74,16 @@ namespace MadagascarVanilla.Settings
                 rows += 2;
             
             GameFont currFont = Verse.Text.Font;
-            Verse.Text.Font = GameFont.Medium;
-            float defaultMedicineSettingsLabelHeight = (float)Math.Ceiling(Verse.Text.CalcHeight((string)"DefaultMedicineSettings".Translate(), width));
             Verse.Text.Font = GameFont.Small;
             float defaultMedicineDescriptionLabelHeight = (float)Math.Ceiling(Verse.Text.CalcHeight((string)"DefaultMedicineSettingsDesc".Translate(), width));
             Verse.Text.Font = currFont;
             
-            return rows * RowHeight + defaultMedicineSettingsLabelHeight + defaultMedicineDescriptionLabelHeight + GetDefaultSpacing();
+            return rows * RowHeight + defaultMedicineDescriptionLabelHeight + BottomBufferSpacing + GetDefaultSpacing();
         }
         
         protected override void DrawSettingContents(Rect rect)
         {
             float y = rect.y + VerticalElementSpacing;
-            using (new TextBlock(GameFont.Medium))
-                Widgets.Label(rect, ref y, (string)"DefaultMedicineSettings".Translate());
             Text.Font = GameFont.Small;
             Widgets.Label(rect, ref y, (string)"DefaultMedicineSettingsDesc".Translate());
             float y2 = y + VerticalElementSpacing;

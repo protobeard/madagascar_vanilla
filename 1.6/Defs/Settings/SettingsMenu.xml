@@ -7,13 +7,22 @@
         <settings>
 
             <li Class="XmlExtensions.Setting.Text">
-                <text>Any changes require a restart to take effect.</text>
+                <text>Many changes require a restart to take effect.</text>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>verboseMode</key>
+                <label>Verbose Mode</label>
+                <tooltip>Print lots of log messages. Useful for debugging.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Gap"/>
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Stand Your Ground</text>
