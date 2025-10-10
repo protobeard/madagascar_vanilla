@@ -112,16 +112,13 @@ namespace MadagascarVanilla.Settings
                     return;
                 
                 // Add a row for the setting
-                this.DoRow(rect, ref y2, ref medicalCareCategory, medicalDefaultKey, medicalDefaultHelp.Item1, medicalDefaultHelp.Item2);
+                DoRow(rect, ref y2, medicalCareCategory, medicalDefaultKey, medicalDefaultHelp.Item1, medicalDefaultHelp.Item2);
             }
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        // TODO: medical care category probably doesn't need to be a ref, since what's being passed in here isn't
-        // being used directly by anything elsewhere. It's a ref in medical dialog b/c it's actually the PlaySettings
-        // var that holds the category for one of the medical groups. Here, it's just a new object derived from
-        // our mod settings string.
-        private void DoRow(Rect rect, ref float y, ref MedicalCareCategory category, string medicalDefaultKey, string labelKey, string tipKey)
+        // Draw a medical default settings row
+        private static void DoRow(Rect rect, ref float y, MedicalCareCategory category, string medicalDefaultKey, string labelKey, string tipKey)
         {
             Rect rect1 = new Rect(rect.x, y, rect.width, 28f);
             Rect rect2 = new Rect(rect.x, y, 230f, 28f);
@@ -131,21 +128,18 @@ namespace MadagascarVanilla.Settings
             TooltipHandler.TipRegionByKey(rect1, tipKey);
             string label = (string)labelKey.Translate();
             Widgets.LabelFit(rect2, label);
-            //MedicalCareUtility.MedicalCareSetter(rect3, ref category);
-            MedicalCareSetter(rect3, ref category, medicalDefaultKey);
+            MedicalCareSetter(rect3, category, medicalDefaultKey);
             y += 34f;
         }
         
+        // FIXME: painting doesn't work. Either remove the code or fix it.
+        // TODO: what is the uniqueId number below? Where does it come from? Looks like a constant from somewhere...
         // Create our own copy of MedicalCareUtility.MedicalCareSetter so that we can
         // ensure that our Mod Settings window write to all the places we need.
-        private static void MedicalCareSetter(Rect rect, ref MedicalCareCategory medCare, string medicalDefaultKey)
+        private static void MedicalCareSetter(Rect rect, MedicalCareCategory currentlySelectedMedicalCareCategory, string medicalDefaultKey)
         {
-            // private static vars in MedicalCareUtiltiy
             bool medicalCarePainting = false;
-            Texture2D[] careTextures;
-            
-            // assigned in MedicalCareUtility.Reset() -- I don't think we need that here
-            careTextures = new Texture2D[5];
+            Texture2D[] careTextures = new Texture2D[5];
             careTextures[0] = ContentFinder<Texture2D>.Get("UI/Icons/Medical/NoCare");
             careTextures[1] = ContentFinder<Texture2D>.Get("UI/Icons/Medical/NoMeds");
             careTextures[2] = ThingDefOf.MedicineHerbal.uiIcon;
@@ -155,7 +149,7 @@ namespace MadagascarVanilla.Settings
             Rect rect1 = new Rect(rect.x, rect.y, rect.width / 5f, rect.height);
             for (int index = 0; index < 5; ++index)
             {
-                MedicalCareCategory mc = (MedicalCareCategory) index;
+                MedicalCareCategory newMedicalCareCategory = (MedicalCareCategory) index;
                 Widgets.DrawHighlightIfMouseover(rect1);
                 MouseoverSounds.DoRegion(rect1);
                 GUI.DrawTexture(rect1, (Texture) careTextures[index]);
@@ -163,30 +157,21 @@ namespace MadagascarVanilla.Settings
                 if (result == Widgets.DraggableResult.Dragged)
                     medicalCarePainting = true;
                 
-                // DraggableResultUtility is an internal class in Verse which adds AnyPressed() to DraggableResult
-                //if (medicalCarePainting && Mouse.IsOver(rect1) && medCare != mc || result.AnyPressed()) 
-                if (medicalCarePainting && Mouse.IsOver(rect1) && medCare != mc || (result == Widgets.DraggableResult.Pressed || result == Widgets.DraggableResult.DraggedThenPressed))
+                if (medicalCarePainting && Mouse.IsOver(rect1) && currentlySelectedMedicalCareCategory != newMedicalCareCategory || (result == Widgets.DraggableResult.Pressed || result == Widgets.DraggableResult.DraggedThenPressed))
                 {
-                    medCare = mc;
-                    
-                    SettingsManager.SetSetting(MadagascarVanillaMod.ModId, medicalDefaultKey, mc.ToString());
-                    
+                    currentlySelectedMedicalCareCategory = newMedicalCareCategory;
+                    SettingsManager.SetSetting(MadagascarVanillaMod.ModId, medicalDefaultKey, newMedicalCareCategory.ToString());
                     SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
-                if (medCare == mc)
+                if (currentlySelectedMedicalCareCategory == newMedicalCareCategory)
                     Widgets.DrawBox(rect1, 2);
                 if (Mouse.IsOver(rect1))
-                    TooltipHandler.TipRegion(rect1, (Func<string>) (() => mc.GetLabel().CapitalizeFirst()), 632165 + index * 17);
+                    TooltipHandler.TipRegion(rect1, (Func<string>) (() => newMedicalCareCategory.GetLabel().CapitalizeFirst()), 632165 + index * 17);
                 rect1.x += rect1.width;
             }
             if (UnityEngine.Input.GetMouseButton(0))
                 return;
             medicalCarePainting = false;
         }
-        
-        // public static bool AnyPressed(this Widgets.DraggableResult result)
-        // {
-        //     return result == Widgets.DraggableResult.Pressed || result == Widgets.DraggableResult.DraggedThenPressed;
-        // }
     }
 }
