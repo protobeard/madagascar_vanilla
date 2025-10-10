@@ -61,7 +61,7 @@ namespace MadagascarVanilla.Settings
             { EntityMedicalDefault, ("MedGroupEntities", "MedGroupEntitiesDesc") },
         };
 
-        private const float VeritcalElementSpacing = 10f;
+        private const float VerticalElementSpacing = 10f;
         private const float RowSpacing = 6;
         private const float RowHeight = MedicalCareUtility.CareSetterHeight + RowSpacing;
 
@@ -86,12 +86,12 @@ namespace MadagascarVanilla.Settings
         
         protected override void DrawSettingContents(Rect rect)
         {
-            float y = rect.y + VeritcalElementSpacing;
+            float y = rect.y + VerticalElementSpacing;
             using (new TextBlock(GameFont.Medium))
                 Widgets.Label(rect, ref y, (string)"DefaultMedicineSettings".Translate());
             Text.Font = GameFont.Small;
             Widgets.Label(rect, ref y, (string)"DefaultMedicineSettingsDesc".Translate());
-            float y2 = y + VeritcalElementSpacing;
+            float y2 = y + VerticalElementSpacing;
             Text.Anchor = TextAnchor.MiddleLeft;
             
             foreach (var (medicalDefaultKey, medicalDefaultHelp) in MedicalDefaultsSettingToHelpDict)
