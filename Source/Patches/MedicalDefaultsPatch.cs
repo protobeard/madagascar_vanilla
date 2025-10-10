@@ -42,23 +42,6 @@ namespace MadagascarVanilla.Patches
                 PersistMedicalSettings(playSettings);
         }
         
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(MedicalCareUtility))]
-        [HarmonyPatch(nameof(MedicalCareUtility.MedicalCareSetter))]
-        public static void MedicalCareSetterPatchPostfix(MedicalCareCategory medicalCareCategory)
-        {
-            Log.Message("MedicalCareSetter " + MedicalDefaults.PersistMedicalSettingsKey);
-            
-            bool persistMedicalSettings = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PersistMedicalSettingsKey));
-            if (persistMedicalSettings)
-            {
-                // FIXME: we don't know what key to use b/c it isn't sent in to MedicalCareUtility, just the ref to the medical care category
-                // FIXME: maybe just implement our own MedicalCareSetter. 
-                // SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.ColonistMedicalDefault, medicalCareCategory.ToString());
-            }
-        }
-        
-        
         // Load mod medical settings into Playsettings before opening the medical defaults dialog window.
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Window))]
