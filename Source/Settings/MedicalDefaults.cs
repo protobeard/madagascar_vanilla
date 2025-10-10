@@ -120,9 +120,9 @@ namespace MadagascarVanilla.Settings
         // Draw a medical default settings row
         private static void DoRow(Rect rect, ref float y, MedicalCareCategory category, string medicalDefaultKey, string labelKey, string tipKey)
         {
-            Rect rect1 = new Rect(rect.x, y, rect.width, 28f);
-            Rect rect2 = new Rect(rect.x, y, 230f, 28f);
-            Rect rect3 = new Rect(230f, y, 140f, 28f);
+            Rect rect1 = new Rect(rect.x, y, rect.width, MedicalCareUtility.CareSetterHeight);
+            Rect rect2 = new Rect(rect.x, y, 230f, MedicalCareUtility.CareSetterHeight);
+            Rect rect3 = new Rect(230f, y, MedicalCareUtility.CareSetterWidth, MedicalCareUtility.CareSetterHeight);
             if (Mouse.IsOver(rect1))
                 Widgets.DrawLightHighlight(rect1);
             TooltipHandler.TipRegionByKey(rect1, tipKey);
@@ -146,8 +146,10 @@ namespace MadagascarVanilla.Settings
             careTextures[3] = ThingDefOf.MedicineIndustrial.uiIcon;
             careTextures[4] = ThingDefOf.MedicineUltratech.uiIcon;
             
-            Rect rect1 = new Rect(rect.x, rect.y, rect.width / 5f, rect.height);
-            for (int index = 0; index < 5; ++index)
+            int medicalCareCategoryCount = Enum.GetNames(typeof(MedicalCareCategory)).Length;
+            
+            Rect rect1 = new Rect(rect.x, rect.y, rect.width / medicalCareCategoryCount, rect.height);
+            for (int index = 0; index < medicalCareCategoryCount; ++index)
             {
                 MedicalCareCategory newMedicalCareCategory = (MedicalCareCategory) index;
                 Widgets.DrawHighlightIfMouseover(rect1);
