@@ -30,10 +30,6 @@ namespace MadagascarVanilla.Settings
         public const string GhoulMedicalDefault = "ghoulMedicalDefault";
         public const string EntityMedicalDefault = "entityMedicalDefault";
         
-        // All parameters will appear as a node you can define in the XML
-        public string text;
-        
-        // TODO: turn field names into constants -- just make the keys match?
         // Mod setting name to Playsettings field name
         public static readonly Dictionary<string, string> MedicalDefaultsDict = new Dictionary<string, string>()
         {
@@ -65,32 +61,37 @@ namespace MadagascarVanilla.Settings
             { EntityMedicalDefault, ("MedGroupEntities", "MedGroupEntitiesDesc") },
         };
 
-        // FIXME: Calculate height of the settings for real.
+        private const float VeritcalElementSpacing = 10f;
+        private const float RowSpacing = 6;
+        private const float RowHeight = MedicalCareUtility.CareSetterHeight + RowSpacing;
+
         protected override float CalculateHeight(float width)
         {
-            int rows = 11;
-            float spacePerRow = 10f;
-            // Adding some spacing so it looks nicer when the settings are stacked on top of each other
-            return rows * spacePerRow + 400f + GetDefaultSpacing();
-        }
+            int rows = 8;
 
-        // So the issue here is that if the game is loaded, we want to pass the PlaySettings.default* through DoRow to MedicalCareSetter
-        // but if we do that then only the game settings are changed, not ours. Can we patch MedicalCareUtility.MedicalCareSetter to call PersistSettings?
-        // If we patch MedicalCareSetter do we even need to patch the Medical default dialog PostClose() anymore? 1.c. above is the problematic case.
-        //
-        // AND, if the game is not loaded, then we have no PlaySettings.default* to pass through, so we want to pass through our
-        // settings to get modified. Then, when a new game is created or an old one loaded, our existing patches should load
-        // our settings into the created PlaySettings object.
-        //
-        // Since we're in the mod settings window, we shouldn't have to worry about manually persisting our settings to disk.
+            if (ModsConfig.IdeologyActive)
+                rows++;
+            if (ModsConfig.AnomalyActive)
+                rows += 2;
+            
+            GameFont currFont = Verse.Text.Font;
+            Verse.Text.Font = GameFont.Medium;
+            float defaultMedicineSettingsLabelHeight = (float)Math.Ceiling(Verse.Text.CalcHeight((string)"DefaultMedicineSettings".Translate(), width));
+            Verse.Text.Font = GameFont.Small;
+            float defaultMedicineDescriptionLabelHeight = (float)Math.Ceiling(Verse.Text.CalcHeight((string)"DefaultMedicineSettingsDesc".Translate(), width));
+            Verse.Text.Font = currFont;
+            
+            return rows * RowHeight + defaultMedicineSettingsLabelHeight + defaultMedicineDescriptionLabelHeight + GetDefaultSpacing();
+        }
+        
         protected override void DrawSettingContents(Rect rect)
         {
-            float y1 = rect.y + 10f;
+            float y = rect.y + VeritcalElementSpacing;
             using (new TextBlock(GameFont.Medium))
-                Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettings".Translate());
+                Widgets.Label(rect, ref y, (string)"DefaultMedicineSettings".Translate());
             Text.Font = GameFont.Small;
-            Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettingsDesc".Translate());
-            float y2 = y1 + 10f;
+            Widgets.Label(rect, ref y, (string)"DefaultMedicineSettingsDesc".Translate());
+            float y2 = y + VeritcalElementSpacing;
             Text.Anchor = TextAnchor.MiddleLeft;
             
             foreach (var (medicalDefaultKey, medicalDefaultHelp) in MedicalDefaultsSettingToHelpDict)
@@ -120,16 +121,17 @@ namespace MadagascarVanilla.Settings
         // Draw a medical default settings row
         private static void DoRow(Rect rect, ref float y, MedicalCareCategory category, string medicalDefaultKey, string labelKey, string tipKey)
         {
+            float labelWidth = 230f;
             Rect rect1 = new Rect(rect.x, y, rect.width, MedicalCareUtility.CareSetterHeight);
-            Rect rect2 = new Rect(rect.x, y, 230f, MedicalCareUtility.CareSetterHeight);
-            Rect rect3 = new Rect(230f, y, MedicalCareUtility.CareSetterWidth, MedicalCareUtility.CareSetterHeight);
+            Rect rect2 = new Rect(rect.x, y, labelWidth, MedicalCareUtility.CareSetterHeight);
+            Rect rect3 = new Rect(labelWidth, y, MedicalCareUtility.CareSetterWidth, MedicalCareUtility.CareSetterHeight);
             if (Mouse.IsOver(rect1))
                 Widgets.DrawLightHighlight(rect1);
             TooltipHandler.TipRegionByKey(rect1, tipKey);
             string label = (string)labelKey.Translate();
             Widgets.LabelFit(rect2, label);
             MedicalCareSetter(rect3, category, medicalDefaultKey);
-            y += 34f;
+            y += RowHeight;
         }
         
         // FIXME: painting doesn't work. Either remove the code or fix it.
