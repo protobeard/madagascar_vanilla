@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -8,76 +10,111 @@ namespace MadagascarVanilla.Settings
 {
     public class MedicalDefaults : SettingContainer
     {
+        public const string PersistMedicalSettingsKey = "persistMedicalSettings";
+        
+        public const string ColonistMedicalDefault = "colonistMedicalDefault";
+        public const string PrisonerMedicalDefault = "prisonerMedicalDefault";
+        public const string SlaveMedicalDefault = "slaveMedicalDefault";
+        
+        public const string TamedAnimalMedicalDefault = "tameAnimalMedicalDefault";
+        public const string WildlifeMedicalDefault = "wildlifeMedicalDefault";
+        
+        public const string FriendlyMedicalDefault = "friendlyMedicalDefault";
+        public const string NeutralMedicalDefault = "neutralMedicalDefault";
+        public const string HostileMedicalDefault = "hostileMedicalDefault";
+        public const string NoFactionMedicalDefault = "noFactionMedicalDefault";
+
+        public const string GhoulMedicalDefault = "ghoulMedicalDefault";
+        public const string EntityMedicalDefault = "entityMedicalDefault";
+        
         // All parameters will appear as a node you can define in the XML
         public string text;
+        
+        // TODO: turn field names into constants -- just make the keys match?
+        // Mod setting name to Playsettings field name
+        public static readonly Dictionary<string, string> MedicalDefaultsDict = new Dictionary<string, string>()
+        {
+            { ColonistMedicalDefault, "defaultCareForColonist" },
+            { PrisonerMedicalDefault, "defaultCareForPrisoner" },
+            { SlaveMedicalDefault, "defaultCareForSlave" },
+            { TamedAnimalMedicalDefault, "defaultCareForTamedAnimal" },
+            { WildlifeMedicalDefault, "defaultCareForWildlife" },
+            { FriendlyMedicalDefault, "defaultCareForFriendlyFaction" },
+            { NeutralMedicalDefault, "defaultCareForNeutralFaction" },
+            { HostileMedicalDefault, "defaultCareForHostileFaction" },
+            { NoFactionMedicalDefault, "defaultCareForNoFaction" },
+            { GhoulMedicalDefault, "defaultCareForGhouls" },
+            { EntityMedicalDefault, "defaultCareForEntities" },
+        };
+        
+        public static readonly Dictionary<string, (string, string)> MedicalDefaultsSettingToHelpDict = new Dictionary<string, (string label, string tip)>()
+        {
+            { ColonistMedicalDefault, ("MedGroupColonists", "MedGroupColonistsDesc") },
+            { PrisonerMedicalDefault, ("MedGroupPrisoners", "MedGroupColonistsDesc") },
+            { SlaveMedicalDefault, ("MedGroupSlaves", "MedGroupSlavesDesc") },
+            { TamedAnimalMedicalDefault, ("MedGroupTamedAnimals", "MedGroupTamedAnimalsDesc") },
+            { WildlifeMedicalDefault, ("MedGroupWildlife", "MedGroupWildlifeDesc") },
+            { FriendlyMedicalDefault, ("MedGroupFriendlyFaction", "MedGroupFriendlyFactionDesc") },
+            { NeutralMedicalDefault, ("MedGroupNeutralFaction", "MedGroupNeutralFactionDesc") },
+            { HostileMedicalDefault, ("MedGroupHostileFaction", "MedGroupHostileFactionDesc") },
+            { NoFactionMedicalDefault, ("MedGroupNoFaction", "MedGroupNoFactionDesc") },
+            { GhoulMedicalDefault, ("MedGroupGhouls", "MedGroupGhoulsDesc") },
+            { EntityMedicalDefault, ("MedGroupEntities", "MedGroupEntitiesDesc") },
+        };
 
-        // Calculate height of the text with Small GameFont
+        // FIXME: Calculate height of the settings for real.
         protected override float CalculateHeight(float width)
         {
             int rows = 11;
             float spacePerRow = 10f;
             // Adding some spacing so it looks nicer when the settings are stacked on top of each other
-            return rows * spacePerRow + GetDefaultSpacing();
+            return rows * spacePerRow + 400f + GetDefaultSpacing();
         }
 
+        // So the issue here is that if the game is loaded, we want to pass the PlaySettings.default* through DoRow to MedicalCareSetter
+        // but if we do that then only the game settings are changed, not ours. Can we patch MedicalCareUtility.MedicalCareSetter to call PersistSettings?
+        // If we patch MedicalCareSetter do we even need to patch the Medical default dialog PostClose() anymore? 1.c. above is the problematic case.
+        //
+        // AND, if the game is not loaded, then we have no PlaySettings.default* to pass through, so we want to pass through our
+        // settings to get modified. Then, when a new game is created or an old one loaded, our existing patches should load
+        // our settings into the created PlaySettings object.
+        //
+        // Since we're in the mod settings window, we shouldn't have to worry about manually persisting our settings to disk.
         protected override void DrawSettingContents(Rect rect)
         {
+            float y1 = rect.y + 10f;
+            using (new TextBlock(GameFont.Medium))
+                Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettings".Translate());
+            Text.Font = GameFont.Small;
+            Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettingsDesc".Translate());
+            float y2 = y1 + 10f;
+            Text.Anchor = TextAnchor.MiddleLeft;
             
-            GameFont currFont = Verse.Text.Font;
-            Verse.Text.Font = GameFont.Small;
-            Widgets.Label(rect, text);          
-            Verse.Text.Font = currFont;
+            foreach (var (medicalDefaultKey, medicalDefaultHelp) in MedicalDefaultsSettingToHelpDict)
+            {
+                // Bail if we don't have the setting for some reason.
+                bool medicalCategorySettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, medicalDefaultKey, out string medicalCareCategoryName);
+                if (!medicalCategorySettingExists)
+                    return;
             
-            // MedicalCareCategory defaultCareForColonist = MedicalCareCategory.Best;
-            
-            
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForColonist, "defaultCareForColonist", MedicalCareCategory.Best);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForTamedAnimal, "defaultCareForTamedAnimal", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForPrisoner, "defaultCareForPrisoner", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForSlave, "defaultCareForSlave", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForNeutralFaction, "defaultCareForNeutralFaction", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForWildlife, "defaultCareForWildlife", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForHostileFaction, "defaultCareForHumanlikeEnemies", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForFriendlyFaction, "defaultCareForFriendlyFaction", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForNoFaction, "defaultCareForNoFaction", MedicalCareCategory.HerbalOrWorse);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForEntities, "defaultCareForEntities", MedicalCareCategory.NoMeds);
-                // Scribe_Values.Look<MedicalCareCategory>(ref this.defaultCareForGhouls, "defaultCareForGhouls", MedicalCareCategory.NoMeds);
-            
-            // float y1 = 0.0f;
-            // using (new TextBlock(GameFont.Medium))
-            //     Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettings".Translate());
-            // Text.Font = GameFont.Small;
-            // Widgets.Label(rect, ref y1, (string)"DefaultMedicineSettingsDesc".Translate());
-            // float y2 = y1 + 10f;
-            // Text.Anchor = TextAnchor.MiddleLeft;
-            // this.DoRow(rect, ref y2, ref Find.PlaySettings.defaultCareForColonist, "MedGroupColonists", "MedGroupColonistsDesc");
-            // this.DoRow(rect, ref y2, ref Find.PlaySettings.defaultCareForPrisoner, "MedGroupPrisoners", "MedGroupPrisonersDesc");
-            // if (ModsConfig.IdeologyActive)
-            //     this.DoRow(rect, ref y2, ref Find.PlaySettings.defaultCareForSlave, "MedGroupSlaves", "MedGroupSlavesDesc");
-            // if (ModsConfig.AnomalyActive)
-            //     this.DoRow(rect, ref y2, ref Find.PlaySettings.defaultCareForGhouls, "MedGroupGhouls", "MedGroupGhoulsDesc");
-            // this.DoRow(rect, ref y2, ref Find.PlaySettings.defaultCareForTamedAnimal, "MedGroupTamedAnimals", "MedGroupTamedAnimalsDesc");
-            // float y3 = y2 + 17f;
-            // this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForFriendlyFaction, "MedGroupFriendlyFaction", "MedGroupFriendlyFactionDesc");
-            // this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForNeutralFaction, "MedGroupNeutralFaction", "MedGroupNeutralFactionDesc");
-            // this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForHostileFaction, "MedGroupHostileFaction", "MedGroupHostileFactionDesc");
-            // y3 += 17f;
-            // this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForNoFaction, "MedGroupNoFaction", "MedGroupNoFactionDesc");
-            // this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForWildlife, "MedGroupWildlife", "MedGroupWildlifeDesc");
-            // if (ModsConfig.AnomalyActive)
-            //     this.DoRow(rect, ref y3, ref Find.PlaySettings.defaultCareForEntities, "MedGroupEntities", "MedGroupEntitiesDesc");
-            // Text.Anchor = TextAnchor.UpperLeft;
-            
-            
-            
+                // Bail if the setting can't be parsed.
+                bool parsed = Enum.TryParse(medicalCareCategoryName, false, out MedicalCareCategory medicalCareCategory);
+                if (!parsed)
+                    return;
+
+                // Bail if we don't have the right DLCs for the setting
+                if (!ModsConfig.IdeologyActive && medicalDefaultKey == SlaveMedicalDefault ||
+                    !ModsConfig.AnomalyActive && medicalDefaultKey == GhoulMedicalDefault ||
+                    !ModsConfig.AnomalyActive && medicalDefaultKey == EntityMedicalDefault)
+                    return;
+                
+                // Add a row for the setting
+                this.DoRow(rect, ref y2, ref medicalCareCategory, medicalDefaultHelp.Item1, medicalDefaultHelp.Item2);
+            }
+            Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        private void DoRow(
-            Rect rect,
-            ref float y,
-            ref MedicalCareCategory category,
-            string labelKey,
-            string tipKey)
+        private void DoRow(Rect rect, ref float y, ref MedicalCareCategory category, string labelKey, string tipKey)
         {
             Rect rect1 = new Rect(rect.x, y, rect.width, 28f);
             Rect rect2 = new Rect(rect.x, y, 230f, 28f);
