@@ -207,6 +207,19 @@
                 <label>Starting Areas:</label>
             </li>
 
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Work Priorities</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>useWorkPriorities</key>
+                <label>Use Manual Priorities</label>
+                <tooltip>Use manual work priorities rather than boolean (vanilla is false)</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
