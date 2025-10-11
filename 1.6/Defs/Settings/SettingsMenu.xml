@@ -184,6 +184,20 @@
                 <anchor>Middle</anchor>
             </li>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>autoHomeArea</key>
+                <label>Automatically Expand Home</label>
+                <tooltip>Automatically expand the Home area (vanilla is true)</tooltip>
+                <defaultValue>true</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>autoRebuild</key>
+                <label>Auto Rebuild in Home</label>
+                <tooltip>Automatically rebuild buildings in the Home area which get destroyed (vanilla is false)</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
             <li Class="XmlExtensions.Setting.Text">
                 <text>Comma separated list of areas to start a new game with (e.g., "Work,Inside,Safe"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</text>
             </li>
@@ -213,6 +227,23 @@
                 <tooltip>Make all mechanitor chips (signal, power focus, nano structuring) non flammable (vanilla default is only signal chips).</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
+
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Odyssey</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>showExpandingLandmarks</key>
+                <label>Landmark Visibility</label>
+                <tooltip>Show landmarks on world map by default -- no need to turn it on again every game (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
