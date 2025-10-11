@@ -68,6 +68,7 @@
     <ItemGroup>
         <Compile Include="GeneDefOf.cs" />
         <Compile Include="MagagascarVanillaMod.cs" />
+        <Compile Include="Patches\BillProductionPatches.cs" />
         <Compile Include="Patches\DistantOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\NewGamePlaysettingsPatch.cs" />
         <Compile Include="Patches\LongerOdysseyQuestsPatch.cs" />

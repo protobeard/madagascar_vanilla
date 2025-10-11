@@ -207,6 +207,7 @@
                 <label>Starting Areas:</label>
             </li>
 
+
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Work Priorities</text>
@@ -218,6 +219,37 @@
                 <label>Use Manual Priorities</label>
                 <tooltip>Use manual work priorities rather than boolean (vanilla is false)</tooltip>
                 <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Bills</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>storeMode</key>
+                <label>On item completion:</label>
+                <defaultValue>BestStockpile</defaultValue>
+                <buttons>
+                    <li>
+                        <value>DropOnFloor</value>
+                        <label>Drop on floor</label>
+                        </li>
+                    <li>
+                        <value>BestStockpile</value>
+                        <label>Take to best stockpile</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Numeric">
+                <key>ingredientSearchRadius</key>
+                <label>Ingredient Search Radius</label>
+                <defaultValue>999</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
             </li>
 
 
