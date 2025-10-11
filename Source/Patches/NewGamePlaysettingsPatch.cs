@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using RimWorld;
 using HarmonyLib;
-using MadagascarVanilla.Settings;
-using Verse;
 using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
