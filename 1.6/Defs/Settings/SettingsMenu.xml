@@ -346,6 +346,22 @@
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Auto Cutting</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableAutoCut</key>
+                <label>Auto Cut by Default</label>
+                <tooltip>Enable auto cutting on wind turbines and animal pens by default (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
