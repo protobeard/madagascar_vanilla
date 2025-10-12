@@ -72,6 +72,7 @@
         <Compile Include="Patches\AutoStripPrisonersPatch.cs" />
         <Compile Include="Patches\BillProductionPatches.cs" />
         <Compile Include="Patches\DistantOdysseyQuestsPatch.cs" />
+        <Compile Include="Patches\MilkableDisplayPatch.cs" />
         <Compile Include="Patches\NewGamePlaysettingsPatch.cs" />
         <Compile Include="Patches\LongerOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\MadagascarVanillaPatcher.cs" />

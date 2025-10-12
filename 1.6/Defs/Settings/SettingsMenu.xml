@@ -380,6 +380,18 @@
             </li>
 
 
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Animals</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableCompMilkableDisplayProperItem</key>
+                <label>Display Correct Milk Type on Animal Fullness Labels</label>
+                <tooltip>Instead of labeling all resource producing animals with "Milk Fullness" show the actual resource produced (e.g., Boomalopes are now labeled with "Chemfuel Fullness") (vanilla default is false, but should honestly just be true. This is much more of a bug fix than a setting).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
