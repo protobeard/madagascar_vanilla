@@ -24,7 +24,7 @@ namespace MadagascarVanilla.Patches
 
             // If we're looking at a Wind Turbine we can force an immediate cut rather than waiting
             // for the next long tick.
-            if (enableAutoCut && __instance is CompAutoCutWindTurbine && __instance.CanDesignatePlants)
+            if (__instance.autoCut && __instance is CompAutoCutWindTurbine)
                 __instance.DesignatePlantsToCut();
         }
         
