@@ -359,6 +359,27 @@
             </li>
 
 
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Prisoners</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableAutoStrip</key>
+                <label>Auto Strip Prisoners</label>
+                <tooltip>Enable auto stripping prisoners by default (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableAutoStripArrestedColonist</key>
+                <label>Auto Strip Arrested Colonists</label>
+                <tooltip>Enable auto stripping colonists by default when arrested (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
