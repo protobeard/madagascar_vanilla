@@ -68,6 +68,7 @@
     <ItemGroup>
         <Compile Include="GeneDefOf.cs" />
         <Compile Include="MagagascarVanillaMod.cs" />
+        <Compile Include="Patches\AddTraitsToOutfitAssignmentRow.cs" />
         <Compile Include="Patches\AutoCutPatch.cs" />
         <Compile Include="Patches\AutoStripPrisonersPatch.cs" />
         <Compile Include="Patches\BillProductionPatches.cs" />

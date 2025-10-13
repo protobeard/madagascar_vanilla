@@ -8,5 +8,6 @@ namespace MadagascarVanilla
         public static TraitDef NightOwl;
         public static TraitDef QuickSleeper;
         public static TraitDef BodyMastery;
+        public static TraitDef Cannibal;
     }
 }

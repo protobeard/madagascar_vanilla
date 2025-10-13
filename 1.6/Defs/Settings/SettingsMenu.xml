@@ -396,7 +396,7 @@
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Controls</text>
+                <text>User Interface/Controls</text>
                 <anchor>Middle</anchor>
             </li>
 
@@ -404,6 +404,13 @@
                 <key>hideLearningHelperButton</key>
                 <label>Hide Learning Helper Button</label>
                 <tooltip>Hide learning helper button on the bottom right of the map.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>addTraitsToOutFitAssignmentRow</key>
+                <label>Show Traits in Outfit Assignment</label>
+                <tooltip>Show relevant traits (Nudist, Bloodlust, etc.) in the UI for pawn outfit assignment (vanilla is false). Just like how drug related traits are shown for drug policy assignments.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
