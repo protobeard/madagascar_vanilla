@@ -395,6 +395,21 @@
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Controls</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>hideLearningHelperButton</key>
+                <label>Hide Learning Helper Button</label>
+                <tooltip>Hide learning helper button on the bottom right of the map.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
