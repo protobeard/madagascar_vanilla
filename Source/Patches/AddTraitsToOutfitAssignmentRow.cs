@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using RimWorld;
 using Verse;
 using HarmonyLib;
 using UnityEngine;
 using XmlExtensions;
+using XmlExtensions.Setting;
 
 namespace MadagascarVanilla.Patches
 {
@@ -21,9 +23,32 @@ namespace MadagascarVanilla.Patches
     {
         private const string AddTraitsToOutFitAssignmentRow = "addTraitsToOutFitAssignmentRow";
         
-        public static bool Prefix(PawnColumnWorker_Outfit __instance, Rect rect, Pawn pawn, PawnTable table)
+        private static readonly List<TraitDef> OutfitRelevantTraitDefs = new List<TraitDef>
         {
-            bool startingAreasString = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AddTraitsToOutFitAssignmentRow));
+            RimWorld.TraitDefOf.Bloodlust,
+            RimWorld.TraitDefOf.Brawler,
+            TraitDefOf.Cannibal,
+            RimWorld.TraitDefOf.Nudist,
+            RimWorld.TraitDefOf.Psychopath,
+        };
+        
+        // Check the pawn for traits that impact what types of apparel they are happy to wear,
+        // then display them on the Assignment menu.
+        public static bool Prefix(PawnColumnWorker_Outfit __instance, Rect rect, Pawn pawn)
+        {
+            // Let the original method run if setting is false
+            bool addTraitsToOutFitAssignmentRow = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AddTraitsToOutFitAssignmentRow));
+            if (!addTraitsToOutFitAssignmentRow)
+                return true;
+            
+            // Let the original method run if we can't find the private menuGenerator method.
+            MethodInfo buttonGenerateMenuMethodInfo = AccessTools.Method(typeof(PawnColumnWorker_Outfit),"Button_GenerateMenu", new Type[] { typeof(Pawn) });
+            if (buttonGenerateMenuMethodInfo == null)
+            {
+                Log.Error("PawnColumnWorker_Outfit.Prefix: Couldn't find Button_GenerateMenu method. Skipping patch.");
+                return true;
+            }
+            
             if (pawn.outfits == null)
             {
                 return false;
@@ -45,45 +70,23 @@ namespace MadagascarVanilla.Patches
             }
             else
             {
-                // FIXME: think about TraitDefOf stuff -- maybe they should all be
-                // defined in the Rimworld namepsace?
-                // Actual Patch: Nudist, Bloodlust, Cannibal, Psychopath, Brawler
-                List<RimWorld.TraitDef> outfitRelevantTraits = new List<RimWorld.TraitDef>
-                {
-                    RimWorld.TraitDefOf.Nudist,
-                    RimWorld.TraitDefOf.Bloodlust,
-                    TraitDefOf.Cannibal,
-                    RimWorld.TraitDefOf.Psychopath,
-                    RimWorld.TraitDefOf.Brawler,
-                };
-                
-                // TODO: clean this up, can't possibly need to iterate over the list twice like this.
+                // Actual Patch (minus the checks at the top and return changes)
                 string text = pawn.outfits.CurrentApparelPolicy.label;
                 if (pawn.story?.traits != null)
                 {
-                    List<RimWorld.Trait> pawnMatchingTraits = new List<RimWorld.Trait>();
-                    foreach (TraitDef traitDef in outfitRelevantTraits)
-                    {
-                        Trait trait = pawn.story.traits.GetTrait(traitDef);
-                        if (trait != null)
-                            pawnMatchingTraits.Add(trait);
-                    }
+                    var pawnMatchingTraitLabels = OutfitRelevantTraitDefs.Where(traitDef => pawn.story.traits.HasTrait(traitDef)).Select(traitDef => pawn.story.traits.GetTrait(traitDef).Label);
 
-                    if (pawnMatchingTraits.Any())
-                    {
-                        Trait last = pawnMatchingTraits.Last();
-                        text = text + " (";
-                        foreach (Trait trait in pawnMatchingTraits)
-                        {
-                            if (trait != last)
-                                text += trait.Label + ", ";
-                            else
-                                text += trait.Label + ")";
-                        }
-                    }
+                    if (pawnMatchingTraitLabels.Any())
+                        text += " (" + String.Join(", ", pawnMatchingTraitLabels) + ")";
                 }
 
-                Widgets.Dropdown(left, pawn, (Pawn p) => p.outfits.CurrentApparelPolicy, Button_GenerateMenu, text.Truncate(left.width), null, pawn.outfits.CurrentApparelPolicy.label, null, null, paintable: true);
+                // Create a Func from the methodInfo of Button_GenerateMenu that we grabbed above, bound to the instance of PawnColumnWorker_Outfit.
+                Func<Pawn, IEnumerable<Widgets.DropdownMenuElement<ApparelPolicy>>> buttonGenerateMenuMethod = 
+                    (Func<Pawn, IEnumerable<Widgets.DropdownMenuElement<ApparelPolicy>>>) Delegate.CreateDelegate(typeof(Func<Pawn, IEnumerable<Widgets.DropdownMenuElement<ApparelPolicy>>>),
+                        __instance,
+                        buttonGenerateMenuMethodInfo);
+                
+                Widgets.Dropdown(left, pawn, (Pawn p) => p.outfits.CurrentApparelPolicy, buttonGenerateMenuMethod, text.Truncate(left.width), null, pawn.outfits.CurrentApparelPolicy.label, null, null, paintable: true);
             }
             if (!somethingIsForced)
             {
@@ -108,28 +111,6 @@ namespace MadagascarVanilla.Patches
             }, pawn.GetHashCode() * 612));
 
             return false;
-        }
-        
-        private static IEnumerable<Widgets.DropdownMenuElement<ApparelPolicy>> Button_GenerateMenu(Pawn pawn)
-        {
-            foreach (ApparelPolicy outfit in Current.Game.outfitDatabase.AllOutfits)
-            {
-                yield return new Widgets.DropdownMenuElement<ApparelPolicy>
-                {
-                    option = new FloatMenuOption(outfit.label, delegate
-                    {
-                        pawn.outfits.CurrentApparelPolicy = outfit;
-                    }),
-                    payload = outfit
-                };
-            }
-            yield return new Widgets.DropdownMenuElement<ApparelPolicy>
-            {
-                option = new FloatMenuOption(string.Format("{0}...", "AssignTabEdit".Translate()), delegate
-                {
-                    Find.WindowStack.Add(new Dialog_ManageApparelPolicies(pawn.outfits.CurrentApparelPolicy));
-                })
-            };
         }
     }
 }
