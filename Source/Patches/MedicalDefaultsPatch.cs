@@ -27,7 +27,7 @@ namespace MadagascarVanilla.Patches
         // method and not overriden in Dialog_MedicalDefaults Harmony won't patch it directly
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Window))]
-        [HarmonyPatch("PostClose")]
+        [HarmonyPatch(nameof(Window.PostClose))]
         public static void DialogMedicalDefaultsPostClosePatchPostfix(Window __instance)
         {
             if (!(__instance is Dialog_MedicalDefaults))

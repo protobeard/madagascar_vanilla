@@ -414,6 +414,13 @@
                 <defaultValue>false</defaultValue>
             </li>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistApparelPolicies</key>
+                <label>Outfit Policies Persist Across Games</label>
+                <tooltip>Outfit policies persist across new games -- make your desired set of outfits once and keep them forever.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>

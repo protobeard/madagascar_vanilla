@@ -12,6 +12,7 @@
         <AssemblyName>madagascar_vanilla</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -66,8 +67,9 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="ExposableList.cs" />
         <Compile Include="GeneDefOf.cs" />
-        <Compile Include="MagagascarVanillaMod.cs" />
+        <Compile Include="MadagascarVanillaMod.cs" />
         <Compile Include="Patches\AddTraitsToOutfitAssignmentRow.cs" />
         <Compile Include="Patches\AutoCutPatch.cs" />
         <Compile Include="Patches\AutoStripPrisonersPatch.cs" />
@@ -81,6 +83,7 @@
         <Compile Include="Patches\MechRepairableOn.cs" />
         <Compile Include="Patches\MedicalDefaultsPatch.cs" />
         <Compile Include="Patches\MoreGravshipSubquests.cs" />
+        <Compile Include="Patches\PersistPolicies.cs" />
         <Compile Include="Patches\QuestRewardsPatch.cs" />
         <Compile Include="Patches\SchedulePatch.cs" />
         <Compile Include="Patches\StandYourGroundPatch.cs" />
