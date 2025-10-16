@@ -24,13 +24,22 @@ namespace MadagascarVanilla.Patches
         // is computing delayTicks:
         //      int delayTicks = QuestNode_Root_Asteroid.TimeoutDays.RandomInRange * GenDate.TicksPerDay;
         // We can premultiply in our extension and replace GenDate.TicksPerDay in the computation. Nice small patch.
+        //
+        // Looking for line:
+        // IL_00be: ldsfld       valuetype Verse.IntRange RimWorld.QuestGen.QuestNode_Root_Asteroid::TimeoutDays
+        // IL_00c3: stloc.s      V_7
+        // IL_00c5: ldloca.s     V_7
+        // IL_00c7: call         instance int32 Verse.IntRange::get_RandomInRange()
+        // IL_00cc: ldc.i4       60000 // 0x0000ea60
+        // IL_00d1: mul
+        // IL_00d2: stloc.s      delayTicks
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
         {
             int questExtensionMultiplier = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestExtensionMultipler));
             int ticksPerDayExtension = GenDate.TicksPerDay * questExtensionMultiplier;
             
             List<CodeInstruction> newLines = lines.ToList();
-            int referenceLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.opcode == OpCodes.Ldc_I4 && (int) instruction.operand == 60000);
+            int referenceLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.opcode == OpCodes.Ldc_I4 && (int) instruction.operand == GenDate.TicksPerDay);
 
             if (referenceLineNumber != -1)
             {
