@@ -28,8 +28,6 @@ namespace MadagascarVanilla
         // FIXME: pull all XML Extensions setting keys in here? Rename them all to include setting? or key?
         public const string VerboseSetting = "verboseMode";
         
-        public override string SettingsCategory() => "Madagascar Vanilla";
-        
         // We're using "settings" to mean things that we want to save to disk. For more traditional
         // settings we're using the XML Extensions mod's settings features.
         private static MadagascarVanillaPersistables _persistables;
