@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MadagascarVanilla.Patches;
+using RimWorld;
 using Verse;
 using UnityEngine;
 
@@ -16,24 +17,32 @@ namespace MadagascarVanilla
         
         // We're using "settings" to mean things that we want to save to disk. For more traditional
         // settings we're using the XML Extensions mod's settings features.
-        public static MadagascarVanillaPersistables Persistables;
+        private static MadagascarVanillaPersistables _persistables;
         public static MadagascarVanillaMod Instance;
         
-        //public static MadagascarVanillaSettings Persistables => persistables ??= Instance.GetSettings<MadagascarVanillaSettings>();
+        // If we instantiate persistables in the constructor, it's too soon in the RimWorld load process
+        // for all the various refs to exist, and so we end up with empty Apparel Policies etc.
+        // Instead, lazy load it.
+        public static MadagascarVanillaPersistables Persistables => _persistables ??= Instance.GetSettings<MadagascarVanillaPersistables>();
         
         public MadagascarVanillaMod(ModContentPack content) : base(content) {
             Instance = this;
-            Persistables = GetSettings<MadagascarVanillaPersistables>();
         }
     }
     public class MadagascarVanillaPersistables : ModSettings
     {
-        public Dictionary<ExportType, ExposableList<ExposableList<IExposable>>> PolicyDictionary = new Dictionary<ExportType, ExposableList<ExposableList<IExposable>>>();
+        public List<ApparelPolicy> ApparelPolicies = new List<ApparelPolicy>();
+        public List<DrugPolicy> DrugPolicies = new List<DrugPolicy>();
+        public List<FoodPolicy> FoodPolicies = new List<FoodPolicy>();
+        public List<ReadingPolicy> ReadingPolicies = new List<ReadingPolicy>();
         
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(dict: ref PolicyDictionary, label: "persistablePolicies", valueLookMode: LookMode.Deep);
+            Scribe_Collections.Look(ref ApparelPolicies, "apparelPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref DrugPolicies, "drugPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref FoodPolicies, "foodPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref ReadingPolicies, "readingPolicies", LookMode.Deep);
         }
     }
 

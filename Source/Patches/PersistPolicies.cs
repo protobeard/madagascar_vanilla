@@ -9,14 +9,6 @@ using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
-    // FIXME: give this a better name, maybe just PolicyType?
-    public enum ExportType : byte
-    {
-        ApparelPolicy,
-        DrugPolicy,
-        FoodPolicy,
-        ReadingPolicy,
-    }
     
     [HarmonyPatch]
     public static class PersistPolicies
@@ -64,61 +56,143 @@ namespace MadagascarVanilla.Patches
             if (!persistApparelPolicies)
                 return;
             
-            // Overwrite whatever we have in our persistables with the current outfit database
-            if (MadagascarVanillaMod.Persistables.PolicyDictionary.TryGetValue(ExportType.ApparelPolicy, out ExposableList<ExposableList<IExposable>> apparelPolicy))
-                apparelPolicy.Clear();
-
-            foreach (ApparelPolicy outfit in Current.Game.outfitDatabase.AllOutfits) 
-                PersistPolicy(ExportType.ApparelPolicy, new IExposable[] { outfit.filter }, outfit.label);
+            Log.Message("Save Apparel Polices into Persistables");   
+            
+            // FIXME: move this null check into the Policy getter.
+            MadagascarVanillaMod.Persistables.ApparelPolicies ??= new List<ApparelPolicy>();
+            MadagascarVanillaMod.Persistables.ApparelPolicies.Clear();
+            
+            foreach (ApparelPolicy apparelPolicy in Current.Game.outfitDatabase.AllOutfits)
+                MadagascarVanillaMod.Persistables.ApparelPolicies.Add(apparelPolicy);
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         private static void DialogDrugPolicyPostfix(Window __instance)
         {
-            return;
+            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPolicies));
+            if (!persistDrugPolicies)
+                return;
+            
+            Log.Message("Save Drug Polices into Persistables");
+            
+            // FIXME: move this null check into the Policy getter.
+            MadagascarVanillaMod.Persistables.DrugPolicies ??= new List<DrugPolicy>();
+            MadagascarVanillaMod.Persistables.DrugPolicies.Clear();
+            
+            foreach (DrugPolicy drugPolicy in Current.Game.drugPolicyDatabase.AllPolicies)
+                MadagascarVanillaMod.Persistables.DrugPolicies.Add(drugPolicy);
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         private static void DialogFoodPolicyPostfix(Window __instance)
         {
-            return;
+            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPolicies));
+            if (!persistFoodPolicies)
+                return;
+            
+            Log.Message("Save Food Policies into Persistables");
+            
+            // FIXME: move this null check into the Policy getter.
+            MadagascarVanillaMod.Persistables.FoodPolicies ??= new List<FoodPolicy>();
+            MadagascarVanillaMod.Persistables.FoodPolicies.Clear();
+
+            foreach (FoodPolicy foodPolicy in Current.Game.foodRestrictionDatabase.AllFoodRestrictions)
+                MadagascarVanillaMod.Persistables.FoodPolicies.Add(foodPolicy);
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         private static void DialogReadingPolicyPostfix(Window __instance)
         {
-            return;
+            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPolicies));
+            if (!persistReadingPolicies)
+                return;
+            
+            Log.Message("Save Reading Policies into Persistables");
+            
+            // FIXME: move this null check into the Policy getter.
+            MadagascarVanillaMod.Persistables.ReadingPolicies ??= new List<ReadingPolicy>();
+            MadagascarVanillaMod.Persistables.ReadingPolicies.Clear();
+
+            foreach (ReadingPolicy readingPolicy in Current.Game.readingPolicyDatabase.AllReadingPolicies)
+                MadagascarVanillaMod.Persistables.ReadingPolicies.Add(readingPolicy);
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
-        
+        // Note: first outfit in the OutfitDatabase list is the default, so I shouldn't need to do anything
+        // special to preserve that.
         [HarmonyPatch(typeof(OutfitDatabase))]
         [HarmonyPatch(MethodType.Constructor)]
         public static void Postfix(OutfitDatabase __instance)
         {
-            // Bail if persisting apparel policies is disabled, or there are no policies to persist
+            // Bail if persisting apparel policies is disabled, or there are no policies to load
             bool persistApparelPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistApparelPolicies));
-            if (!persistApparelPolicies || !MadagascarVanillaMod.Persistables.PolicyDictionary.ContainsKey(ExportType.ApparelPolicy)) 
+            if (!persistApparelPolicies || MadagascarVanillaMod.Persistables.ApparelPolicies == null || !MadagascarVanillaMod.Persistables.ApparelPolicies.Any()) 
                 return;
             
+            Log.Message("Loading Apparel Policies into Database");
+            
             __instance.AllOutfits.Clear();
-            foreach (ExposableList<IExposable> li in MadagascarVanillaMod.Persistables.PolicyDictionary[ExportType.ApparelPolicy])
-            {
-                ApparelPolicy outfit = __instance.MakeNewOutfit();
-                outfit.filter = (ThingFilter) li.First().exposable;
-                outfit.label  = li.Name;
-            }
+            foreach (ApparelPolicy apparelPolicy in MadagascarVanillaMod.Persistables.ApparelPolicies)
+                __instance.AllOutfits.Add(apparelPolicy);
         }
         
-        private static void PersistPolicy(ExportType key, IEnumerable<IExposable> list, string name)
+        // FIXME: "Just Say No" feature is handled here too, since the default gets saved. Remove that patch.
+        // Note: first policy in the DrugDatabase list is the default, so I shouldn't need to do anything
+        // special to preserve that.
+        [HarmonyPatch(typeof(DrugPolicyDatabase))]
+        [HarmonyPatch(MethodType.Constructor)]
+        public static void Postfix(DrugPolicyDatabase __instance)
         {
-            IEnumerable<IExposable> exposables = list as IExposable[] ?? list.ToArray();
-            if (!exposables.Any()) 
+            // Bail if persisting drug policies is disabled, or there are no policies to load
+            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPolicies));
+            if (!persistDrugPolicies || MadagascarVanillaMod.Persistables.DrugPolicies == null || !MadagascarVanillaMod.Persistables.DrugPolicies.Any()) 
                 return;
+            
+            Log.Message("Loading Drug Policies into Database");
 
-            if (!MadagascarVanillaMod.Persistables.PolicyDictionary.ContainsKey(key))
-                MadagascarVanillaMod.Persistables.PolicyDictionary.Add(key, new ExposableList<ExposableList<IExposable>>());
-
-            MadagascarVanillaMod.Persistables.PolicyDictionary[key].Add(item: new ExposableList<IExposable>(exposables) { Name = name });
-            MadagascarVanillaMod.Instance.WriteSettings();
+            __instance.AllPolicies.Clear();
+            foreach (DrugPolicy drugPolicy in MadagascarVanillaMod.Persistables.DrugPolicies)
+                __instance.AllPolicies.Add(drugPolicy);
         }
         
+        // Note: first policy in the FoodRestrictionDatabase list is the default, so I shouldn't need to do anything
+        // special to preserve that.
+        [HarmonyPatch(typeof(FoodRestrictionDatabase))]
+        [HarmonyPatch(MethodType.Constructor)]
+        public static void Postfix(FoodRestrictionDatabase __instance)
+        {
+            // Bail if persisting food policies is disabled, or there are no policies to load
+            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPolicies));
+            if (!persistFoodPolicies || MadagascarVanillaMod.Persistables.FoodPolicies == null || !MadagascarVanillaMod.Persistables.FoodPolicies.Any()) 
+                return;
+            
+            Log.Message("Loading Food Policies into Database");
+            
+            __instance.AllFoodRestrictions.Clear();
+            foreach (FoodPolicy foodPolicy in MadagascarVanillaMod.Persistables.FoodPolicies)
+                __instance.AllFoodRestrictions.Add(foodPolicy);
+        }
+        
+        // Note: first policy in the ReadingPolicyDatabase list is the default, so I shouldn't need to do anything
+        // special to preserve that.
+        [HarmonyPatch(typeof(ReadingPolicyDatabase))]
+        [HarmonyPatch(MethodType.Constructor)]
+        public static void Postfix(ReadingPolicyDatabase __instance)
+        {
+            // Bail if persisting reading policies is disabled, or there are no policies to load
+            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPolicies));
+            if (!persistReadingPolicies || MadagascarVanillaMod.Persistables.ReadingPolicies == null || !MadagascarVanillaMod.Persistables.ReadingPolicies.Any()) 
+                return;
+            
+            Log.Message("Loading Reading Policies into Database");
+            
+            __instance.AllReadingPolicies.Clear();
+            foreach (ReadingPolicy readingPolicy in MadagascarVanillaMod.Persistables.ReadingPolicies)
+                __instance.AllReadingPolicies.Add(readingPolicy);
+        }
     }
-    
 }

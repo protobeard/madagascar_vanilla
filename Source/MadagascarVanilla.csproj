@@ -67,7 +67,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ExposableList.cs" />
         <Compile Include="GeneDefOf.cs" />
         <Compile Include="MadagascarVanillaMod.cs" />
         <Compile Include="Patches\AddTraitsToOutfitAssignmentRow.cs" />

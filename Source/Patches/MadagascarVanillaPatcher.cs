@@ -14,7 +14,7 @@ namespace MadagascarVanilla.Patches
             harmony.PatchAll();
             Log.Message("Initializing Madagascar Vanilla");
             
-            // FIXME: why do we need to do this? If I don't, the Persistables dictionary is always null
+            // Force RimWorld to load in our Persistables
             MadagascarVanillaMod.Persistables.GetHashCode();
         }
     }
