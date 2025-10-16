@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using XmlExtensions;
 
 namespace MadagascarVanilla
 {
@@ -26,7 +28,7 @@ namespace MadagascarVanilla
         public const string ModId = "com.protobeard.madagascarvanilla";
         
         // FIXME: pull all XML Extensions setting keys in here? Rename them all to include setting? or key?
-        public const string VerboseSetting = "verboseMode";
+        public const string VerboseSettingKey = "verboseMode";
         
         // We're using "settings" to mean things that we want to save to disk. For more traditional
         // settings we're using the XML Extensions mod's settings features.
@@ -40,6 +42,11 @@ namespace MadagascarVanilla
         
         public MadagascarVanillaMod(ModContentPack content) : base(content) {
             Instance = this;
+        }
+
+        public static bool Verbose()
+        {
+            return bool.Parse(SettingsManager.GetSetting(ModId, VerboseSettingKey));
         }
     }
     public class MadagascarVanillaPersistables : ModSettings

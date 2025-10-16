@@ -23,8 +23,6 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Window.PostClose))]
         public static void Postfix(Window __instance)
         {
-            Log.Message("Window.PostClose");
-            
             switch (__instance)
             {
                 // TODO: Might as well have the medical defaults covered here too. They aren't a "policy" but
@@ -45,7 +43,8 @@ namespace MadagascarVanilla.Patches
                     DialogReadingPolicyPostfix(dialogManagePolicies);
                     break;
                 default:
-                    Log.Message("Not a policy dialog window.");
+                    if (MadagascarVanillaMod.Verbose())
+                        Log.Message("Not a policy dialog window.");
                     return;
             }
         }
@@ -56,7 +55,8 @@ namespace MadagascarVanilla.Patches
             if (!persistApparelPolicies)
                 return;
             
-            Log.Message("Save Apparel Polices into Persistables");   
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Save Apparel Polices into Persistables");   
             
             // FIXME: move this null check into the Policy getter.
             MadagascarVanillaMod.Persistables.ApparelPolicies ??= new List<ApparelPolicy>();
@@ -74,7 +74,8 @@ namespace MadagascarVanilla.Patches
             if (!persistDrugPolicies)
                 return;
             
-            Log.Message("Save Drug Polices into Persistables");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Save Drug Polices into Persistables");
             
             // FIXME: move this null check into the Policy getter.
             MadagascarVanillaMod.Persistables.DrugPolicies ??= new List<DrugPolicy>();
@@ -92,7 +93,8 @@ namespace MadagascarVanilla.Patches
             if (!persistFoodPolicies)
                 return;
             
-            Log.Message("Save Food Policies into Persistables");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Save Food Policies into Persistables");
             
             // FIXME: move this null check into the Policy getter.
             MadagascarVanillaMod.Persistables.FoodPolicies ??= new List<FoodPolicy>();
@@ -110,7 +112,8 @@ namespace MadagascarVanilla.Patches
             if (!persistReadingPolicies)
                 return;
             
-            Log.Message("Save Reading Policies into Persistables");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Save Reading Policies into Persistables");
             
             // FIXME: move this null check into the Policy getter.
             MadagascarVanillaMod.Persistables.ReadingPolicies ??= new List<ReadingPolicy>();
@@ -133,7 +136,8 @@ namespace MadagascarVanilla.Patches
             if (!persistApparelPolicies || MadagascarVanillaMod.Persistables.ApparelPolicies == null || !MadagascarVanillaMod.Persistables.ApparelPolicies.Any()) 
                 return;
             
-            Log.Message("Loading Apparel Policies into Database");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Loading Apparel Policies into Database");
             
             __instance.AllOutfits.Clear();
             foreach (ApparelPolicy apparelPolicy in MadagascarVanillaMod.Persistables.ApparelPolicies)
@@ -152,7 +156,8 @@ namespace MadagascarVanilla.Patches
             if (!persistDrugPolicies || MadagascarVanillaMod.Persistables.DrugPolicies == null || !MadagascarVanillaMod.Persistables.DrugPolicies.Any()) 
                 return;
             
-            Log.Message("Loading Drug Policies into Database");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Loading Drug Policies into Database");
 
             __instance.AllPolicies.Clear();
             foreach (DrugPolicy drugPolicy in MadagascarVanillaMod.Persistables.DrugPolicies)
@@ -170,7 +175,8 @@ namespace MadagascarVanilla.Patches
             if (!persistFoodPolicies || MadagascarVanillaMod.Persistables.FoodPolicies == null || !MadagascarVanillaMod.Persistables.FoodPolicies.Any()) 
                 return;
             
-            Log.Message("Loading Food Policies into Database");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Loading Food Policies into Database");
             
             __instance.AllFoodRestrictions.Clear();
             foreach (FoodPolicy foodPolicy in MadagascarVanillaMod.Persistables.FoodPolicies)
@@ -188,7 +194,8 @@ namespace MadagascarVanilla.Patches
             if (!persistReadingPolicies || MadagascarVanillaMod.Persistables.ReadingPolicies == null || !MadagascarVanillaMod.Persistables.ReadingPolicies.Any()) 
                 return;
             
-            Log.Message("Loading Reading Policies into Database");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message("Loading Reading Policies into Database");
             
             __instance.AllReadingPolicies.Clear();
             foreach (ReadingPolicy readingPolicy in MadagascarVanillaMod.Persistables.ReadingPolicies)

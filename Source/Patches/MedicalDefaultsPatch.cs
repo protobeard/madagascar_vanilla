@@ -83,11 +83,10 @@ namespace MadagascarVanilla.Patches
         private static void LoadMedicalSettingsIntoPlaySettings(PlaySettings playSettings)
         {
             Traverse traverse = Traverse.Create(playSettings);
-            bool verbose = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MadagascarVanillaMod.VerboseSetting));
             
             foreach (var (medicalDefaultKey, medicalDefaultField) in MedicalDefaults.MedicalDefaultsDict)
             {
-                if (verbose)
+                if (MadagascarVanillaMod.Verbose())
                 {
                     Log.Message($"medical default key: {medicalDefaultKey}");
                     Log.Message($"medicalDefaultField: {medicalDefaultField}");
@@ -97,7 +96,7 @@ namespace MadagascarVanilla.Patches
                 if (!medicalCategorySettingExists)
                     continue;
 
-                if (verbose)
+                if (MadagascarVanillaMod.Verbose())
                     Log.Message($"medicalCareCategoryName: {medicalCareCategoryName}\n\n");
                 
                 if (medicalCareCategoryName != null)
@@ -105,14 +104,14 @@ namespace MadagascarVanilla.Patches
                     bool parsed = Enum.TryParse(medicalCareCategoryName, false, out MedicalCareCategory medicalCareCategory);
                     if (!parsed)
                     {
-                        Log.Error("Unknown medical category: " + medicalCareCategoryName);
+                        Log.Error($"Unknown medical category: {medicalCareCategoryName}");
                         continue;
                     }
                     
                     traverse.Field(medicalDefaultField).SetValue(medicalCareCategory);
                     
-                    if (verbose)
-                        Log.Message("medicalCareCategory for " + medicalDefaultField + ": " + medicalCareCategory);
+                    if (MadagascarVanillaMod.Verbose())
+                        Log.Message($"medicalCareCategory for {medicalDefaultField}: {medicalCareCategory}");
                 }
             }
         }

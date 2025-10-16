@@ -48,17 +48,9 @@ namespace MadagascarVanilla.Patches
         // ensuring that all pawns recreate at the same time.
         public static void Postfix(ref Pawn pawn)
         {
-            if (pawn == null)
-            {
-                //Log.Message("pawn is null");
+            // Bail if pawn does not exist or doesn't have a story yet (won't have traits).
+            if (pawn?.story == null)
                 return;
-            }
-
-            if (pawn.story == null)
-            {
-                //Log.Message("pawn story is null. don't try to modify schedule");
-                return;
-            }
             
             bool initialSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSchedule));
             bool initialNightOwlSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNightOwlSchedule));
@@ -76,31 +68,26 @@ namespace MadagascarVanilla.Patches
 
             if (cache.HaveSetSchedules.Contains(pawn))
             {
-                //Log.Message("Pawn is in the cache: " + pawn.Name);
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Pawn {pawn.Name} is in the cache. Skipping.");
                 return;
             }
-                
             
             if (faction == null || !faction.IsPlayer)
                 return;
-
-            //Log.Message("we're in the players faction");
             
             if (def == null || (def.race != null && !def.race.Humanlike))
                 return;
-
-            //Log.Message("we're Humanlike");
             
             if (pawn.timetable == null)
                 return;
-            
-            //Log.Message("we have a timetable");
-            
-            //Log.Message("pawn named: " + pawn.Name);
-            
-            // Log.Message("pawn has traits: ");
-            // foreach(Trait trait in pawn.story.traits.allTraits)
-            //     Log.Message("trait: " + trait);
+
+            if (MadagascarVanillaMod.Verbose())
+            {
+                Log.Message($"Setting schedule for {pawn.Name}");
+                foreach(Trait trait in pawn.story.traits.allTraits) 
+                    Log.Message("trait: " + trait);
+            }
             
             if ((initialBodyMasterySchedule && pawn.story.traits.HasTrait(TraitDefOf.BodyMastery)) || 
                 (initialSleepyGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
@@ -141,8 +128,6 @@ namespace MadagascarVanilla.Patches
         //    this.times.Add(index <= 5 || index > 21 ? TimeAssignmentDefOf.Sleep : TimeAssignmentDefOf.Anything);
         private static void SetSchedule(Pawn pawn, ScheduleType type = ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
         {
-            //Log.Message("Setting schedule to : " + type);
-            
             bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
             int quickSleeperOffset;
             

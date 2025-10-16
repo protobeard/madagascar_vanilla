@@ -35,7 +35,6 @@ namespace MadagascarVanilla.Patches
             float min = float.Parse(rangeBoundaries[0]);
             float max = float.Parse(rangeBoundaries[1]);
             
-            
             // Looking for:
             //
             // FastTileFinder.TileQueryParams query = new FastTileFinder.TileQueryParams(origin, QuestNode_Root_Asteroid.MinDistanceFromColony, QuestNode_Root_Asteroid.MaxDistanceFromColony);
@@ -57,7 +56,7 @@ namespace MadagascarVanilla.Patches
             }
             else
             {
-                Log.Error("Madagascar Vanilla: Failed to apply odyssey quest extension transpile, returning base");
+                Log.Error("Madagascar Vanilla: Failed to apply odyssey quest range extension transpile, returning base");
             }
             return lines;
         }

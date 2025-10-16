@@ -48,7 +48,7 @@ namespace MadagascarVanilla.Patches
             }
             else
             {
-                Log.Error("Madagascar Vanilla: Failed to apply odyssey quest extension transpile, returning base");
+                Log.Error("Madagascar Vanilla: Failed to apply odyssey quest time extension transpile, returning base");
             }
             return lines;
         }
