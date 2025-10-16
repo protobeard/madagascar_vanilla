@@ -1,11 +1,26 @@
 using System.Collections.Generic;
-using MadagascarVanilla.Patches;
+using HarmonyLib;
 using RimWorld;
 using Verse;
-using UnityEngine;
 
 namespace MadagascarVanilla
 {
+    
+    [StaticConstructorOnStartup]
+    public static class MadagascarVanillaPatches
+    {
+        static MadagascarVanillaPatches()
+        {
+            Harmony harmony = new Harmony(MadagascarVanillaMod.ModId);
+            Harmony.DEBUG = false;
+            harmony.PatchAll();
+            Log.Message("Initializing Madagascar Vanilla");
+            
+            // Force RimWorld to load in our Persistables
+            MadagascarVanillaMod.Persistables.GetHashCode();
+        }
+    }
+    
     public class MadagascarVanillaMod : Mod
     {
         public const string ModId = "com.protobeard.madagascarvanilla";
