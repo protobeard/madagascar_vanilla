@@ -51,18 +51,23 @@ namespace MadagascarVanilla
     }
     public class MadagascarVanillaPersistables : ModSettings
     {
-        public List<ApparelPolicy> ApparelPolicies = new List<ApparelPolicy>();
-        public List<DrugPolicy> DrugPolicies = new List<DrugPolicy>();
-        public List<FoodPolicy> FoodPolicies = new List<FoodPolicy>();
-        public List<ReadingPolicy> ReadingPolicies = new List<ReadingPolicy>();
+        private List<ApparelPolicy> _apparelPolicies;
+        private List<DrugPolicy> _drugPolicies;
+        private List<FoodPolicy> _foodPolicies;
+        private List<ReadingPolicy> _readingPolicies;
+        
+        public List<ApparelPolicy> ApparelPolicies => _apparelPolicies ??= new List<ApparelPolicy>();
+        public List<DrugPolicy> DrugPolicies => _drugPolicies ??= new List<DrugPolicy>();
+        public List<FoodPolicy> FoodPolicies => _foodPolicies ??= new List<FoodPolicy>();
+        public List<ReadingPolicy> ReadingPolicies => _readingPolicies ??= new List<ReadingPolicy>();
         
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Collections.Look(ref ApparelPolicies, "apparelPolicies", LookMode.Deep);
-            Scribe_Collections.Look(ref DrugPolicies, "drugPolicies", LookMode.Deep);
-            Scribe_Collections.Look(ref FoodPolicies, "foodPolicies", LookMode.Deep);
-            Scribe_Collections.Look(ref ReadingPolicies, "readingPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref _apparelPolicies, "apparelPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref _drugPolicies, "drugPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref _foodPolicies, "foodPolicies", LookMode.Deep);
+            Scribe_Collections.Look(ref _readingPolicies, "readingPolicies", LookMode.Deep);
         }
     }
 

@@ -58,8 +58,6 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Save Apparel Polices into Persistables");   
             
-            // FIXME: move this null check into the Policy getter.
-            MadagascarVanillaMod.Persistables.ApparelPolicies ??= new List<ApparelPolicy>();
             MadagascarVanillaMod.Persistables.ApparelPolicies.Clear();
             
             foreach (ApparelPolicy apparelPolicy in Current.Game.outfitDatabase.AllOutfits)
@@ -77,8 +75,6 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Save Drug Polices into Persistables");
             
-            // FIXME: move this null check into the Policy getter.
-            MadagascarVanillaMod.Persistables.DrugPolicies ??= new List<DrugPolicy>();
             MadagascarVanillaMod.Persistables.DrugPolicies.Clear();
             
             foreach (DrugPolicy drugPolicy in Current.Game.drugPolicyDatabase.AllPolicies)
@@ -96,8 +92,6 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Save Food Policies into Persistables");
             
-            // FIXME: move this null check into the Policy getter.
-            MadagascarVanillaMod.Persistables.FoodPolicies ??= new List<FoodPolicy>();
             MadagascarVanillaMod.Persistables.FoodPolicies.Clear();
 
             foreach (FoodPolicy foodPolicy in Current.Game.foodRestrictionDatabase.AllFoodRestrictions)
@@ -115,8 +109,6 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Save Reading Policies into Persistables");
             
-            // FIXME: move this null check into the Policy getter.
-            MadagascarVanillaMod.Persistables.ReadingPolicies ??= new List<ReadingPolicy>();
             MadagascarVanillaMod.Persistables.ReadingPolicies.Clear();
 
             foreach (ReadingPolicy readingPolicy in Current.Game.readingPolicyDatabase.AllReadingPolicies)
