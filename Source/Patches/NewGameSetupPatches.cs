@@ -7,18 +7,15 @@ using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
-    public enum CommitmentModeType
-    {
-        Commitment,
-        ReloadAnytime
-    }
     
     [HarmonyPatch]
     public static class NewGameSetupPatches
     {
-        private const string CommitmentMode = "commitmentMode";
-        private const string SelectedStoryteller = "selectedStoryteller";
-        private const string SelectedDifficulty = "selectedDifficulty";
+        private const string CommitmentModeKey = "commitmentMode";
+        private const string SelectedStorytellerKey = "selectedStoryteller";
+        private const string SelectedDifficultyKey = "selectedDifficulty";
+        
+        private const string CommitmentMode = "CommitmentMode";
         
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
@@ -27,7 +24,7 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Page_SelectStoryteller patch");
             
-            bool selectedStorytellerSettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, SelectedStoryteller, out string selectedStorytellerName);
+            bool selectedStorytellerSettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, SelectedStorytellerKey, out string selectedStorytellerName);
             if (selectedStorytellerSettingExists)
             {
                 StorytellerDef storytellerDef = DefDatabase<StorytellerDef>.GetNamed(selectedStorytellerName);
@@ -43,7 +40,7 @@ namespace MadagascarVanilla.Patches
                 }
             }
             
-            bool selectedDifficultySettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, SelectedDifficulty, out string selectedDifficultyName);
+            bool selectedDifficultySettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, SelectedDifficultyKey, out string selectedDifficultyName);
             if (selectedDifficultySettingExists)
             {
                 DifficultyDef difficultyDef = DefDatabase<DifficultyDef>.GetNamed(selectedDifficultyName);
@@ -60,13 +57,13 @@ namespace MadagascarVanilla.Patches
                 }
             }
             
-            bool commitmentModeSettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, CommitmentMode, out string commitmentModeName);
-            if (commitmentModeSettingExists && Enum.TryParse(commitmentModeName, false, out CommitmentModeType commitmentMode))
+            bool commitmentModeSettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, CommitmentModeKey, out string commitmentModeName);
+            if (commitmentModeSettingExists)
             {
                 if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"GameInitData set commitment mode to: {CommitmentModeType.Commitment == commitmentMode}");
+                    Log.Message($"GameInitData set commitment mode to: {commitmentModeName == CommitmentMode}");
                 
-                Find.GameInitData.permadeath  = CommitmentModeType.Commitment == commitmentMode;
+                Find.GameInitData.permadeath = commitmentModeName == CommitmentMode;
                 Find.GameInitData.permadeathChosen = true;
             }
         }
