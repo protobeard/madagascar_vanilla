@@ -51,6 +51,17 @@ namespace MadagascarVanilla
     }
     public class MadagascarVanillaPersistables : ModSettings
     {
+        // New Game Setup
+        private StorytellerDef _storyteller;
+        private DifficultyDef _difficultyDef;
+        private Difficulty _difficulty;
+        
+        public StorytellerDef StorytellerDef { get => _storyteller; set => _storyteller = value; }
+        public DifficultyDef DifficultyDef { get => _difficultyDef; set => _difficultyDef = value; }
+        public Difficulty Difficulty { get => _difficulty ??= new Difficulty(); set => _difficulty = value; }
+        public bool Permadeath;
+
+        // Policies
         private List<ApparelPolicy> _apparelPolicies;
         private List<DrugPolicy> _drugPolicies;
         private List<FoodPolicy> _foodPolicies;
@@ -64,6 +75,14 @@ namespace MadagascarVanilla
         public override void ExposeData()
         {
             base.ExposeData();
+            
+            // Persist New Game Setup
+            Scribe_Defs.Look(ref _storyteller, "storyteller");
+            Scribe_Defs.Look(ref _difficultyDef, "difficultyDef");
+            Scribe_Deep.Look(ref _difficulty, "difficulty");
+            Scribe_Values.Look(ref Permadeath, "permadeath");
+                
+            // Persist Policies
             Scribe_Collections.Look(ref _apparelPolicies, "apparelPolicies", LookMode.Deep);
             Scribe_Collections.Look(ref _drugPolicies, "drugPolicies", LookMode.Deep);
             Scribe_Collections.Look(ref _foodPolicies, "foodPolicies", LookMode.Deep);
