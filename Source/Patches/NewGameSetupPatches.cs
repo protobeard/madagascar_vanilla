@@ -17,12 +17,31 @@ namespace MadagascarVanilla.Patches
         
         private const string CommitmentMode = "CommitmentMode";
         
+        // Track whether we've loaded our settings since the user can go forward and back through
+        // the new game setup UI, and we don't want to overwrite any changes they may have made
+        // on each page.
+        private static bool StorytellerSettingsLoaded;
+        private static bool WorldGeneratorSettingsLoaded;
+        
+        // Set defaults from mod settings for:
+        //  - Storyteller
+        //  - Difficulty
+        //  - Commitment Mode
+        //
+        // TODO: is there some way we can just persist these like policies instead of having settings for them.
+        // seems like especially for difficulty they aren't going to change a lot. Just using what you used last game
+        // makes a lot of sense.
+        // Would also need to patch the in game difficulty change UI as well. Probably just need to tie into the "Next" button
+        // on the Page.
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
         public static void Postfix(Page_SelectStoryteller __instance)
         {
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Page_SelectStoryteller patch");
+            
+            if (StorytellerSettingsLoaded)
+                return;
             
             bool selectedStorytellerSettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, SelectedStorytellerKey, out string selectedStorytellerName);
             if (selectedStorytellerSettingExists)
@@ -66,6 +85,29 @@ namespace MadagascarVanilla.Patches
                 Find.GameInitData.permadeath = commitmentModeName == CommitmentMode;
                 Find.GameInitData.permadeathChosen = true;
             }
+
+            StorytellerSettingsLoaded = true;
+        }
+
+        // Set defaults from mod settings for:
+        //  - planet coverage
+        //  - rainfall
+        //  - temperature
+        //  - population density
+        //  - landmark density
+        //  - factions
+        //  - pollution
+        // TODO: is there some way we can just persist these like policies instead of having settings for them.
+        [HarmonyPatch(typeof(Page_CreateWorldParams))]
+        [HarmonyPatch(nameof(Page_CreateWorldParams.PreOpen))]
+        public static void Postfix(Page_CreateWorldParams __instance)
+        {
+            if (WorldGeneratorSettingsLoaded)
+                return;
+            
+            Traverse traverse = Traverse.Create(__instance);
+
+            WorldGeneratorSettingsLoaded = true;
         }
     }
 }
