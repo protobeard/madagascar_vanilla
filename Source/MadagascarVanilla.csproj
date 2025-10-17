@@ -81,6 +81,7 @@
         <Compile Include="Patches\MechRepairableOn.cs" />
         <Compile Include="Patches\MedicalDefaultsPatch.cs" />
         <Compile Include="Patches\MoreGravshipSubquests.cs" />
+        <Compile Include="Patches\NewGameSetupPatches.cs" />
         <Compile Include="Patches\PersistPolicies.cs" />
         <Compile Include="Patches\QuestRewardsPatch.cs" />
         <Compile Include="Patches\SchedulePatch.cs" />

@@ -274,7 +274,6 @@
             </li>
 
 
-
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Odyssey</text>
@@ -287,8 +286,6 @@
                 <tooltip>Show landmarks on world map by default -- no need to turn it on again every game (vanilla default is false).</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
-
-
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
@@ -414,13 +411,19 @@
                 <defaultValue>false</defaultValue>
             </li>
 
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Policy Persistance</text>
+                <anchor>Middle</anchor>
+            </li>
+
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>persistApparelPolicies</key>
                 <label>Outfit Policies Persist Across Games</label>
                 <tooltip>Outfit policies persist across new games -- make your desired set of outfits once and keep them forever.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
-
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>persistDrugPolicies</key>
@@ -441,6 +444,91 @@
                 <label>Reading Policies Persist Across Games</label>
                 <tooltip>Reading policies persist across new games -- make your desired set of reading policies once and keep them forever.</tooltip>
                 <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Storyteller Settings</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Storyteller:</text>
+            </li>
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>selectedStoryteller</key>
+                <defaultValue>Cassandra</defaultValue>
+                <buttons>
+                    <li>
+                        <value>Phoebe</value>
+                        <label>Phoebe Chillax</label>
+                    </li>
+                    <li>
+                        <value>Cassandra</value>
+                        <label>Cassandra Classic</label>
+                    </li>
+                    <li>
+                        <value>Randy</value>
+                        <label>Randy Random</label>
+                    </li>
+                </buttons>
+            </li>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Difficulty:</text>
+            </li>
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>selectedDifficulty</key>
+                <buttons>
+                    <li>
+                        <value>Peaceful</value>
+                        <label>Peaceful</label>
+                    </li>
+                    <li>
+                        <value>Easy</value>
+                        <label>Community Builder</label>
+                    </li>
+                    <li>
+                        <value>Medium</value>
+                        <label>Adventure Story</label>
+                    </li>
+                    <li>
+                        <value>Rough</value>
+                        <label>Strive to Survive</label>
+                    </li>
+                    <li>
+                        <value>Hard</value>
+                        <label>Blood and Dust</label>
+                    </li>
+                    <li>
+                        <value>Extreme</value>
+                        <label>Losing is Fun</label>
+                    </li>
+                    <li>
+                        <value>Custom</value>
+                        <label>Custom</label>
+                    </li>
+                </buttons>
+            </li>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Commitment Mode:</text>
+            </li>
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>commitmentMode</key>
+                <buttons>
+                    <li>
+                        <value>ReloadAnytime</value>
+                        <label>Reload Anytime</label>
+                    </li>
+                    <li>
+                        <value>Commitment</value>
+                        <label>Commitment</label>
+                    </li>
+                </buttons>
             </li>
 
 
