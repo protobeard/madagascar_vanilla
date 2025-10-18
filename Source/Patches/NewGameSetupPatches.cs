@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using XmlExtensions;
 
@@ -37,7 +39,7 @@ namespace MadagascarVanilla.Patches
         
         // Set defaults from mod settings for:
         //  - Storyteller
-        //  - Difficulty
+        //  - DifficultyDef/Difficulty
         //  - Commitment Mode
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
@@ -92,9 +94,7 @@ namespace MadagascarVanilla.Patches
 
         // Persist the bits of the Storyteller that we need for setup:
         // - storytellerDef
-        // - difficultyDef
-        // - difficulty (if custom)
-        // - Anomaly settings (if Anomaly active and difficulty isn't custom (b/c if it is custom this gets saved there instead))
+        // - difficultyDef/difficulty
         // - commitment mode
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch("CanDoNext")]
@@ -103,25 +103,25 @@ namespace MadagascarVanilla.Patches
             bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
             if (persistNewGameSetup && __result)
             { 
-                Log.Message("persistNewGameSetup true, __result true: persist storyteller settings");
+                //Log.Message("persistNewGameSetup true, __result true: persist storyteller settings");
                 
                 Traverse traverse = Traverse.Create(__instance);
                 
                 // Persist new game settings
-                Log.Message("Persist storyteller");
+                //Log.Message("Persist storyteller");
                 MadagascarVanillaMod.Persistables.StorytellerDef = (StorytellerDef) traverse.Field("storyteller").GetValue<StorytellerDef>();
                 
-                Log.Message("Persist DifficultyDef");
+                //Log.Message("Persist DifficultyDef");
                 MadagascarVanillaMod.Persistables.DifficultyDef = traverse.Field("difficulty").GetValue<DifficultyDef>();
                 
-                Log.Message("Persist difficulty:");
+                //Log.Message("Persist difficulty:");
                 //Log.Message(traverse.Field("difficultyValues").GetValue<Difficulty>().DebugString());
                 MadagascarVanillaMod.Persistables.Difficulty = (Difficulty) traverse.Field("difficultyValues").GetValue<Difficulty>();
 
-                Log.Message("Persist permadeath");
+                //Log.Message("Persist permadeath");
                 MadagascarVanillaMod.Persistables.Permadeath = Find.GameInitData.permadeath;
                 
-                Log.Message("Write settings");
+               //Log.Message("Write settings");
                 MadagascarVanillaMod.Instance.WriteSettings();
             }
         }
@@ -135,8 +135,6 @@ namespace MadagascarVanilla.Patches
         //  - landmark density
         //  - factions
         //  - pollution
-        // TODO: is there some way we can just persist these like policies instead of having settings for them.
-        // tie into the "generate" button on the Page (CanDoNext method?)
         [HarmonyPatch(typeof(Page_CreateWorldParams))]
         [HarmonyPatch(nameof(Page_CreateWorldParams.PreOpen))]
         public static void Postfix(Page_CreateWorldParams __instance)
@@ -145,8 +143,159 @@ namespace MadagascarVanilla.Patches
                 return;
             
             Traverse traverse = Traverse.Create(__instance);
+            
+            List<FactionDef> factions = MadagascarVanillaMod.Persistables.Factions;
+            List<FactionDef> validFactions = new List<FactionDef>();
+            if (factions != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set factions:");
+                foreach (FactionDef faction in factions)
+                {
+                    if (MadagascarVanillaMod.Verbose())
+                        Log.Message($"{faction.defName}");
+                    if (!FactionGenerator.ConfigurableFactions.Contains(faction))
+                    {
+                        Log.Message($"Madagascar Vanilla: Unknown faction ({faction.defName})), skipping.");
+                        continue;
+                    }
+                    validFactions.Add(faction);
+                }
+                traverse.Field("factions").SetValue(validFactions);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: Faction list null, skip trying to set defaults. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            // Set PlanetCoverage
+            float? planetCoverage = MadagascarVanillaMod.Persistables.PlanetCoverage;
+            if (planetCoverage != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set planetCoverage: {planetCoverage}");
+                traverse.Field("planetCoverage").SetValue(planetCoverage);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no planetCoverage value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            OverallRainfall? rainfall = MadagascarVanillaMod.Persistables.Rainfall;
+            if (rainfall != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set rainfall: {rainfall}");
+                traverse.Field("rainfall").SetValue(rainfall);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no rainfall value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            OverallTemperature? temperature = MadagascarVanillaMod.Persistables.Temperature;
+            if (temperature != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set temperature: {temperature}");
+                traverse.Field("temperature").SetValue(temperature);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no temperature value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            OverallPopulation? population = MadagascarVanillaMod.Persistables.Population;
+            if (population != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set population: {population}");
+                traverse.Field("population").SetValue(population);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no population value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            LandmarkDensity? landmarkDensity = MadagascarVanillaMod.Persistables.LandmarkDensity;
+            if (landmarkDensity != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set landmarkDensity: {landmarkDensity}");
+                traverse.Field("landmarkDensity").SetValue(landmarkDensity);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no landmarkDensity value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            float? pollution = MadagascarVanillaMod.Persistables.Pollution;
+            if (pollution != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set pollution: {pollution}");
+                traverse.Field("pollution").SetValue(pollution);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no pollution value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            int? mapSize = MadagascarVanillaMod.Persistables.MapSize;
+            if (mapSize != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set mapSize: {mapSize}");
+                Find.GameInitData.mapSize = (int) mapSize;
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no mapSize value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+            
+            Season? season = MadagascarVanillaMod.Persistables.StartingSeason;
+            if (season != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Page_CreateWorldParams patch set season: {season}");
+                Find.GameInitData.startingSeason = (Season) season;
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no season value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
 
             WorldGeneratorSettingsLoaded = true;
+        }
+        
+        [HarmonyPatch(typeof(Page_CreateWorldParams))]
+        [HarmonyPatch("CanDoNext")]
+        public static void Postfix(Page_CreateWorldParams __instance, bool __result)
+        {
+            Log.Message("Page_CreateWorldParams.CanDoNext");
+            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
+            if (persistNewGameSetup) // && __result) // seems like this method always returns false, after queing up the world gen.
+            { 
+                Log.Message("persistNewGameSetup true, __result true: persist world settings");
+                
+                Traverse traverse = Traverse.Create(__instance);
+                
+                MadagascarVanillaMod.Persistables.Factions = traverse.Field("factions").GetValue<List<FactionDef>>();
+                
+                MadagascarVanillaMod.Persistables.PlanetCoverage = traverse.Field("planetCoverage").GetValue<float>();
+                MadagascarVanillaMod.Persistables.Rainfall = traverse.Field("rainfall").GetValue<OverallRainfall>();
+                MadagascarVanillaMod.Persistables.Temperature = traverse.Field("temperature").GetValue<OverallTemperature>();
+                MadagascarVanillaMod.Persistables.Population = traverse.Field("population").GetValue<OverallPopulation>();
+                MadagascarVanillaMod.Persistables.LandmarkDensity = traverse.Field("landmarkDensity").GetValue<LandmarkDensity>();
+                MadagascarVanillaMod.Persistables.Pollution = traverse.Field("pollution").GetValue<float>();
+                
+                MadagascarVanillaMod.Persistables.MapSize = Find.GameInitData.mapSize;
+                MadagascarVanillaMod.Persistables.StartingSeason = Find.GameInitData.startingSeason;
+                
+                
+               Log.Message("Write settings");
+                MadagascarVanillaMod.Instance.WriteSettings();
+            }
         }
     }
 }

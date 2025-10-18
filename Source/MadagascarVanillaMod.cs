@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
+using JetBrains.Annotations;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using XmlExtensions;
 
@@ -51,7 +53,7 @@ namespace MadagascarVanilla
     }
     public class MadagascarVanillaPersistables : ModSettings
     {
-        // New Game Setup
+        // New Game Setup (Storyteller)
         private StorytellerDef _storyteller;
         private DifficultyDef _difficultyDef;
         private Difficulty _difficulty;
@@ -60,7 +62,18 @@ namespace MadagascarVanilla
         public DifficultyDef DifficultyDef { get => _difficultyDef; set => _difficultyDef = value; }
         public Difficulty Difficulty { get => _difficulty ??= new Difficulty(); set => _difficulty = value; }
         public bool Permadeath;
-
+        
+        // New Game Setup (World)
+        [CanBeNull] public List<FactionDef> Factions;
+        public float? PlanetCoverage;
+        public OverallRainfall? Rainfall;
+        public OverallTemperature? Temperature;
+        public OverallPopulation? Population;
+        public LandmarkDensity? LandmarkDensity;
+        public float? Pollution;
+        public int? MapSize;
+        public Season? StartingSeason;
+            
         // Policies
         private List<ApparelPolicy> _apparelPolicies;
         private List<DrugPolicy> _drugPolicies;
@@ -76,11 +89,22 @@ namespace MadagascarVanilla
         {
             base.ExposeData();
             
-            // Persist New Game Setup
+            // Persist New Game Setup (Storyteller)
             Scribe_Defs.Look(ref _storyteller, "storyteller");
             Scribe_Defs.Look(ref _difficultyDef, "difficultyDef");
             Scribe_Deep.Look(ref _difficulty, "difficulty");
             Scribe_Values.Look(ref Permadeath, "permadeath");
+            
+            // Persist New Game Setup (World)
+            Scribe_Collections.Look(ref Factions, "factions", LookMode.Def);
+            Scribe_Values.Look(ref PlanetCoverage, "planetCoverage");
+            Scribe_Values.Look(ref Rainfall, "rainfall");
+            Scribe_Values.Look(ref Temperature, "temperature");
+            Scribe_Values.Look(ref Population, "population");
+            Scribe_Values.Look(ref LandmarkDensity, "landmarkDensity");
+            Scribe_Values.Look(ref Pollution, "pollution");
+            Scribe_Values.Look(ref MapSize, "mapSize");
+            Scribe_Values.Look(ref StartingSeason, "startingSeason");
                 
             // Persist Policies
             Scribe_Collections.Look(ref _apparelPolicies, "apparelPolicies", LookMode.Deep);
