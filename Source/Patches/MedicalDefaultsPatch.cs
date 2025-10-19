@@ -44,7 +44,7 @@ namespace MadagascarVanilla.Patches
         // method and not overriden in Dialog_MedicalDefaults Harmony won't patch it directly
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Window))]
-        [HarmonyPatch("PreOpen")]
+        [HarmonyPatch(nameof(Window.PreOpen))]
         public static void DialogMedicalDefaultsPreOpenPatchPostfix(Window __instance)
         {
             if (!(__instance is Dialog_MedicalDefaults))

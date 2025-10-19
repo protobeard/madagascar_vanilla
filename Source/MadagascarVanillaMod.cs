@@ -73,6 +73,23 @@ namespace MadagascarVanilla
         public float? Pollution;
         public int? MapSize;
         public Season? StartingSeason;
+        
+        // New Game Setup (Ideology)
+        [CanBeNull] public IdeoPresetDef Ideoligion; // expected to be null unless PresetSelection is Preset
+        public PresetSelectionType? PresetSelection;
+        [CanBeNull] public MemeDef Structure;
+        // Max of 3 styles
+        [CanBeNull] public List<StyleCategoryDef> StyleCategories;
+        
+        // Copy of private enum PresetSelection in Page_ChooseIdeoPreset
+        public enum PresetSelectionType
+        {
+            Classic,
+            CustomFluid,
+            CustomFixed,
+            Load,
+            Preset
+        }
             
         // Policies
         private List<ApparelPolicy> _apparelPolicies;
@@ -105,6 +122,12 @@ namespace MadagascarVanilla
             Scribe_Values.Look(ref Pollution, "pollution");
             Scribe_Values.Look(ref MapSize, "mapSize");
             Scribe_Values.Look(ref StartingSeason, "startingSeason");
+            
+            // Persist New Game Setup (Ideoligion)
+            Scribe_Defs.Look(ref Ideoligion, "ideoligion");
+            Scribe_Values.Look(ref PresetSelection, "presetSelection");
+            Scribe_Defs.Look(ref Structure, "structure");
+            Scribe_Collections.Look(ref StyleCategories, "styles", LookMode.Def);
                 
             // Persist Policies
             Scribe_Collections.Look(ref _apparelPolicies, "apparelPolicies", LookMode.Deep);
