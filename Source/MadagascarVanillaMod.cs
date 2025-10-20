@@ -53,6 +53,9 @@ namespace MadagascarVanilla
     }
     public class MadagascarVanillaPersistables : ModSettings
     {
+        // New Game Setup (Scenario)
+        [CanBeNull] public Scenario SelectedScenario;
+        
         // New Game Setup (Storyteller)
         private StorytellerDef _storyteller;
         private DifficultyDef _difficultyDef;
@@ -105,6 +108,9 @@ namespace MadagascarVanilla
         public override void ExposeData()
         {
             base.ExposeData();
+            
+            // Persist New Game Setup (Scenario)
+            Scribe_Deep.Look(ref SelectedScenario, "scenario");
             
             // Persist New Game Setup (Storyteller)
             Scribe_Defs.Look(ref _storyteller, "storyteller");

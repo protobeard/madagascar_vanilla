@@ -21,12 +21,12 @@ namespace MadagascarVanilla.Patches
         // Track whether we've loaded our settings since the user can go forward and back through
         // the new game setup UI, and we don't want to overwrite any changes they may have made
         // on each page.
+        private static bool ScenarioSettingsLoaded;
         private static bool StorytellerSettingsLoaded;
         private static bool WorldGeneratorSettingsLoaded;
         private static bool IdeoligionSettingsLoaded;
         
         // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
-        // TODO: save scenario choice as well? Seems like yes.
         
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
@@ -34,8 +34,13 @@ namespace MadagascarVanilla.Patches
         {
             if (!PersistNewGameSetup)
                 return;
-            
-            if (__instance is Page_SelectStoryteller)
+
+            if (__instance is Page_SelectScenario)
+            {
+                PersistScenarioSettings(__instance as Page_SelectScenario);
+                ScenarioSettingsLoaded = false;
+            }
+            else if (__instance is Page_SelectStoryteller)
             {
                 PersistStorytellerSettings(__instance as Page_SelectStoryteller);
                 StorytellerSettingsLoaded = false;
@@ -51,6 +56,53 @@ namespace MadagascarVanilla.Patches
                 IdeoligionSettingsLoaded = false;
             }
         }
+
+        [HarmonyPatch(typeof(Page_SelectScenario))]
+        [HarmonyPatch(nameof(Page_SelectScenario.PreOpen))]
+        public static void Postfix(Page_SelectScenario __instance)
+        {
+            // Since this is the first part of new game setup cache the setting for whether we are persisting
+            // settings. The rest of the time we can just check this value.
+            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
+            if (!PersistNewGameSetup)
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectScenario.PreOpen");
+            
+            Traverse traverse = Traverse.Create(__instance);
+            
+            SetValueOfField(traverse, "curScen", MadagascarVanillaMod.Persistables.SelectedScenario);
+        }
+        
+        // Persist the selected scenario:
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Page_SelectScenario))]
+        [HarmonyPatch("CanDoNext")]
+        public static void SelectScenarioPostfix(Page_SelectScenario __instance, bool __result)
+        {
+            if (!PersistNewGameSetup)
+                return;
+            
+            if (ScenarioSettingsLoaded)
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
+            
+            if (__result)
+                PersistScenarioSettings(__instance);
+
+            ScenarioSettingsLoaded = true;
+        }
+
+        private static void PersistScenarioSettings(Page_SelectScenario window)
+        {
+            Traverse traverse = Traverse.Create(window);
+                
+            // Persist scenario
+            MadagascarVanillaMod.Persistables.SelectedScenario = traverse.Field("curScen").GetValue<Scenario>();
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
+        }
         
         // Set defaults from mod settings for:
         //  - Storyteller
@@ -60,9 +112,6 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
         public static void Postfix(Page_SelectStoryteller __instance)
         { 
-            // Since this is the first part of new game setup cache the setting for whether we are persisting
-            // settings. The rest of the time we can just check this value.
-            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
             if (!PersistNewGameSetup)
                 return;
             
@@ -118,7 +167,6 @@ namespace MadagascarVanilla.Patches
         {
             Traverse traverse = Traverse.Create(window);
                 
-            // Persist new game settings
             MadagascarVanillaMod.Persistables.StorytellerDef = traverse.Field("storyteller").GetValue<StorytellerDef>();
             MadagascarVanillaMod.Persistables.DifficultyDef = traverse.Field("difficulty").GetValue<DifficultyDef>();
             MadagascarVanillaMod.Persistables.Difficulty = traverse.Field("difficultyValues").GetValue<Difficulty>();
