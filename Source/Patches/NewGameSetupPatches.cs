@@ -23,9 +23,12 @@ namespace MadagascarVanilla.Patches
         private static bool StorytellerSettingsLoaded;
         private static bool WorldGeneratorSettingsLoaded;
         private static bool IdeoligionSettingsLoaded;
+        
+        // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
 
         // TODO: save settings when the back button is pressed... otherwise going back, changing things,
         // going back further, then going forward causes settings to be lost.
+        
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
         public static void Postfix(Page __instance)
@@ -332,6 +335,23 @@ namespace MadagascarVanilla.Patches
                 MadagascarVanillaMod.Persistables.StyleCategories = traverse.Field("selectedStyles").GetValue<List<StyleCategoryDef>>();
                 
                 MadagascarVanillaMod.Instance.WriteSettings();
+            }
+        }
+        
+        // On new game start, reset the "settings loaded" state trackers so that
+        // if we make another new game settings will still get loaded.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Page_ConfigureStartingPawns))]
+        [HarmonyPatch("DoNext")]
+        public static void Postfix(Page_ConfigureStartingPawns __instance)
+        {
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ConfigureStartingPawns.DoNext");
+            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
+            if (persistNewGameSetup)
+            { 
+                StorytellerSettingsLoaded = false;
+                WorldGeneratorSettingsLoaded = false;
+                IdeoligionSettingsLoaded = false;
             }
         }
         
