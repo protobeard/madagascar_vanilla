@@ -16,6 +16,7 @@ namespace MadagascarVanilla.Patches
     public static class NewGameSetupPatches
     {
         private const string PersistNewGameSetupKey = "persistNewGameSetup";
+        private static bool PersistNewGameSetup;
         
         // Track whether we've loaded our settings since the user can go forward and back through
         // the new game setup UI, and we don't want to overwrite any changes they may have made
@@ -27,18 +28,27 @@ namespace MadagascarVanilla.Patches
         // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
 
         // TODO: save settings when the back button is pressed... otherwise going back, changing things,
-        // going back further, then going forward causes settings to be lost.
+        // going back further, then going forward causes changed settings to get overwritten.
         
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
         public static void Postfix(Page __instance)
         {
+            if (!PersistNewGameSetup)
+                return;
+            
             if (__instance is Page_SelectStoryteller)
+            {
                 StorytellerSettingsLoaded = false;
+            }
             else if (__instance is Page_CreateWorldParams)
+            {
                 WorldGeneratorSettingsLoaded = false;
+            }
             else if (__instance is Page_ChooseIdeoPreset)
-                IdeoligionSettingsLoaded = false;
+            {
+                 IdeoligionSettingsLoaded = false;
+            }
         }
         
         // Set defaults from mod settings for:
@@ -48,7 +58,13 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
         public static void Postfix(Page_SelectStoryteller __instance)
-        {
+        { 
+            // Since this is the first part of new game setup cache the setting for whether we are persisting
+            // settings. The rest of the time we can just check this value.
+            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
+            if (!PersistNewGameSetup)
+                return;
+            
             if (__instance == null)
                 return;
             
@@ -70,9 +86,10 @@ namespace MadagascarVanilla.Patches
             
             // Set commitment mode
             bool permadeath = MadagascarVanillaMod.Persistables.Permadeath;
-            if (MadagascarVanillaMod.Verbose())
-                Log.Message($"GameInitData set commitment mode to: {permadeath}");
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"GameInitData set commitment mode to: {permadeath}");
             
+            // permadeathChoosen tracks not whether "permadeath" itself was picked, but that *something* was picked
+            // for the permadeath mode. So we always set it to true.
             Find.GameInitData.permadeath = permadeath;
             Find.GameInitData.permadeathChosen = true;
 
@@ -87,10 +104,12 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void Postfix(Page_SelectStoryteller __instance, bool __result)
         {
+            if (!PersistNewGameSetup)
+                return;
+            
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
             
-            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (persistNewGameSetup && __result)
+            if (__result)
             { 
                 Traverse traverse = Traverse.Create(__instance);
                 
@@ -116,6 +135,9 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Page_CreateWorldParams.PreOpen))]
         public static void Postfix(Page_CreateWorldParams __instance)
         {
+            if (!PersistNewGameSetup)
+                return;
+            
             if (__instance == null)
                 return;
             
@@ -184,27 +206,26 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void Postfix(Page_CreateWorldParams __instance, bool __result)
         {
+            if (!PersistNewGameSetup)
+                return;
+            
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_CreateWorldParams.CanDoNext");
             
-            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (persistNewGameSetup)
-            { 
-                Traverse traverse = Traverse.Create(__instance);
-                
-                MadagascarVanillaMod.Persistables.Factions = traverse.Field("factions").GetValue<List<FactionDef>>();
-                
-                MadagascarVanillaMod.Persistables.PlanetCoverage = traverse.Field("planetCoverage").GetValue<float>();
-                MadagascarVanillaMod.Persistables.Rainfall = traverse.Field("rainfall").GetValue<OverallRainfall>();
-                MadagascarVanillaMod.Persistables.Temperature = traverse.Field("temperature").GetValue<OverallTemperature>();
-                MadagascarVanillaMod.Persistables.Population = traverse.Field("population").GetValue<OverallPopulation>();
-                MadagascarVanillaMod.Persistables.LandmarkDensity = traverse.Field("landmarkDensity").GetValue<LandmarkDensity>();
-                MadagascarVanillaMod.Persistables.Pollution = traverse.Field("pollution").GetValue<float>();
-                
-                MadagascarVanillaMod.Persistables.MapSize = Find.GameInitData.mapSize;
-                MadagascarVanillaMod.Persistables.StartingSeason = Find.GameInitData.startingSeason;
-                
-                MadagascarVanillaMod.Instance.WriteSettings();
-            }
+            Traverse traverse = Traverse.Create(__instance);
+            
+            MadagascarVanillaMod.Persistables.Factions = traverse.Field("factions").GetValue<List<FactionDef>>();
+            
+            MadagascarVanillaMod.Persistables.PlanetCoverage = traverse.Field("planetCoverage").GetValue<float>();
+            MadagascarVanillaMod.Persistables.Rainfall = traverse.Field("rainfall").GetValue<OverallRainfall>();
+            MadagascarVanillaMod.Persistables.Temperature = traverse.Field("temperature").GetValue<OverallTemperature>();
+            MadagascarVanillaMod.Persistables.Population = traverse.Field("population").GetValue<OverallPopulation>();
+            MadagascarVanillaMod.Persistables.LandmarkDensity = traverse.Field("landmarkDensity").GetValue<LandmarkDensity>();
+            MadagascarVanillaMod.Persistables.Pollution = traverse.Field("pollution").GetValue<float>();
+            
+            MadagascarVanillaMod.Persistables.MapSize = Find.GameInitData.mapSize;
+            MadagascarVanillaMod.Persistables.StartingSeason = Find.GameInitData.startingSeason;
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         // Set defaults from mod settings for:
@@ -219,6 +240,9 @@ namespace MadagascarVanilla.Patches
             if (!(__instance is Page_ChooseIdeoPreset))
                 return;
             
+            if (!PersistNewGameSetup)
+                return;
+                        
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.PreOpen");
             
             if (IdeoligionSettingsLoaded)
@@ -247,7 +271,6 @@ namespace MadagascarVanilla.Patches
                         break;
                     }
                 }
-                //Log.Message($"Got PresetSelection: {presetSelection}");
                 
                 if (presetSelection != null)
                 {
@@ -300,7 +323,6 @@ namespace MadagascarVanilla.Patches
                     }
                 }
                 
-                //if (MadagascarVanillaMod.Verbose()) Log.Message("Setting selected styles to validStyleCategories.");
                 traverse.Field("selectedStyles").SetValue(validStyleCategories);
                 RecacheStyleCategoriesWithPriority((Page_ChooseIdeoPreset) __instance);
             }
@@ -323,19 +345,19 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("DoNext")]
         public static void DoNextPostfix(Page_ChooseIdeoPreset __instance)
         {
+            if (!PersistNewGameSetup)
+                return;
+                        
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.DoNext");
-            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (persistNewGameSetup)
-            { 
-                Traverse traverse = Traverse.Create(__instance);
-                
-                MadagascarVanillaMod.Persistables.PresetSelection = traverse.Field("presetSelection").GetValue<PresetSelectionType>();
-                MadagascarVanillaMod.Persistables.Ideoligion = traverse.Field("selectedIdeo").GetValue<IdeoPresetDef>();
-                MadagascarVanillaMod.Persistables.Structure = traverse.Field("selectedStructure").GetValue<MemeDef>();
-                MadagascarVanillaMod.Persistables.StyleCategories = traverse.Field("selectedStyles").GetValue<List<StyleCategoryDef>>();
-                
-                MadagascarVanillaMod.Instance.WriteSettings();
-            }
+
+            Traverse traverse = Traverse.Create(__instance);
+            
+            MadagascarVanillaMod.Persistables.PresetSelection = traverse.Field("presetSelection").GetValue<PresetSelectionType>();
+            MadagascarVanillaMod.Persistables.Ideoligion = traverse.Field("selectedIdeo").GetValue<IdeoPresetDef>();
+            MadagascarVanillaMod.Persistables.Structure = traverse.Field("selectedStructure").GetValue<MemeDef>();
+            MadagascarVanillaMod.Persistables.StyleCategories = traverse.Field("selectedStyles").GetValue<List<StyleCategoryDef>>();
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         // On new game start, reset the "settings loaded" state trackers so that
@@ -345,14 +367,14 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("DoNext")]
         public static void Postfix(Page_ConfigureStartingPawns __instance)
         {
+            if (!PersistNewGameSetup)
+                return;
+                        
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ConfigureStartingPawns.DoNext");
-            bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (persistNewGameSetup)
-            { 
-                StorytellerSettingsLoaded = false;
-                WorldGeneratorSettingsLoaded = false;
-                IdeoligionSettingsLoaded = false;
-            }
+
+            StorytellerSettingsLoaded = false;
+            WorldGeneratorSettingsLoaded = false;
+            IdeoligionSettingsLoaded = false;
         }
         
         // Need to recache the selectedStylesWithPriority private field so that the tooltips get instantiated properly.
