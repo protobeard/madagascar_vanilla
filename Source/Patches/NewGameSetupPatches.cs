@@ -24,6 +24,8 @@ namespace MadagascarVanilla.Patches
         private static bool WorldGeneratorSettingsLoaded;
         private static bool IdeoligionSettingsLoaded;
 
+        // TODO: save settings when the back button is pressed... otherwise going back, changing things,
+        // going back further, then going forward causes settings to be lost.
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
         public static void Postfix(Page __instance)
@@ -34,17 +36,6 @@ namespace MadagascarVanilla.Patches
                 WorldGeneratorSettingsLoaded = false;
             else if (__instance is Page_ChooseIdeoPreset)
                 IdeoligionSettingsLoaded = false;
-            else if (__instance is Page_ConfigureIdeo)
-            {
-                // FIXME: is this what we actually want? IN this case I've choosen to configure a custom Ideo, then
-                // hit the back button. Structure and style should get reloaded from mod Config, but should the 
-                // ideoligion type selection? Maybe this is a bad idea, b/c when we pressed "Next" on config custom,
-                // it calls ResetSelection and we then save that out, with no styles/structure/preset ideo. So we'd
-                // have to not do that... and then clear our settings after the custom ideo is created? Keep them for
-                // the next game?
-                // IdeoligionSettingsLoaded = false;
-            }
-                
         }
         
         // Set defaults from mod settings for:
@@ -62,37 +53,47 @@ namespace MadagascarVanilla.Patches
                 return;
 
             if (MadagascarVanillaMod.Verbose())
-                Log.Message("Page_SelectStoryteller patch");
+                Log.Message($"Page_SelectStoryteller.PreOpen");
             
             Traverse traverse = Traverse.Create(__instance);
             
-            // Set storyteller
-            StorytellerDef storytellerDef = MadagascarVanillaMod.Persistables.StorytellerDef;
-            if (storytellerDef != null && DefDatabase<StorytellerDef>.AllDefsListForReading.Contains(storytellerDef))
+            SetValueOfField<StorytellerDef>(traverse, "storyteller", MadagascarVanillaMod.Persistables.StorytellerDef);
+
+            // FIXME: this check isn't exactly the same as below. Double check it.
+            if (MadagascarVanillaMod.Persistables.DifficultyDef != null)
             {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_SelectStoryteller patch set storyteller: {storytellerDef.defName}");
-                traverse.Field("storyteller").SetValue(storytellerDef);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: Unknown storyteller ({storytellerDef}), skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+                SetValueOfField<DifficultyDef>(traverse, "difficulty", MadagascarVanillaMod.Persistables.DifficultyDef);
+                SetValueOfField(traverse, "difficultyValues", MadagascarVanillaMod.Persistables.Difficulty);
             }
             
+            
+            // Set storyteller
+            // StorytellerDef storytellerDef = MadagascarVanillaMod.Persistables.StorytellerDef;
+            // if (storytellerDef != null && DefDatabase<StorytellerDef>.AllDefsListForReading.Contains(storytellerDef))
+            // {
+            //     if (MadagascarVanillaMod.Verbose())
+            //         Log.Message($"Page_SelectStoryteller patch set storyteller: {storytellerDef.defName}");
+            //     traverse.Field("storyteller").SetValue(storytellerDef);
+            // }
+            // else
+            // {
+            //     Log.Message($"Madagascar Vanilla: Unknown storyteller ({storytellerDef}), skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            // }
+            
             // Set difficulty/custom difficulty/anomaly difficulty
-            DifficultyDef difficultyDef = MadagascarVanillaMod.Persistables.DifficultyDef;
-            if (difficultyDef != null && DefDatabase<DifficultyDef>.AllDefsListForReading.Contains(difficultyDef))
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_SelectStoryteller patch set difficulty: {difficultyDef.defName}");
-                
-                traverse.Field("difficulty").SetValue(difficultyDef);
-                traverse.Field("difficultyValues").SetValue(MadagascarVanillaMod.Persistables.Difficulty);
-            }
-            else
-            { 
-                Log.Message("Madagascar Vanilla: Unknown difficulty, skip trying to set a default.  This is expected on first new game after enabling persistant storyteller settings.");
-            }
+            // DifficultyDef difficultyDef = MadagascarVanillaMod.Persistables.DifficultyDef;
+            // if (difficultyDef != null && DefDatabase<DifficultyDef>.AllDefsListForReading.Contains(difficultyDef))
+            // {
+            //     if (MadagascarVanillaMod.Verbose())
+            //         Log.Message($"Page_SelectStoryteller patch set difficulty: {difficultyDef.defName}");
+            //     
+            //     traverse.Field("difficulty").SetValue(difficultyDef);
+            //     traverse.Field("difficultyValues").SetValue(MadagascarVanillaMod.Persistables.Difficulty);
+            // }
+            // else
+            // { 
+            //     Log.Message("Madagascar Vanilla: Unknown difficulty, skip trying to set a default.  This is expected on first new game after enabling persistant storyteller settings.");
+            // }
             
             // Set commitment mode
             bool permadeath = MadagascarVanillaMod.Persistables.Permadeath;
@@ -113,11 +114,12 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void Postfix(Page_SelectStoryteller __instance, bool __result)
         {
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message($"Page_SelectStoryteller.CanDoNext");
+            
             bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
             if (persistNewGameSetup && __result)
             { 
-                //Log.Message("persistNewGameSetup true, __result true: persist storyteller settings");
-                
                 Traverse traverse = Traverse.Create(__instance);
                 
                 // Persist new game settings
@@ -148,21 +150,24 @@ namespace MadagascarVanilla.Patches
             if (WorldGeneratorSettingsLoaded)
                 return;
             
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message($"Page_CreateWorldParams.PreOpen");
+            
             Traverse traverse = Traverse.Create(__instance);
             
             List<FactionDef> factions = MadagascarVanillaMod.Persistables.Factions;
             List<FactionDef> validFactions = new List<FactionDef>();
             if (factions != null)
             {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set factions:");
                 foreach (FactionDef faction in factions)
                 {
                     if (MadagascarVanillaMod.Verbose())
-                        Log.Message($"{faction.defName}");
+                        Log.Message($"Page_CreateWorldParams processing: {faction.defName}");
+                    
                     if (!FactionGenerator.ConfigurableFactions.Contains(faction))
                     {
-                        Log.Message($"Madagascar Vanilla: Unknown faction ({faction.defName})), skipping.");
+                        if (MadagascarVanillaMod.Verbose())
+                            Log.Message($"Madagascar Vanilla: Unknown faction ({faction.defName})), skipping.");
                         continue;
                     }
                     validFactions.Add(faction);
@@ -174,78 +179,12 @@ namespace MadagascarVanilla.Patches
                 Log.Message($"Madagascar Vanilla: Faction list null, skip trying to set defaults. This is expected on first new game after enabling persistant storyteller settings.");
             }
             
-            // Set PlanetCoverage
-            float? planetCoverage = MadagascarVanillaMod.Persistables.PlanetCoverage;
-            if (planetCoverage != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set planetCoverage: {planetCoverage}");
-                traverse.Field("planetCoverage").SetValue(planetCoverage);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no planetCoverage value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
-            
-            OverallRainfall? rainfall = MadagascarVanillaMod.Persistables.Rainfall;
-            if (rainfall != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set rainfall: {rainfall}");
-                traverse.Field("rainfall").SetValue(rainfall);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no rainfall value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
-            
-            OverallTemperature? temperature = MadagascarVanillaMod.Persistables.Temperature;
-            if (temperature != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set temperature: {temperature}");
-                traverse.Field("temperature").SetValue(temperature);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no temperature value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
-            
-            OverallPopulation? population = MadagascarVanillaMod.Persistables.Population;
-            if (population != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set population: {population}");
-                traverse.Field("population").SetValue(population);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no population value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
-            
-            LandmarkDensity? landmarkDensity = MadagascarVanillaMod.Persistables.LandmarkDensity;
-            if (landmarkDensity != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set landmarkDensity: {landmarkDensity}");
-                traverse.Field("landmarkDensity").SetValue(landmarkDensity);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no landmarkDensity value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
-            
-            float? pollution = MadagascarVanillaMod.Persistables.Pollution;
-            if (pollution != null)
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_CreateWorldParams patch set pollution: {pollution}");
-                traverse.Field("pollution").SetValue(pollution);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: no pollution value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
+            SetValueOfField(traverse, "planetCoverage", MadagascarVanillaMod.Persistables.PlanetCoverage);
+            SetValueOfField(traverse, "rainfall", MadagascarVanillaMod.Persistables.Rainfall);
+            SetValueOfField(traverse, "temperature", MadagascarVanillaMod.Persistables.Temperature);
+            SetValueOfField(traverse, "population", MadagascarVanillaMod.Persistables.Population);
+            SetValueOfField(traverse, "landmarkDensity", MadagascarVanillaMod.Persistables.LandmarkDensity);
+            SetValueOfField(traverse, "pollution", MadagascarVanillaMod.Persistables.Pollution);
             
             int? mapSize = MadagascarVanillaMod.Persistables.MapSize;
             if (mapSize != null)
@@ -278,12 +217,12 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void Postfix(Page_CreateWorldParams __instance, bool __result)
         {
-            Log.Message("Page_CreateWorldParams.CanDoNext");
+            if (MadagascarVanillaMod.Verbose())
+                Log.Message($"Page_CreateWorldParams.CanDoNext");
+            
             bool persistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (persistNewGameSetup) // && __result) // seems like this method always returns false, after queing up the world gen.
+            if (persistNewGameSetup)
             { 
-                Log.Message("persistNewGameSetup true, __result true: persist world settings");
-                
                 Traverse traverse = Traverse.Create(__instance);
                 
                 MadagascarVanillaMod.Persistables.Factions = traverse.Field("factions").GetValue<List<FactionDef>>();
@@ -298,8 +237,6 @@ namespace MadagascarVanilla.Patches
                 MadagascarVanillaMod.Persistables.MapSize = Find.GameInitData.mapSize;
                 MadagascarVanillaMod.Persistables.StartingSeason = Find.GameInitData.startingSeason;
                 
-                
-                Log.Message("Write settings");
                 MadagascarVanillaMod.Instance.WriteSettings();
             }
         }
@@ -309,8 +246,6 @@ namespace MadagascarVanilla.Patches
         // - Ideoligion (if preset is "Preset", otherwise null)
         // - Structure
         // - Styles
-        // [HarmonyPatch(typeof(Page_ChooseIdeoPreset))]
-        // [HarmonyPatch(nameof(Page_ChooseIdeoPreset.PostOpen))]
         [HarmonyPatch(typeof(Window))]
         [HarmonyPatch(nameof(Window.PreOpen))]
         public static void Postfix(Window __instance)
@@ -389,17 +324,20 @@ namespace MadagascarVanilla.Patches
             }
             
             // Set Structure
-            MemeDef structure = MadagascarVanillaMod.Persistables.Structure;
-            if (structure != null && DefDatabase<MemeDef>.AllDefsListForReading.Contains(structure))
-            {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Page_ChooseIdeoPreset patch set structure: {structure.defName}");
-                traverse.Field("selectedStructure").SetValue(structure);
-            }
-            else
-            {
-                Log.Message($"Madagascar Vanilla: Unknown structure ({structure}), skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
-            }
+            
+            SetValueOfField<MemeDef>(traverse, "structure", MadagascarVanillaMod.Persistables.Structure);
+            
+            // MemeDef structure = MadagascarVanillaMod.Persistables.Structure;
+            // if (structure != null && DefDatabase<MemeDef>.AllDefsListForReading.Contains(structure))
+            // {
+            //     if (MadagascarVanillaMod.Verbose())
+            //         Log.Message($"Page_ChooseIdeoPreset patch set structure: {structure.defName}");
+            //     traverse.Field("selectedStructure").SetValue(structure);
+            // }
+            // else
+            // {
+            //     Log.Message($"Madagascar Vanilla: Unknown structure ({structure}), skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            // }
             
             // Set Styles
             List<StyleCategoryDef> styleCategories = MadagascarVanillaMod.Persistables.StyleCategories;
@@ -431,7 +369,6 @@ namespace MadagascarVanilla.Patches
                 
                 Log.Message("Setting selected styles to validStyleCategories.");
                 traverse.Field("selectedStyles").SetValue(validStyleCategories);
-                Log.Message("Recaching style categories.");
                 RecacheStyleCategoriesWithPriority((Page_ChooseIdeoPreset) __instance);
             }
             else
@@ -441,27 +378,6 @@ namespace MadagascarVanilla.Patches
 
             IdeoligionSettingsLoaded = true;
         }
-        
-        // Need to recache the selectedStylesWithPriority private field so that the tooltips get instantiated properly.
-        // TODO: remove this and just call the private method in Page_ChooseIdeoPreset instead.
-        private static void RecacheStyleCategoriesWithPriority(Page_ChooseIdeoPreset __instance)
-        {
-            Traverse traverse = Traverse.Create(__instance);
-            List<StyleCategoryDef> selectedStyles = traverse.Field("selectedStyles").GetValue<List<StyleCategoryDef>>();
-            List<ThingStyleCategoryWithPriority> selectedStylesWithPriority = traverse.Field("selectedStylesWithPriority").GetValue<List<ThingStyleCategoryWithPriority>>();
-            
-            selectedStylesWithPriority.Clear();
-            for (int i = 0; i < selectedStyles.Count; i++)
-            {
-                StyleCategoryDef styleCategoryDef = selectedStyles[i];
-                if (styleCategoryDef != null)
-                {
-                    selectedStylesWithPriority.Add(new ThingStyleCategoryWithPriority(styleCategoryDef, 3 - i));
-                }
-            }
-            traverse.Field("selectedStylesWithPriority").SetValue(selectedStylesWithPriority);
-        }
-        
 
         // Persist the bits of the Ideoligion that we need for setup:
         // - Preset Selection (type of ideoligion)
@@ -494,6 +410,56 @@ namespace MadagascarVanilla.Patches
 
                 //Log.Message("Write settings");
                 MadagascarVanillaMod.Instance.WriteSettings();
+            }
+        }
+        
+        // Need to recache the selectedStylesWithPriority private field so that the tooltips get instantiated properly.
+        // TODO: remove this and just call the private method in Page_ChooseIdeoPreset instead.
+        private static void RecacheStyleCategoriesWithPriority(Page_ChooseIdeoPreset __instance)
+        {
+            Traverse traverse = Traverse.Create(__instance);
+            List<StyleCategoryDef> selectedStyles = traverse.Field("selectedStyles").GetValue<List<StyleCategoryDef>>();
+            List<ThingStyleCategoryWithPriority> selectedStylesWithPriority = traverse.Field("selectedStylesWithPriority").GetValue<List<ThingStyleCategoryWithPriority>>();
+            
+            selectedStylesWithPriority.Clear();
+            for (int i = 0; i < selectedStyles.Count; i++)
+            {
+                StyleCategoryDef styleCategoryDef = selectedStyles[i];
+                if (styleCategoryDef != null)
+                {
+                    selectedStylesWithPriority.Add(new ThingStyleCategoryWithPriority(styleCategoryDef, 3 - i));
+                }
+            }
+            traverse.Field("selectedStylesWithPriority").SetValue(selectedStylesWithPriority);
+        }
+        
+        // Defs: Set the field using the Traverse, with some extra logging
+        private static void SetValueOfField<T>(Traverse traverse, string fieldName, object value) where T : Def
+        {
+            if (value != null && DefDatabase<T>.AllDefsListForReading.Contains(value))
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Madagascar Vanilla: set value of {fieldName}: {value}");
+                traverse.Field(fieldName).SetValue(value);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no {fieldName} value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+            }
+        }
+        
+        // Non-Defs: Set the field using the Traverse, with some extra logging
+        private static void SetValueOfField(Traverse traverse, string fieldName, object value)
+        {
+            if (value != null)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"Madagascar Vanilla: patch set value of {fieldName}: {value}");
+                traverse.Field(fieldName).SetValue(value);
+            }
+            else
+            {
+                Log.Message($"Madagascar Vanilla: no {fieldName} value, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
             }
         }
     }
