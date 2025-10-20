@@ -49,7 +49,6 @@ I'd say that 95% of this mod is simple quality of life, with no implact on balan
 
 ## Downloads
 
-* [Steam][steam]
 * [GitHub][github]
 
 [license]: https://github.com/protobeard/madagascar_vanilla/blob/master/LICENSE
