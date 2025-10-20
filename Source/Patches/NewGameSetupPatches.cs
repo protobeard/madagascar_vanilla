@@ -437,6 +437,7 @@ namespace MadagascarVanilla.Patches
             StorytellerSettingsLoaded = false;
             WorldGeneratorSettingsLoaded = false;
             IdeoligionSettingsLoaded = false;
+            ScenarioSettingsLoaded = false;
         }
         
         // Need to recache the selectedStylesWithPriority private field so that the tooltips get instantiated properly.
