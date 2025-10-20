@@ -28,38 +28,39 @@ namespace MadagascarVanilla.Patches
         
         // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
         
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
-        public static void Postfix(Page __instance)
+        public static void PageDoBackPostfix(Page __instance)
         {
             if (!PersistNewGameSetup)
                 return;
 
-            if (__instance is Page_SelectScenario)
+            switch (__instance)
             {
-                PersistScenarioSettings(__instance as Page_SelectScenario);
-                ScenarioSettingsLoaded = false;
-            }
-            else if (__instance is Page_SelectStoryteller)
-            {
-                PersistStorytellerSettings(__instance as Page_SelectStoryteller);
-                StorytellerSettingsLoaded = false;
-            }
-            else if (__instance is Page_CreateWorldParams)
-            {
-                PersistWorldParams(__instance as Page_CreateWorldParams);
-                WorldGeneratorSettingsLoaded = false;
-            }
-            else if (__instance is Page_ChooseIdeoPreset)
-            {
-                PersistIdeoligionSettings(__instance as Page_ChooseIdeoPreset);
-                IdeoligionSettingsLoaded = false;
+                case Page_SelectScenario scenarioWindow:
+                    PersistScenarioSettings(scenarioWindow);
+                    ScenarioSettingsLoaded = false;
+                    break;
+                case Page_SelectStoryteller storytellerWindow:
+                    PersistStorytellerSettings(storytellerWindow);
+                    StorytellerSettingsLoaded = false;
+                    break;
+                case Page_CreateWorldParams worldParamsWindow:
+                    PersistWorldParams(worldParamsWindow);
+                    WorldGeneratorSettingsLoaded = false;
+                    break;
+                case Page_ChooseIdeoPreset ideoligionWindow:
+                    PersistIdeoligionSettings(ideoligionWindow);
+                    IdeoligionSettingsLoaded = false;
+                    break;
             }
         }
 
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_SelectScenario))]
         [HarmonyPatch(nameof(Page_SelectScenario.PreOpen))]
-        public static void Postfix(Page_SelectScenario __instance)
+        public static void SelectScenarioPreOpenPostfix(Page_SelectScenario __instance)
         {
             // Since this is the first part of new game setup cache the setting for whether we are persisting
             // settings. The rest of the time we can just check this value.
@@ -78,12 +79,9 @@ namespace MadagascarVanilla.Patches
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_SelectScenario))]
         [HarmonyPatch("CanDoNext")]
-        public static void SelectScenarioPostfix(Page_SelectScenario __instance, bool __result)
+        public static void SelectScenarioCanDoNextPostfix(Page_SelectScenario __instance, bool __result)
         {
-            if (!PersistNewGameSetup)
-                return;
-            
-            if (ScenarioSettingsLoaded)
+            if (!PersistNewGameSetup || ScenarioSettingsLoaded)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
@@ -108,17 +106,12 @@ namespace MadagascarVanilla.Patches
         //  - Storyteller
         //  - DifficultyDef/Difficulty
         //  - Commitment Mode
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
-        public static void Postfix(Page_SelectStoryteller __instance)
+        public static void SelectStorytellerPreOpenPostfix(Page_SelectStoryteller __instance)
         { 
-            if (!PersistNewGameSetup)
-                return;
-            
-            if (__instance == null)
-                return;
-            
-            if (StorytellerSettingsLoaded)
+            if (!PersistNewGameSetup || StorytellerSettingsLoaded || __instance == null)
                 return;
 
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.PreOpen");
@@ -150,9 +143,10 @@ namespace MadagascarVanilla.Patches
         // - storytellerDef
         // - difficultyDef/difficulty
         // - commitment mode
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_SelectStoryteller))]
         [HarmonyPatch("CanDoNext")]
-        public static void Postfix(Page_SelectStoryteller __instance, bool __result)
+        public static void SelectStorytellerCanDoNextPostfix(Page_SelectStoryteller __instance, bool __result)
         {
             if (!PersistNewGameSetup)
                 return;
@@ -183,17 +177,12 @@ namespace MadagascarVanilla.Patches
         //  - landmark density
         //  - factions
         //  - pollution
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_CreateWorldParams))]
         [HarmonyPatch(nameof(Page_CreateWorldParams.PreOpen))]
-        public static void Postfix(Page_CreateWorldParams __instance)
+        public static void CreateWorldParamsPreOpenPostfix(Page_CreateWorldParams __instance)
         {
-            if (!PersistNewGameSetup)
-                return;
-            
-            if (__instance == null)
-                return;
-            
-            if (WorldGeneratorSettingsLoaded)
+            if (!PersistNewGameSetup || WorldGeneratorSettingsLoaded || __instance == null)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_CreateWorldParams.PreOpen");
@@ -254,9 +243,10 @@ namespace MadagascarVanilla.Patches
             WorldGeneratorSettingsLoaded = true;
         }
         
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_CreateWorldParams))]
         [HarmonyPatch("CanDoNext")]
-        public static void Postfix(Page_CreateWorldParams __instance, bool __result)
+        public static void CreateWorldParamsCanDoNextPostfix(Page_CreateWorldParams __instance, bool __result)
         {
             if (!PersistNewGameSetup)
                 return;
@@ -290,22 +280,17 @@ namespace MadagascarVanilla.Patches
         // - Ideoligion (if preset is "Preset", otherwise null)
         // - Structure
         // - Styles
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Window))]
         [HarmonyPatch(nameof(Window.PreOpen))]
-        public static void Postfix(Window __instance)
+        public static void WindowPreOpenPostfix(Window __instance)
         {
-            if (!(__instance is Page_ChooseIdeoPreset))
-                return;
-            
-            if (!PersistNewGameSetup)
+            if (!PersistNewGameSetup || IdeoligionSettingsLoaded || !(__instance is Page_ChooseIdeoPreset page))
                 return;
                         
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.PreOpen");
-            
-            if (IdeoligionSettingsLoaded)
-                return;
 
-            Traverse traverse = Traverse.Create((Page_ChooseIdeoPreset) __instance);
+            Traverse traverse = Traverse.Create(page);
             
             // Set presetSelection and selectedIdeo -- this is all a bit awkward because the PresetSeletion enum
             // is private, so we've stored it as a new enum: PresetSelectionType. So we grab our PresetSelectionType,
@@ -381,7 +366,7 @@ namespace MadagascarVanilla.Patches
                 }
                 
                 traverse.Field("selectedStyles").SetValue(validStyleCategories);
-                RecacheStyleCategoriesWithPriority((Page_ChooseIdeoPreset) __instance);
+                RecacheStyleCategoriesWithPriority(page);
             }
             else
             { 
@@ -400,7 +385,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_ChooseIdeoPreset))]
         [HarmonyPatch("DoNext")]
-        public static void DoNextPostfix(Page_ChooseIdeoPreset __instance)
+        public static void ChooseIdeoPresetDoNextPostfix(Page_ChooseIdeoPreset __instance)
         {
             if (!PersistNewGameSetup)
                 return;
@@ -427,7 +412,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Page_ConfigureStartingPawns))]
         [HarmonyPatch("DoNext")]
-        public static void Postfix(Page_ConfigureStartingPawns __instance)
+        public static void ConfigureStartingPawnsDoNextPostfix(Page_ConfigureStartingPawns __instance)
         {
             if (!PersistNewGameSetup)
                 return;
