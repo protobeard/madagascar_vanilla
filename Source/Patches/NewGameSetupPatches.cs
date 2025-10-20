@@ -26,9 +26,7 @@ namespace MadagascarVanilla.Patches
         private static bool IdeoligionSettingsLoaded;
         
         // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
-
-        // TODO: save settings when the back button is pressed... otherwise going back, changing things,
-        // going back further, then going forward causes changed settings to get overwritten.
+        // TODO: save scenario choice as well? Seems like yes.
         
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
@@ -39,15 +37,18 @@ namespace MadagascarVanilla.Patches
             
             if (__instance is Page_SelectStoryteller)
             {
+                PersistStorytellerSettings(__instance as Page_SelectStoryteller);
                 StorytellerSettingsLoaded = false;
             }
             else if (__instance is Page_CreateWorldParams)
             {
+                PersistWorldParams(__instance as Page_CreateWorldParams);
                 WorldGeneratorSettingsLoaded = false;
             }
             else if (__instance is Page_ChooseIdeoPreset)
             {
-                 IdeoligionSettingsLoaded = false;
+                PersistIdeoligionSettings(__instance as Page_ChooseIdeoPreset);
+                IdeoligionSettingsLoaded = false;
             }
         }
         
@@ -110,17 +111,20 @@ namespace MadagascarVanilla.Patches
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
             
             if (__result)
-            { 
-                Traverse traverse = Traverse.Create(__instance);
+                PersistStorytellerSettings(__instance);
+        }
+
+        private static void PersistStorytellerSettings(Page_SelectStoryteller window)
+        {
+            Traverse traverse = Traverse.Create(window);
                 
-                // Persist new game settings
-                MadagascarVanillaMod.Persistables.StorytellerDef = traverse.Field("storyteller").GetValue<StorytellerDef>();
-                MadagascarVanillaMod.Persistables.DifficultyDef = traverse.Field("difficulty").GetValue<DifficultyDef>();
-                MadagascarVanillaMod.Persistables.Difficulty = traverse.Field("difficultyValues").GetValue<Difficulty>();
-                MadagascarVanillaMod.Persistables.Permadeath = Find.GameInitData.permadeath;
-                
-                MadagascarVanillaMod.Instance.WriteSettings();
-            }
+            // Persist new game settings
+            MadagascarVanillaMod.Persistables.StorytellerDef = traverse.Field("storyteller").GetValue<StorytellerDef>();
+            MadagascarVanillaMod.Persistables.DifficultyDef = traverse.Field("difficulty").GetValue<DifficultyDef>();
+            MadagascarVanillaMod.Persistables.Difficulty = traverse.Field("difficultyValues").GetValue<Difficulty>();
+            MadagascarVanillaMod.Persistables.Permadeath = Find.GameInitData.permadeath;
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
         
         // Set defaults from mod settings for:
@@ -211,7 +215,12 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_CreateWorldParams.CanDoNext");
             
-            Traverse traverse = Traverse.Create(__instance);
+            PersistWorldParams(__instance);
+        }
+
+        private static void PersistWorldParams(Page_CreateWorldParams window)
+        {
+            Traverse traverse = Traverse.Create(window);
             
             MadagascarVanillaMod.Persistables.Factions = traverse.Field("factions").GetValue<List<FactionDef>>();
             
@@ -350,7 +359,12 @@ namespace MadagascarVanilla.Patches
                         
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.DoNext");
 
-            Traverse traverse = Traverse.Create(__instance);
+            PersistIdeoligionSettings(__instance);
+        }
+
+        private static void PersistIdeoligionSettings(Page_ChooseIdeoPreset window)
+        {
+            Traverse traverse = Traverse.Create(window);
             
             MadagascarVanillaMod.Persistables.PresetSelection = traverse.Field("presetSelection").GetValue<PresetSelectionType>();
             MadagascarVanillaMod.Persistables.Ideoligion = traverse.Field("selectedIdeo").GetValue<IdeoPresetDef>();
