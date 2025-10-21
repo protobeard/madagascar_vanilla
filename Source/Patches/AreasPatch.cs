@@ -18,8 +18,8 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(AreaManager __instance)
         {
             string startingAreasString = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, StartingAreasList));
-            List<string> startingAreasList = startingAreasString.Split(StartingAreaDelimiter).ToList();
-
+            List<string> startingAreasList = startingAreasString.Split(StartingAreaDelimiter).Select(s => s.Trim()).ToList();
+            
             if (startingAreasList.Any())
             {
                 // Remove the default Area RimWorld creates ("Area 1")

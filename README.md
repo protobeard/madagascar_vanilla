@@ -36,7 +36,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Avoid Scheduled Mood Debuffs: Do not reduce sleep in schedules for Night Owl/UV Sensitive even if the pawn has Quick Sleeper
 * Automatically Expand Home: enable or disable automatically expanding the Home area.
 * Auto Rebuild in Home: enable or disable automatically rebuilding in the Home area.
-* Starting Areas: provide a list of areas which will be automatically created on each new game (e.g., Work, Inside, Safe).
+* Starting Areas: provide a list of areas which will be automatically created on each new game (e.g., "Work, Inside, Safe").
 * Use Manual Priorities: enable or disable using manual work priorities.
 * Bill Storage: enable Drop on Floor or Take to Best Stockpile default for new production bills.
 * Bill Ingredient Search Radius: set a default ingredient search radius for new production bills.
