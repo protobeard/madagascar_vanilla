@@ -24,7 +24,6 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 ### Quality of Life
 
 * Stand Your Ground: set a default value for pawn hostility response.
-* Just Say No: set a default value for drug policy. FIXME: this should be removed in favor of just persisting drug policies.
 * Allow Goodwill Reward: enable or disable goodwill rewards from factions.
 * Allow Honor Reward: enable of distable honot rewards from factions.
 * Override Default Schedules: enable a better (according to protobeard) default schedule for pawns.

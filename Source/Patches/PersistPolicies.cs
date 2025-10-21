@@ -136,7 +136,6 @@ namespace MadagascarVanilla.Patches
                 __instance.AllOutfits.Add(apparelPolicy);
         }
         
-        // FIXME: "Just Say No" feature is handled here too, since the default gets saved. Remove that patch.
         // Note: first policy in the DrugDatabase list is the default, so I shouldn't need to do anything
         // special to preserve that.
         [HarmonyPatch(typeof(DrugPolicyDatabase))]

@@ -52,20 +52,6 @@
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Drugs</text>
-                <anchor>Middle</anchor>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>drugPolicy</key>
-                <label>Just Say No</label>
-                <tooltip>Set default pawn drug policy to "No Drugs" (vanilla is "Social Drugs").</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-
-            <li Class="XmlExtensions.Setting.GapLine"/>
-            <li Class="XmlExtensions.Setting.Text">
                 <text>Acceptable Quest Rewards</text>
                 <anchor>Middle</anchor>
             </li>
