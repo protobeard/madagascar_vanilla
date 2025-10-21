@@ -150,36 +150,6 @@
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Plant Changes</text>
-                <tooltip>All of these are off by default in vanilla.</tooltip>
-                <anchor>Middle</anchor>
-            </li>
-
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>hydroponicDevilstrand</key>
-                <label>Hydroponic Devilstrand</label>
-                <tooltip>Devilstrand can be grown in hydroponic basins.</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>falloutImmuneDevilstrand</key>
-                <label>Toxic Fallout Immune Devilstrand</label>
-                <tooltip>Devilstrand is immune to toxic fallout.</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>falloutImmuneToxipotatos</key>
-                <label>Toxic Fallout Immune Toxipotatos</label>
-                <tooltip>Toxipotatos are immune to toxic fallout.</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-
-            <li Class="XmlExtensions.Setting.GapLine"/>
-            <li Class="XmlExtensions.Setting.Text">
                 <text>Areas</text>
                 <anchor>Middle</anchor>
             </li>
@@ -328,22 +298,6 @@
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Medical Care Defaults</text>
-                <anchor>Middle</anchor>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>persistMedicalSettings</key>
-                <label>Medical Defaults Persist Across Games</label>
-                <tooltip>Persist medical care default settings across games -- can set pawns to Herbal Medicine default once and never worry again (vanilla default is false).</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-            <li Class="MadagascarVanilla.Settings.MedicalDefaults" />
-
-
-            <li Class="XmlExtensions.Setting.GapLine"/>
-            <li Class="XmlExtensions.Setting.Text">
                 <text>Auto Cutting</text>
                 <anchor>Middle</anchor>
             </li>
@@ -418,10 +372,21 @@
                 <anchor>Middle</anchor>
             </li>
 
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistMedicalSettings</key>
+                <label>Medical Defaults Persist Across Games</label>
+                <tooltip>Persist medical care default settings across games -- can set pawns to Herbal Medicine default once and never worry again (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="MadagascarVanilla.Settings.MedicalDefaults" />
+
+
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>persistApparelPolicies</key>
-                <label>Outfit Policies Persist Across Games</label>
-                <tooltip>Outfit policies persist across new games -- make your desired set of outfits once and keep them forever.</tooltip>
+                <label>Apparel Policies Persist Across Games</label>
+                <tooltip>Apparel policies persist across new games -- make your desired set of outfits once and keep them forever.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
@@ -457,6 +422,36 @@
                 <key>persistNewGameSetup</key>
                 <label>Persist New Game Configuration</label>
                 <tooltip>Save new game setup (storyteller, difficulty, world size, etc.) and reuse it for the next new game.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Plant Changes</text>
+                <tooltip>All of these are off by default in vanilla.</tooltip>
+                <anchor>Middle</anchor>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>hydroponicDevilstrand</key>
+                <label>Hydroponic Devilstrand</label>
+                <tooltip>Devilstrand can be grown in hydroponic basins.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>falloutImmuneDevilstrand</key>
+                <label>Toxic Fallout Immune Devilstrand</label>
+                <tooltip>Devilstrand is immune to toxic fallout.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>falloutImmuneToxipotatos</key>
+                <label>Toxic Fallout Immune Toxipotatos</label>
+                <tooltip>Toxipotatos are immune to toxic fallout.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
