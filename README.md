@@ -61,6 +61,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Toxic Fallout Immune Toxipotatos: seems on brand.
 * Toxic Fallout Immune Devilstrand: it takes so long to grow already.
 * Hydroponic Devilstrand: allow devilstrand to be grown in hydroponics.
+* Adjust Gauranlen Pruning speed: I always feel like this is just too much work.
 
 
 ## Balance

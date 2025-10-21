@@ -43,13 +43,6 @@
         <li>imranfish.xmlextensions</li>
     </loadAfter>
     <description>
-        Play like protobeard!
-
-        Changes default values of various things to be the way I like them. Mostly intended to make starting new colonies less of a chore:
-            * Set the default drug policy on pawns to "No drugs" instead of the vanilla default of "Social drugs".
-
-        Adds a few features to fix things I find anoying:
-            * Allows devilstrand to be grown in hydroponic basins.
-            * Doubles the base speed of Gauranlen pruning.
+        Adds a bunch of quality of life settings. Please see the README for details.
     </description>
 </ModMetaData>

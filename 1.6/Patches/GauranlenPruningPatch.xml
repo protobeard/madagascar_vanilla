@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <Patch>
-    <Operation Class="PatchOperationReplace">
-        <xpath>/Defs/ThingDef[defName = "Plant_TreeGauranlen"]/comps/li[4]/connectionStrengthGainPerHourPruningBase</xpath>
-        <value>
-            <connectionStrengthGainPerHourPruningBase>0.02</connectionStrengthGainPerHourPruningBase>
-        </value>
+
+    <Operation Class="XmlExtensions.UseSetting">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>gauralenPruningSpeedMultipler</key>
+        <defaultValue>1</defaultValue>
+        <apply>
+
+            <Operation Class="XmlExtensions.PatchOperationMath">
+                <xpath>/Defs/ThingDef[defName = "Plant_TreeGauranlen"]/comps/li[4]/connectionStrengthGainPerHourPruningBase</xpath>
+                <value>{gauralenPruningSpeedMultipler}</value>
+                <operation>*</operation>
+            </Operation>
+
+        </apply>
     </Operation>
+
 </Patch>

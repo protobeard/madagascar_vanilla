@@ -451,6 +451,14 @@
                 <defaultValue>false</defaultValue>
             </li>
 
+            <li Class="XmlExtensions.Setting.Numeric">
+                <key>gauralenPruningSpeedMultipler</key>
+                <label>Multiply Gauralen Pruning Speed by X</label>
+                <defaultValue>1</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
+            </li>
+
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Gap"/>
