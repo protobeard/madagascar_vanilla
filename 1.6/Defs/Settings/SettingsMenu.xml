@@ -175,6 +175,7 @@
             <li Class="XmlExtensions.Setting.Textbox">
                 <key>startingAreasList</key>
                 <label>Starting Areas:</label>
+                <defaultValue></defaultValue>
             </li>
 
 
