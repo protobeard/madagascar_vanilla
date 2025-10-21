@@ -26,8 +26,6 @@ namespace MadagascarVanilla.Patches
         private static bool WorldGeneratorSettingsLoaded;
         private static bool IdeoligionSettingsLoaded;
         
-        // TODO: save storyteller settings on Page_SelectStorytellerInGame as well?
-        
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Page))]
         [HarmonyPatch("DoBack")]
@@ -155,6 +153,36 @@ namespace MadagascarVanilla.Patches
             
             if (__result)
                 PersistStorytellerSettings(__instance);
+        }
+        
+        // Save storyteller settings if modified in game
+        // - Storyteller
+        // - DifficultDef
+        // - Difficulty
+        // note: commitment mode can't be changed in game, so don't do anything with it here.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Page_SelectStorytellerInGame))]
+        [HarmonyPatch(nameof(Page_SelectStorytellerInGame.PreClose))]
+        private static void SelectStorytellerInGamePreClosePostfix()
+        {
+            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
+            if (!PersistNewGameSetup)
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStorytellerInGame.PreClose");
+            
+            PersistStorytellerInGameSettings();
+        }
+
+        private static void PersistStorytellerInGameSettings()
+        {
+            Storyteller storyteller = Current.Game.storyteller;
+                
+            MadagascarVanillaMod.Persistables.StorytellerDef = storyteller.def;
+            MadagascarVanillaMod.Persistables.DifficultyDef = storyteller.difficultyDef;
+            MadagascarVanillaMod.Persistables.Difficulty = storyteller.difficulty;
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
 
         private static void PersistStorytellerSettings(Page_SelectStoryteller window)
@@ -336,7 +364,7 @@ namespace MadagascarVanilla.Patches
             }
             else
             {
-                Log.Message($"Madagascar Vanilla: Unknown preset selection ({presetSelectionType}), skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
+                Log.Message($"Madagascar Vanilla: Preset selection missing, skip trying to set a default. This is expected on first new game after enabling persistant storyteller settings.");
             }
             
             // Set Structure
