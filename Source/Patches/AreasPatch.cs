@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -33,7 +32,7 @@ namespace MadagascarVanilla.Patches
                 if (__instance.TryMakeNewAllowed(out Area_Allowed areaAllowed))
                     areaAllowed.RenamableLabel = startingAreaName;
                 else
-                    Log.Error("Attempted to create more default areas than what is allowed.");
+                    Log.Error($"Attempted to create more default areas than what is allowed. Skipped creating {startingAreaName}");
             }
         }
     }
