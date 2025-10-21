@@ -169,7 +169,7 @@
             </li>
 
             <li Class="XmlExtensions.Setting.Text">
-                <text>Comma separated list of areas to start a new game with (e.g., "Work, Inside, Safe"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</text>
+                <text>Comma separated list of areas to start a new game with (e.g., "Ship, Ship+, Work, Inside, Safe, Clean, Slaughter"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</text>
             </li>
 
             <li Class="XmlExtensions.Setting.Textbox">
@@ -270,23 +270,7 @@
                 <text>For 100% worlds it can be nice to have additional time for Odyssey space site quests so that traveling around the world is not as punishing. You can also increase the distance at which these quests are located to further enhance the world traveling vibe (note that grav ship quests are not impacted as they can already appear far away from the colony).</text>
                 <anchor>Left</anchor>
             </li>
-
-            <li Class="XmlExtensions.Setting.Numeric">
-                <key>odysseyQuestExtensionMultipler</key>
-                <label>Multiply Odyssey Quest Expiration Time by X (vanilla default is 1, I'd recommend 2-3 for a 100% world)</label>
-                <defaultValue>1</defaultValue>
-                <decimals>0</decimals>
-                <min>1</min>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Range">
-                <key>odysseyQuestRangeExtender</key>
-                <label>Odyssey Quest Generation Distance (vanilla default is 1~3, I'd recommend 1~5 for a 100% world)</label>
-                <defaultValue>1~3</defaultValue>
-                <decimals>0</decimals>
-                <min>1</min>
-                <max>20</max>
-            </li>
+            <li Class="XmlExtensions.Setting.Gap"/>
 
             <li Class="XmlExtensions.Setting.Numeric">
                 <key>allowXAdditionalGravshipSubquests</key>
@@ -294,6 +278,33 @@
                 <defaultValue>3</defaultValue>
                 <decimals>0</decimals>
                 <min>3</min>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Numeric">
+                <key>odysseyQuestExtensionMultipler</key>
+                <label>Multiply Odyssey Quest Expiration Time by X </label>
+                <defaultValue>1</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>(vanilla default is 1, I'd recommend 2-3 for a 100% world)</text>
+                <anchor>Left</anchor>
+            </li>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Odyssey Quest Generation Distance (vanilla default is 1~3, I'd recommend 1~5 for a 100% world):</text>
+                <anchor>Left</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Range">
+                <key>odysseyQuestRangeExtender</key>
+                <defaultValue>1~3</defaultValue>
+                <decimals>0</decimals>
+                <min>1</min>
+                <max>20</max>
             </li>
 
 
@@ -369,10 +380,23 @@
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Policy Persistance</text>
+                <text>Storyteller Settings</text>
                 <anchor>Middle</anchor>
             </li>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistNewGameSetup</key>
+                <label>Persist New Game Configuration</label>
+                <tooltip>Save new game setup (storyteller, difficulty, world size, etc.) and reuse it for the next new game.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Policy Persistance</text>
+                <anchor>Middle</anchor>
+            </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>persistMedicalSettings</key>
@@ -382,7 +406,6 @@
             </li>
 
             <li Class="MadagascarVanilla.Settings.MedicalDefaults" />
-
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>persistApparelPolicies</key>
@@ -409,20 +432,6 @@
                 <key>persistReadingPolicies</key>
                 <label>Reading Policies Persist Across Games</label>
                 <tooltip>Reading policies persist across new games -- make your desired set of reading policies once and keep them forever.</tooltip>
-                <defaultValue>false</defaultValue>
-            </li>
-
-
-            <li Class="XmlExtensions.Setting.GapLine"/>
-            <li Class="XmlExtensions.Setting.Text">
-                <text>Storyteller Settings</text>
-                <anchor>Middle</anchor>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>persistNewGameSetup</key>
-                <label>Persist New Game Configuration</label>
-                <tooltip>Save new game setup (storyteller, difficulty, world size, etc.) and reuse it for the next new game.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
