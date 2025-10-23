@@ -79,7 +79,7 @@
 
             <li Class="XmlExtensions.Setting.Gap"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Overrride the default RimWorld schedule with one that includes recreation, and has slightly less sleep so if pawns wake up early they don't go back to bed. Special trairs and gene modifiers can be enabled below. Regardless of modifications, all pawns will recreate at the same time to help with social relations. Note that children will be assigned recreation even though they don't technically need it (that way you don't have to touch their schedule when they reach adulthood).</text>
+                <text>Overrride the default RimWorld schedule with one that includes recreation, and has slightly less sleep so if pawns wake up early they don't go back to bed. Special traits and gene modifiers can be enabled below. Regardless of modifications, all pawns will recreate at the same time to help with social relations. Note that children will be assigned recreation even though they don't technically need it (that way you don't have to touch their schedule when they reach adulthood).</text>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
@@ -88,6 +88,8 @@
                 <tooltip>Set pawns up with a better initial schedule which includes recreation.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
+
+            <li Class="MadagascarVanilla.Settings.ScheduleDefaults" />
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>initialNightOwlSchedule</key>

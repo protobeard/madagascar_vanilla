@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using HarmonyLib;
+using MadagascarVanilla.Settings;
 using XmlExtensions;
 
 
@@ -92,135 +93,26 @@ namespace MadagascarVanilla.Patches
             if ((initialBodyMasterySchedule && pawn.story.traits.HasTrait(TraitDefOf.BodyMastery)) || 
                 (initialSleepyGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
             {
-                SetSchedule(pawn, ScheduleType.NeverSleep, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NeverSleep, reduceSleepForQuickSleepers);
             }
             else if ((initialNightOwlSchedule && pawn.story.traits.HasTrait(TraitDefOf.NightOwl)) ||
                 (initialUVSensitiveSchedule && (pawn.genes.HasActiveGene(GeneDefOf.UVSensitivity_Mild) || pawn.genes.HasActiveGene(GeneDefOf.UVSensitivity_Intense))))
             {
-                SetSchedule(pawn, ScheduleType.NightShift, reduceSleepForQuickSleepers, avoidScheduledMoodDebuffs);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NightShift, reduceSleepForQuickSleepers, avoidScheduledMoodDebuffs);
             }
             else if (initialSleepyGeneSchedule && (pawn.genes.HasActiveGene(GeneDefOf.VerySleepy) || pawn.genes.HasActiveGene(GeneDefOf.Sleepy)))
             {
-                SetSchedule(pawn, ScheduleType.Biphasic, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.Biphasic, reduceSleepForQuickSleepers);
             }
             else if ((initialSleepyGeneSchedule && (pawn.genes.HasActiveGene(GeneDefOf.LowSleep))) || 
                       initialSchedule)
             {
-                SetSchedule(pawn, ScheduleType.DayShift, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.DayShift, reduceSleepForQuickSleepers);
             }
             
             // Add pawn to the list we've already looked at so that we don't reset their schedule
             // the next time AddAndRemoveDynamicComponents is called
             cache.HaveSetSchedules.Add(pawn);
         }
-        
-        // Set pawn schedules:
-        //         NeverSleep           |        Night Shift      |          Biphasic    |         Day Shift   |     Default
-        // BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Initial > RimWorld Default
-        // 
-        // Modifiers: Quick Sleeper, reduce sleep time by 1/3
-        //
-        // If avoidScheduledMoodDebuffs then leave sleep schedule for Night Owl/UV Sensitive as sleeping through the day even
-        // if the pawn has Quick Sleeper.
-        //
-        // The constructor in Pawn_TimetableTracker:
-        // for (int index = 0; index < 24; ++index)
-        //    this.times.Add(index <= 5 || index > 21 ? TimeAssignmentDefOf.Sleep : TimeAssignmentDefOf.Anything);
-        private static void SetSchedule(Pawn pawn, ScheduleType type = ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
-        {
-            bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
-            int quickSleeperOffset;
-            
-            switch (type)
-            {
-                case ScheduleType.DayShift:
-                    pawn.timetable.times.Clear();
-                    quickSleeperOffset = quickSleeper ? 2 : 0;
-                    
-                    for (int index = 0; index < 24; ++index)
-                    {
-                        if (index >= 0 && index < 4 - quickSleeperOffset)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 4 - quickSleeperOffset && index < 20)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 20 && index < 22)
-                            pawn.timetable.times.Add(JoyOrAnything(pawn));
-                        else
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                    }
-                    break;
-                case ScheduleType.NightShift:
-                    pawn.timetable.times.Clear();
-                    quickSleeperOffset = avoidScheduledMoodDebuffs ? 0 : (quickSleeper ? 2 : 0);
-                        
-                    for (int index = 0; index < 24; ++index)
-                    {
-                        if (index >= 0 && index < 11)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 11 && index < 19 - quickSleeperOffset)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 19 - quickSleeperOffset && index < 22)
-                            pawn.timetable.times.Add(JoyOrAnything(pawn));
-                        else
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                    }
-                    break;
-                case ScheduleType.NeverSleep:
-                    pawn.timetable.times.Clear();
-                    
-                    for (int index = 0; index < 24; ++index)
-                    {
-                        if (index >= 0 && index < 20)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 20 && index < 22)
-                            pawn.timetable.times.Add(JoyOrAnything(pawn));
-                        else
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                    }
-                    break;
-                case ScheduleType.Biphasic:
-                    pawn.timetable.times.Clear();
-                    quickSleeperOffset = quickSleeper ? 1 : 0;
-                    
-                    for (int index = 0; index < 24; ++index)
-                    {
-                        if (index >= 0 && index < 2 - quickSleeperOffset)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 2 - quickSleeperOffset && index < 10)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 10 && index < 14 - quickSleeperOffset)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 14 - quickSleeperOffset && index < 20)
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 20 && index < 22)
-                            pawn.timetable.times.Add(JoyOrAnything(pawn));
-                        else
-                            pawn.timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                    }
-                    break;
-                default:
-                    Log.Error("Unknown schedule type: " + type);
-                    break;
-            }
-        }
-
-        // FIXME: looks like pawns aren't considered slaves at this point in execution, even if enslaved from prison.
-        // Need to either patch the enslave interaction or somehow make this trigger later.
-        // Might just remove this method, since as of right now it always returns Joy.
-        // Since slaves don't need Joy, we don't want to assign it to them in their schedule. Give them Anything instead.
-        private static TimeAssignmentDef JoyOrAnything(Pawn pawn)
-        {
-            //Log.Message(pawn.Name + " is Slave of colony? " + pawn.IsSlaveOfColony);
-            //Log.Message(pawn.Name + " is Slave: " + pawn.IsSlave);
-            return pawn.IsSlaveOfColony ? TimeAssignmentDefOf.Anything : TimeAssignmentDefOf.Joy;
-        }
-    }
-    
-    public enum ScheduleType
-    {
-        DayShift,
-        NightShift,
-        Biphasic,
-        NeverSleep
     }
 }

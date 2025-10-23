@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MadagascarVanilla.Patches;
+using MadagascarVanilla.Settings;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -105,6 +107,38 @@ namespace MadagascarVanilla
         public List<FoodPolicy> FoodPolicies => _foodPolicies ??= new List<FoodPolicy>();
         public List<ReadingPolicy> ReadingPolicies => _readingPolicies ??= new List<ReadingPolicy>();
         
+        public enum ScheduleType
+        {
+            DayShift,
+            NightShift,
+            Biphasic,
+            NeverSleep
+        }
+        
+        private Dictionary<ScheduleType, List<TimeAssignmentDef>> _defaultSchedulesDictionary;
+        public Dictionary<ScheduleType, List<TimeAssignmentDef>> DefaultSchedulesDictionary =>
+            _defaultSchedulesDictionary ??= new Dictionary<ScheduleType, List<TimeAssignmentDef>>()
+            {
+                { ScheduleType.DayShift, GeneratePawnTimeAssignments(ScheduleType.DayShift) },
+                { ScheduleType.NightShift, GeneratePawnTimeAssignments(ScheduleType.NightShift) },
+                { ScheduleType.Biphasic, GeneratePawnTimeAssignments(ScheduleType.Biphasic) },
+                { ScheduleType.NeverSleep, GeneratePawnTimeAssignments(ScheduleType.NeverSleep) }
+            };
+
+        // FIXME: clean this up. has side effect of populating the _defaultSchedulesPawnsDict
+        // this should only be run if there are no timetables in the settings file.
+        private List<TimeAssignmentDef> GeneratePawnTimeAssignments(ScheduleType type)
+        {
+            //Pawn pawn = new Pawn();
+            Pawn_TimetableTracker timetable = new Pawn_TimetableTracker(null);
+            ScheduleDefaults.SetDefaultSchedule(timetable, type);
+
+            return timetable.times;
+            //return timetable;
+        }
+        
+        
+        
         public override void ExposeData()
         {
             base.ExposeData();
@@ -140,6 +174,9 @@ namespace MadagascarVanilla
             Scribe_Collections.Look(ref _drugPolicies, "drugPolicies", LookMode.Deep);
             Scribe_Collections.Look(ref _foodPolicies, "foodPolicies", LookMode.Deep);
             Scribe_Collections.Look(ref _readingPolicies, "readingPolicies", LookMode.Deep);
+            
+            // Persist Schedule Defaults
+            Scribe_Collections.Look(ref _defaultSchedulesDictionary, "defaultSchedulesDictionary", LookMode.Value, LookMode.Def);
         }
     }
 

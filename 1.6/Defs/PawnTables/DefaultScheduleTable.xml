@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+    <PawnTableDef>
+        <defName>DefaultSchedules</defName>
+        <workerClass>PawnTable_PlayerPawnsTimetable</workerClass>
+        <columns>
+            <li>Timetable</li>
+        </columns>
+    </PawnTableDef>
+
+</Defs>
