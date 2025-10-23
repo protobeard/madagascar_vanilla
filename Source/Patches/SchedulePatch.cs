@@ -41,6 +41,7 @@ namespace MadagascarVanilla.Patches
         private const string InitialBodyMasterySchedule = "initialBodyMasterySchedule";
         private const string InitialUVSensitiveSchedule = "initialUVSensitiveSchedule";
         private const string InitialSleepyGeneSchedule = "initialSleepyGeneSchedule";
+        private const string InitialNeverSleepGeneSchedule = "initialNeverSleepGeneSchedule";
         
         private const string ReduceSleepForQuickSleepers = "reduceSleepForQuickSleepers";
         private const string AvoidScheduledMoodDebuffs = "avoidScheduledMoodDebuffs";
@@ -58,6 +59,7 @@ namespace MadagascarVanilla.Patches
             bool initialBodyMasterySchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialBodyMasterySchedule));
             bool initialUVSensitiveSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialUVSensitiveSchedule));
             bool initialSleepyGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSleepyGeneSchedule));
+            bool initialNeverSleepGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNeverSleepGeneSchedule));
             
             bool reduceSleepForQuickSleepers = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, ReduceSleepForQuickSleepers));
             bool avoidScheduledMoodDebuffs = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AvoidScheduledMoodDebuffs));
@@ -69,8 +71,7 @@ namespace MadagascarVanilla.Patches
 
             if (cache.HaveSetSchedules.Contains(pawn))
             {
-                if (MadagascarVanillaMod.Verbose())
-                    Log.Message($"Pawn {pawn.Name} is in the cache. Skipping.");
+                if (MadagascarVanillaMod.Verbose()) Log.Message($"Pawn {pawn.Name} is in the cache. Skipping.");
                 return;
             }
             
@@ -91,7 +92,7 @@ namespace MadagascarVanilla.Patches
             }
             
             if ((initialBodyMasterySchedule && pawn.story.traits.HasTrait(TraitDefOf.BodyMastery)) || 
-                (initialSleepyGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
+                (initialNeverSleepGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
             {
                 ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NeverSleep, reduceSleepForQuickSleepers);
             }

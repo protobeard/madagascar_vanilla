@@ -125,19 +125,14 @@ namespace MadagascarVanilla
                 { ScheduleType.NeverSleep, GeneratePawnTimeAssignments(ScheduleType.NeverSleep) }
             };
 
-        // FIXME: clean this up. has side effect of populating the _defaultSchedulesPawnsDict
         // this should only be run if there are no timetables in the settings file.
         private List<TimeAssignmentDef> GeneratePawnTimeAssignments(ScheduleType type)
         {
-            //Pawn pawn = new Pawn();
             Pawn_TimetableTracker timetable = new Pawn_TimetableTracker(null);
             ScheduleDefaults.SetDefaultSchedule(timetable, type);
 
             return timetable.times;
-            //return timetable;
         }
-        
-        
         
         public override void ExposeData()
         {

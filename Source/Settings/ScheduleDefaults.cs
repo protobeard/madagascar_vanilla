@@ -1,83 +1,55 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using MadagascarVanilla.Patches;
 using RimWorld;
 using UnityEngine;
-using UnityEngine.Windows;
 using Verse;
-using Verse.Sound;
-
-using XmlExtensions;
 using XmlExtensions.Setting;
 
 namespace MadagascarVanilla.Settings
 {
     public class ScheduleDefaults : SettingContainer
     {
-        public const string PersistMedicalSettingsKey = "persistMedicalSettings";
-
-        private const float VerticalElementSpacing = 10f;
-        private const float RowSpacing = 6f;
-        private const float RowHeight = 25 + RowSpacing;
+        private const float HeaderHeight = 35;
+        private const float RowSpacing = 5f;
+        private const float RowHeight = 20 + RowSpacing;
         private const float BottomBufferSpacing = 5f;
         
         private const int TimeAssignmentSelectorWidth = 191;
         private const int TimeAssignmentSelectorHeight = 65;
 
-        // FIXME: real implementation
         protected override float CalculateHeight(float width)
         {
-            int rows = 4;
-
-            GameFont currFont = Verse.Text.Font;
-            Verse.Text.Font = GameFont.Small;
-            float defaultMedicineDescriptionLabelHeight = (float)Math.Ceiling(Verse.Text.CalcHeight((string)"DefaultMedicineSettingsDesc".Translate(), width));
-            Verse.Text.Font = currFont;
-            
-            return rows * RowHeight + defaultMedicineDescriptionLabelHeight + BottomBufferSpacing + GetDefaultSpacing();
+            // One header row, 4 schedule type rows
+            int rows = 5;
+            return TimeAssignmentSelectorHeight + (rows * RowHeight) + BottomBufferSpacing + GetDefaultSpacing();
         }
         
         protected override void DrawSettingContents(Rect rect)
         {
-            // lets us select what kind of schedule restriction to paint
-            TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid(new Rect(rect.x, rect.y, TimeAssignmentSelectorWidth , TimeAssignmentSelectorHeight));
-
+            float yOffset = 0;
             List<Pawn> schedulePawns = SchedulePawns();
+            float scheduleTypeLabelWidth = 100f;
+            
+            // lets us select what kind of schedule restriction to paint
+            TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid(new Rect(rect.x, rect.y, TimeAssignmentSelectorWidth, TimeAssignmentSelectorHeight));
+            yOffset += TimeAssignmentSelectorHeight/2f;
             
             PawnTableDef tableDef = DefDatabase<PawnTableDef>.GetNamed("DefaultSchedules");
-            PawnTable table = new PawnTable(tableDef, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)(rect.width - 20f), (int)(rect.height - 20f));
+            PawnTable table = new PawnTable(tableDef, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)rect.width, (int)(rect.height - yOffset));
             
             PawnColumnWorker_DefaultTimetable pcwdt = new PawnColumnWorker_DefaultTimetable();
             
-            pcwdt.DoHeader(new Rect(rect.x + 100, rect.y, rect.width - 100, rect.height), table);
-            
-            float y = 35;
+            pcwdt.DoHeader(new Rect(rect.x + scheduleTypeLabelWidth, rect.y + yOffset, rect.width - scheduleTypeLabelWidth, HeaderHeight), table);
+            yOffset += HeaderHeight;
+
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
             foreach (Pawn pawn in schedulePawns)
             {
-                Widgets.Label(new Rect(rect.x, rect.y + y, rect.width, 25f), pawn.Name.ToString());
-                pcwdt.DoCell(new Rect(rect.x + 100, rect.y + y, rect.width - 100, 25f), pawn, table);
-                y += 25;
+                Widgets.Label(new Rect(rect.x, rect.y + yOffset, scheduleTypeLabelWidth, RowHeight), pawn.Name.ToString().Translate());
+                pcwdt.DoCell(new Rect(rect.x + scheduleTypeLabelWidth, rect.y + yOffset, rect.width - scheduleTypeLabelWidth, RowHeight), pawn, table);
+                yOffset += RowHeight;
             }
-        }
-
-        // TODO: clean this up -- put in a better place, give better name
-        // Create temp pawns to use as timetable placeholders for the UI.
-        private List<Pawn> SchedulePawns()
-        {
-            List<Pawn> pawns = new List<Pawn>();
-            foreach ((MadagascarVanillaPersistables.ScheduleType type, List<TimeAssignmentDef> timeAssignments) in MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary)
-            {
-                Pawn pawn = new Pawn();
-                pawn.Name = new NameSingle(type.ToString());
-                pawn.timetable = new Pawn_TimetableTracker(pawn);
-                pawn.timetable.times = timeAssignments;
-                pawns.Add(pawn);
-            }
-
-            return pawns;
         }
         
         // Set pawn schedules:
@@ -129,8 +101,7 @@ namespace MadagascarVanilla.Settings
                 pawn.timetable.times.Add(timeAssigments[i]);
             }
         }
-
-
+        
         public static void SetDefaultSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
         {
             bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
@@ -225,11 +196,22 @@ namespace MadagascarVanilla.Settings
         //     return pawn.IsSlaveOfColony ? TimeAssignmentDefOf.Anything : TimeAssignmentDefOf.Joy;
         // }
         
-        
-        
-        
-        
+        // Create temp pawns to use as timetable placeholders for the UI.
+        private List<Pawn> SchedulePawns()
+        {
+            List<Pawn> pawns = new List<Pawn>();
+            foreach ((MadagascarVanillaPersistables.ScheduleType type, List<TimeAssignmentDef> timeAssignments) in MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary)
+            {
+                Pawn pawn = new Pawn();
+                pawn.Name = new NameSingle(type.ToString());
+                pawn.timetable = new Pawn_TimetableTracker(pawn);
+                pawn.timetable.times = timeAssignments;
+                pawns.Add(pawn);
+            }
 
+            return pawns;
+        }
+        
         public class PawnColumnWorker_DefaultTimetable : PawnColumnWorker_Timetable
         {
             public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
@@ -238,11 +220,9 @@ namespace MadagascarVanilla.Settings
                 bool parsed = Enum.TryParse(pawn.Name.ToString(), false, out MadagascarVanillaPersistables.ScheduleType scheduleType);
                 if (!parsed)
                 {
-                    Log.Message($"Trying to set {scheduleType} to {pawn.Name}, an unknown schedule type.");
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"Trying to set {scheduleType} to {pawn.Name}, an unknown schedule type.");
                     return;
                 }
-
-                Log.Message($"Setting DefaultScheduleDictionary[{scheduleType}] to {pawn.Name}");
                 
                 MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[scheduleType] = pawn.timetable.times;
                 

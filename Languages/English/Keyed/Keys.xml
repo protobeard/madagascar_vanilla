@@ -3,4 +3,10 @@
 
     <MilkableResourceFullness>Fullness</MilkableResourceFullness>
 
+    <!-- Default Schedule labels -->
+    <DayShift>Day Shift</DayShift>
+    <NightShift>Night Shift</NightShift>
+    <NeverSleep>Never Sleep</NeverSleep>
+    <Biphasic>Biphasic</Biphasic>
+
 </LanguageData>

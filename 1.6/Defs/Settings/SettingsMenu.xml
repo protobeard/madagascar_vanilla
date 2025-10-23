@@ -79,43 +79,59 @@
 
             <li Class="XmlExtensions.Setting.Gap"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Overrride the default RimWorld schedule with one that includes recreation, and has slightly less sleep so if pawns wake up early they don't go back to bed. Special traits and gene modifiers can be enabled below. Regardless of modifications, all pawns will recreate at the same time to help with social relations. Note that children will be assigned recreation even though they don't technically need it (that way you don't have to touch their schedule when they reach adulthood).</text>
-            </li>
+                <text>Overrride the default RimWorld schedule with those specified below, with the following rules (assuming all options below are enabled):
 
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>initialSchedule</key>
-                <label>Override Default Schedules</label>
-                <tooltip>Set pawns up with a better initial schedule which includes recreation.</tooltip>
-                <defaultValue>false</defaultValue>
+                 NeverSleep                 |             Night Shift           |            Biphasic         |     Day Shift
+BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Normal
+
+Modifiers: Quick Sleeper reduce sleep time by 1/3
+
+If avoidScheduledMoodDebuffs is enabled then sleep schedule for Night Owl/UV Sensitive is left as sleeping through the day even if the pawn has Quick Sleeper.
+This only modifies the pawns initial schedule upon recruitment; their schedule can always be changed afterwards in game.
+                </text>
             </li>
 
             <li Class="MadagascarVanilla.Settings.ScheduleDefaults" />
 
             <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialBodyMasterySchedule</key>
+                <label>Assign Body Mastery pawns the Never Sleep Schedule</label>
+                <tooltip>Assign any pawns with the Body Mastery trait the Never Sleep schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialNeverSleepGeneSchedule</key>
+                <label>Assign Never Sleep pawns the Never Sleep Schedule</label>
+                <tooltip>Assign any pawns with the Never Sleep gene the Never Sleep schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
                 <key>initialNightOwlSchedule</key>
-                <label>Special Night Owl Schedule</label>
-                <tooltip>Set up Night Owl pawns with a better initial schedule that sleeps during the day and includes recreation at the same time as other pawns.</tooltip>
+                <label>Assign Night Owl pawns the Night Shift Schedule</label>
+                <tooltip>Assign any pawns with the Night Owl trait the Night Owl schedule.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>initialUVSensitiveSchedule</key>
-                <label>Special UV Sensitive Schedule</label>
-                <tooltip>Set up pawns with UV sensitive genes (Dirtmoles, Sanguophages, etc.) with a better initial schedule that has sleeps during the day and includes recreation at the same time as other pawns.</tooltip>
+                <label>Assign UV Sensitive pawns the Night Shift Schedule</label>
+                <tooltip>Assign pawns with UV sensitive genes (Dirtmoles, Sanguophages, etc.) the Night Shift schedule.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>initialSleepyGeneSchedule</key>
-                <label>Special Sleep Gene Schedules</label>
-                <tooltip>Set up pawns that have sleep modifying genes (Very Sleepy, Sleepy, Low Sleep, Never Sleep) with better initial schedules that have appropriate sleep time and include recreation. Sleep and Very Sleepy pawns are given biphasic scheudules. Never Sleep pawns are given a schedule with no sleep time.</tooltip>
+                <label>Assign Sleepy Pawns the Biphasic Schedule</label>
+                <tooltip>Assign pawns that have sleep modifying genes (Very Sleepy, Sleepy) the Biphasic schedule.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
-                <key>initialBodyMasterySchedule</key>
-                <label>Special Body Mastery Schedule</label>
-                <tooltip>Set up Body Mastery pawns that with a better initial schedule that has no sleep time but includes recreation.</tooltip>
+                <key>initialSchedule</key>
+                <label>Assign "Normal" Pawns Day Shift</label>
+                <tooltip>Assign any pawns that don't meet the above criteria the Day Shift schedule (note that this includes pawns with the Low Sleep gene).</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
