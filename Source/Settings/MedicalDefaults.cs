@@ -62,7 +62,7 @@ namespace MadagascarVanilla.Settings
         private const float VerticalElementSpacing = 10f;
         private const float RowSpacing = 6f;
         private const float RowHeight = MedicalCareUtility.CareSetterHeight + RowSpacing;
-        private const float BottomBufferSpacing = 5f;
+        private const float BottomBufferSpacing = 10f;
 
         protected override float CalculateHeight(float width)
         {
