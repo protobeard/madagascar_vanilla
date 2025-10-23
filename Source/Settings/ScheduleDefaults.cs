@@ -55,37 +55,27 @@ namespace MadagascarVanilla.Settings
         // Set pawn schedules:
         //         NeverSleep           |        Night Shift      |          Biphasic    |         Day Shift   |     Default
         // BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Initial > RimWorld Default
-        // 
-        // Modifiers: Quick Sleeper, reduce sleep time by 1/3
-        //
-        // If avoidScheduledMoodDebuffs then leave sleep schedule for Night Owl/UV Sensitive as sleeping through the day even
-        // if the pawn has Quick Sleeper.
         //
         // The constructor in Pawn_TimetableTracker:
         // for (int index = 0; index < 24; ++index)
         //    this.times.Add(index <= 5 || index > 21 ? TimeAssignmentDefOf.Sleep : TimeAssignmentDefOf.Anything);
-        public static void SetSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
+        public static void SetSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
         {
-            bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
-            int quickSleeperOffset;
             List<TimeAssignmentDef> timeAssigments = new List<TimeAssignmentDef>();
 
             switch (type)
             {
                 case MadagascarVanillaPersistables.ScheduleType.DayShift:
                     timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.DayShift];
-                    quickSleeperOffset = quickSleeper ? 2 : 0;
                     break;
                 case MadagascarVanillaPersistables.ScheduleType.NightShift: 
                     timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.NightShift];
-                    quickSleeperOffset = avoidScheduledMoodDebuffs ? 0 : (quickSleeper ? 2 : 0);
                     break;
                 case MadagascarVanillaPersistables.ScheduleType.NeverSleep:
                     timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.NeverSleep];
                     break;
                 case MadagascarVanillaPersistables.ScheduleType.Biphasic:
                     timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.Biphasic];
-                    quickSleeperOffset = quickSleeper ? 1 : 0;
                     break;
                 default:
                     Log.Error("Unknown schedule type: " + type);
@@ -93,8 +83,6 @@ namespace MadagascarVanilla.Settings
             }
 
             // FIXME: don't assign slaves recreation
-            // FIXME: support quicksleeper offset. Not sure this is actually possible, as a user could create schedules where all sleep would get removed. The offset
-            // only really worked b/c I knew the existing schedule.
             pawn.timetable.times.Clear();
             for (int i = 0; i < 24; i++)
             {
@@ -102,27 +90,23 @@ namespace MadagascarVanilla.Settings
             }
         }
         
-        public static void SetDefaultSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
+        public static void SetDefaultSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
         {
-            bool quickSleeper = reduceSleepForQuickSleepers && pawn.story.traits.HasTrait(TraitDefOf.QuickSleeper);
-            SetDefaultSchedule(pawn.timetable, type, quickSleeper, reduceSleepForQuickSleepers, avoidScheduledMoodDebuffs);
+            SetDefaultSchedule(pawn.timetable, type);
         }
 
-        public static void SetDefaultSchedule(Pawn_TimetableTracker timetable, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift, bool quickSleeper = false, bool reduceSleepForQuickSleepers = false, bool avoidScheduledMoodDebuffs = false)
+        public static void SetDefaultSchedule(Pawn_TimetableTracker timetable, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
         {
-            int quickSleeperOffset;
-            
             switch (type)
             {
                 case MadagascarVanillaPersistables.ScheduleType.DayShift:
                     timetable.times.Clear();
-                    quickSleeperOffset = quickSleeper ? 2 : 0;
             
                     for (int index = 0; index < 24; ++index)
                     {
-                        if (index >= 0 && index < 4 - quickSleeperOffset)
+                        if (index >= 0 && index < 4)
                             timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 4 - quickSleeperOffset && index < 20)
+                        else if (index >= 4 && index < 20)
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
                         else if (index >= 20 && index < 22)
                             timetable.times.Add(TimeAssignmentDefOf.Joy);
@@ -132,15 +116,14 @@ namespace MadagascarVanilla.Settings
                     break;
                 case MadagascarVanillaPersistables.ScheduleType.NightShift:
                     timetable.times.Clear();
-                    quickSleeperOffset = avoidScheduledMoodDebuffs ? 0 : (quickSleeper ? 2 : 0);
                         
                     for (int index = 0; index < 24; ++index)
                     {
                         if (index >= 0 && index < 11)
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 11 && index < 19 - quickSleeperOffset)
+                        else if (index >= 11 && index < 19)
                             timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 19 - quickSleeperOffset && index < 22)
+                        else if (index >= 19 && index < 22)
                             timetable.times.Add(TimeAssignmentDefOf.Joy);
                         else
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
@@ -161,17 +144,16 @@ namespace MadagascarVanilla.Settings
                     break;
                 case MadagascarVanillaPersistables.ScheduleType.Biphasic:
                     timetable.times.Clear();
-                    quickSleeperOffset = quickSleeper ? 1 : 0;
                     
                     for (int index = 0; index < 24; ++index)
                     {
-                        if (index >= 0 && index < 2 - quickSleeperOffset)
+                        if (index >= 0 && index < 2)
                             timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 2 - quickSleeperOffset && index < 10)
+                        else if (index >= 2 && index < 10)
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
-                        else if (index >= 10 && index < 14 - quickSleeperOffset)
+                        else if (index >= 10 && index < 14)
                             timetable.times.Add(TimeAssignmentDefOf.Sleep);
-                        else if (index >= 14 - quickSleeperOffset && index < 20)
+                        else if (index >= 14 && index < 20)
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
                         else if (index >= 20 && index < 22)
                             timetable.times.Add(TimeAssignmentDefOf.Joy);

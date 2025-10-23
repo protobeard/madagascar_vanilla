@@ -43,9 +43,6 @@ namespace MadagascarVanilla.Patches
         private const string InitialSleepyGeneSchedule = "initialSleepyGeneSchedule";
         private const string InitialNeverSleepGeneSchedule = "initialNeverSleepGeneSchedule";
         
-        private const string ReduceSleepForQuickSleepers = "reduceSleepForQuickSleepers";
-        private const string AvoidScheduledMoodDebuffs = "avoidScheduledMoodDebuffs";
-        
         // Give pawns initial schedules that better reflect their traits and genes as well as
         // ensuring that all pawns recreate at the same time.
         public static void Postfix(ref Pawn pawn)
@@ -60,9 +57,6 @@ namespace MadagascarVanilla.Patches
             bool initialUVSensitiveSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialUVSensitiveSchedule));
             bool initialSleepyGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSleepyGeneSchedule));
             bool initialNeverSleepGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNeverSleepGeneSchedule));
-            
-            bool reduceSleepForQuickSleepers = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, ReduceSleepForQuickSleepers));
-            bool avoidScheduledMoodDebuffs = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AvoidScheduledMoodDebuffs));
             
             // If the pawn has already had their schedule set, is not of the players faction, not humanlike, or does not have a timetable, no-op.
             Faction faction = pawn.Faction;
@@ -94,21 +88,21 @@ namespace MadagascarVanilla.Patches
             if ((initialBodyMasterySchedule && pawn.story.traits.HasTrait(TraitDefOf.BodyMastery)) || 
                 (initialNeverSleepGeneSchedule && pawn.genes.HasActiveGene(GeneDefOf.Neversleep)))
             {
-                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NeverSleep, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NeverSleep);
             }
             else if ((initialNightOwlSchedule && pawn.story.traits.HasTrait(TraitDefOf.NightOwl)) ||
                 (initialUVSensitiveSchedule && (pawn.genes.HasActiveGene(GeneDefOf.UVSensitivity_Mild) || pawn.genes.HasActiveGene(GeneDefOf.UVSensitivity_Intense))))
             {
-                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NightShift, reduceSleepForQuickSleepers, avoidScheduledMoodDebuffs);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.NightShift);
             }
             else if (initialSleepyGeneSchedule && (pawn.genes.HasActiveGene(GeneDefOf.VerySleepy) || pawn.genes.HasActiveGene(GeneDefOf.Sleepy)))
             {
-                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.Biphasic, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.Biphasic);
             }
             else if ((initialSleepyGeneSchedule && (pawn.genes.HasActiveGene(GeneDefOf.LowSleep))) || 
                       initialSchedule)
             {
-                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.DayShift, reduceSleepForQuickSleepers);
+                ScheduleDefaults.SetSchedule(pawn, MadagascarVanillaPersistables.ScheduleType.DayShift);
             }
             
             // Add pawn to the list we've already looked at so that we don't reset their schedule

@@ -84,9 +84,6 @@
                  NeverSleep                 |             Night Shift           |            Biphasic         |     Day Shift
 BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Normal
 
-Modifiers: Quick Sleeper reduce sleep time by 1/3
-
-If avoidScheduledMoodDebuffs is enabled then sleep schedule for Night Owl/UV Sensitive is left as sleeping through the day even if the pawn has Quick Sleeper.
 This only modifies the pawns initial schedule upon recruitment; their schedule can always be changed afterwards in game.
                 </text>
             </li>
@@ -133,22 +130,6 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
                 <label>Assign "Normal" Pawns Day Shift</label>
                 <tooltip>Assign any pawns that don't meet the above criteria the Day Shift schedule (note that this includes pawns with the Low Sleep gene).</tooltip>
                 <defaultValue>false</defaultValue>
-            </li>
-
-            <li Class="XmlExtensions.Setting.GapLine"/>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>reduceSleepForQuickSleepers</key>
-                <label>Reduce Sleep in Schedules for Quick Sleepers</label>
-                <tooltip>Reduce Sleep in Schedules for Quick Sleepers by ~ 1/3</tooltip>
-                <defaultValue>true</defaultValue>
-            </li>
-
-            <li Class="XmlExtensions.Setting.Checkbox">
-                <key>avoidScheduledMoodDebuffs</key>
-                <label>Avoid Scheduled Mood Debuffs</label>
-                <tooltip>Do not reduce sleep in schedules for Night Owl/UV Sensitive even if the pawn has Quick Sleeper. This helps to prevent mood debuffs on those pawns for being awake during the day or in the sunlight. Body Mastery and Never Sleep schedules are not effected by this setting.</tooltip>
-                <defaultValue>true</defaultValue>
             </li>
 
 
