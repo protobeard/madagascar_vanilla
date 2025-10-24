@@ -88,7 +88,7 @@
 
     <Operation Class="XmlExtensions.OptionalPatch">
         <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableRottenStorage</key>
+        <key>disableRottenShelfStorage</key>
         <defaultValue>false</defaultValue>
         <caseTrue>
 

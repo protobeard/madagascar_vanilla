@@ -88,6 +88,7 @@
         <Compile Include="Patches\SchedulePatch.cs" />
         <Compile Include="Patches\StandYourGroundPatch.cs" />
         <Compile Include="Patches\AreasPatch.cs" />
+        <Compile Include="Patches\StockpileSpecialFiltersPatches.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="Settings\MedicalDefaults.cs" />
         <Compile Include="Settings\ScheduleDefaults.cs" />

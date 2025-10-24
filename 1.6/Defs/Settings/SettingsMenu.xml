@@ -461,13 +461,25 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
-                <key>disableRottenStorage</key>
-                <label>Disable Storing Rotten Items</label>
-                <tooltip>Sets default storage for rotten items to be false.</tooltip>
+                <key>disableRottenShelfStorage</key>
+                <label>Disable Storing Rotten Items on Shelves</label>
+                <tooltip>Sets default storage for rotten items on shelves to be false.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenStockpileStorage</key>
+                <label>Disable Storing Rotten Items in Stockpiles</label>
+                <tooltip>Sets default storage for rotten items in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
 
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenDumpingStockpileStorage</key>
+                <label>Disable Storing Rotten Items in Dumping Stockpiles</label>
+                <tooltip>Sets default storage for rotten items in dumping stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
