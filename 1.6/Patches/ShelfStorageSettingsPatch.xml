@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>clearShelfStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="StorageShelfBase"]/building/defaultStorageSettings</xpath>
+                <value>
+                    <defaultStorageSettings>
+                        <priority>Normal</priority>
+                        <filter>
+                            <categories />
+                        </filter>
+                    </defaultStorageSettings>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>clearBookcaseStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="BookcaseBase"]/building/defaultStorageSettings</xpath>
+                <value>
+                    <defaultStorageSettings>
+                        <priority>Normal</priority>
+                        <filter>
+                            <categories />
+                        </filter>
+                    </defaultStorageSettings>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>clearOutfitStandStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="OutfitStandBase"]/building/defaultStorageSettings</xpath>
+                <value>
+                    <defaultStorageSettings>
+                        <priority>Normal</priority>
+                        <filter>
+                            <categories />
+                        </filter>
+                    </defaultStorageSettings>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>clearHopperStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[defName="Hopper"]/building/defaultStorageSettings</xpath>
+                <value>
+                    <defaultStorageSettings>
+                        <priority>Normal</priority>
+                        <filter>
+                            <categories />
+                        </filter>
+                    </defaultStorageSettings>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>disableRottenStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/SpecialThingFilterDef[defName="AllowRotten"]/allowedByDefault</xpath>
+                <value>
+                    <allowedByDefault>false</allowedByDefault>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+</Patch>
+

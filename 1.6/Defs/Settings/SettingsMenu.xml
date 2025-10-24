@@ -421,6 +421,55 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
             </li>
 
 
+
+
+
+
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Storage Ddefaults</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearShelfStorage</key>
+                <label>Clear Default Shelf Storage</label>
+                <tooltip>Sets default storage on shelves to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearBookcaseStorage</key>
+                <label>Clear Default Bookcase Storage</label>
+                <tooltip>Sets default storage on bookcases to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearOutfitStandStorage</key>
+                <label>Clear Default Outfit Stand Storage</label>
+                <tooltip>Sets default storage on outfit stands to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearHopperStorage</key>
+                <label>Clear Default Hopper Storage</label>
+                <tooltip>Sets default storage on hoppers to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenStorage</key>
+                <label>Disable Storing Rotten Items</label>
+                <tooltip>Sets default storage for rotten items to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+
+
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Plant Changes</text>
