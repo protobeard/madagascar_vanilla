@@ -26,13 +26,11 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Stand Your Ground: set a default value for pawn hostility response.
 * Allow Goodwill Reward: enable or disable goodwill rewards from factions.
 * Allow Honor Reward: enable of distable honot rewards from factions.
-* Override Default Schedules: enable a better (according to protobeard) default schedule for pawns.
-* Special Night Owl Schedule: enable night shift schedule for Night Owl pawns.
-* Special UV Sensitive Schedule: enable night shift schedule for UV Sensistive pawns.
-* Special Sleep Gene Schedules: enable special schedules for pawns with sleep modifying genes. Sleepy and Very Sleepy pawns get biphasic schedules, etc. See tooltip for more info.
-* Special Body Mastery Schedule: enable special schedule with no sleep time for Body Mastery pawns.
-* Reduce Sleep in Schedules for Quick Sleepers: modify special schedules to have less sleep time for Quick Sleeper pawns.
-* Avoid Scheduled Mood Debuffs: Do not reduce sleep in schedules for Night Owl/UV Sensitive even if the pawn has Quick Sleeper
+* Override Default Schedules: enable custom schedules to be assign to different types of pawns on recruitment: Never Sleep, Night Shift, Biphasic, and Day Shift. These schedules are assigned like so:
+** NeverSleep to BodyMastery/Never Sleep Gene pawns
+** Night Shift to NightOwl, UV Sensitive pawns
+** Biphasic to Very Sleepy > Sleepy pawns
+** Day Shift to Low Sleep > "Normal" pawns
 * Automatically Expand Home: enable or disable automatically expanding the Home area.
 * Auto Rebuild in Home: enable or disable automatically rebuilding in the Home area.
 * Starting Areas: provide a list of areas which will be automatically created on each new game (e.g., "Work, Inside, Safe").
