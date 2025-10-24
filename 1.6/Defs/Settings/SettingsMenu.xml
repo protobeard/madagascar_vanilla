@@ -421,14 +421,9 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
             </li>
 
 
-
-
-
-
-
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Storage Ddefaults</text>
+                <text>Storage Defaults</text>
                 <anchor>Middle</anchor>
             </li>
 
@@ -477,9 +472,38 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>disableRottenDumpingStockpileStorage</key>
                 <label>Disable Storing Rotten Items in Dumping Stockpiles</label>
-                <tooltip>Sets default storage for rotten items in dumping stockpiles to be false.</tooltip>
+                <tooltip>Sets default storage for rotten items in dumping stockpiles to be false. This can be useful to prevent pawns from bringing random rotting animal corpses to dumping stockpiles.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableDeadmansShelfStorage</key>
+                <label>Disable Storing Tainted Items on Shelves</label>
+                <tooltip>Sets default storage for tainted items on shelves to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableDeadmansStockpileStorage</key>
+                <label>Disable Storing Tainted Items in Stockpiles</label>
+                <tooltip>Sets default storage for tainted items in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableBiocodedShelfStorage</key>
+                <label>Disable Storing Biocoded Items on Shelves</label>
+                <tooltip>Sets default storage for biocoded items on shelves to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableBiocodedStockpileStorage</key>
+                <label>Disable Storing Biocoded Items in Stockpiles</label>
+                <tooltip>Sets default storage for biocoded items in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
