@@ -25,18 +25,22 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 * Stand Your Ground: set a default value for pawn hostility response.
 * Allow Goodwill Reward: enable or disable goodwill rewards from factions.
-* Allow Honor Reward: enable of distable honot rewards from factions.
-* Override Default Schedules: enable custom schedules to be assign to different types of pawns on recruitment: Never Sleep, Night Shift, Biphasic, and Day Shift. These schedules are assigned like so:
-** NeverSleep to BodyMastery/Never Sleep Gene pawns
-** Night Shift to NightOwl, UV Sensitive pawns
-** Biphasic to Very Sleepy > Sleepy pawns
-** Day Shift to Low Sleep > "Normal" pawns
+* Allow Honor Reward: enable or disable honor rewards from factions.
+* Override Default Schedules: enable custom schedules to be assigned to different types of pawns on recruitment: Never Sleep, Night Shift, Biphasic, and Day Shift. These schedules are assigned like so:
+    * Never Sleep to BodyMastery, Never Sleep gene pawns
+    * Night Shift to NightOwl, UV Sensitive pawns
+    * Biphasic to Very Sleepy, Sleepy gene pawns
+    * Day Shift to Low Sleep gene, "Normal" pawns
 * Automatically Expand Home: enable or disable automatically expanding the Home area.
 * Auto Rebuild in Home: enable or disable automatically rebuilding in the Home area.
 * Starting Areas: provide a list of areas which will be automatically created on each new game (e.g., "Work, Inside, Safe").
 * Use Manual Priorities: enable or disable using manual work priorities.
+* Bill Repeat Mode: enable Repeat Count (Do X Times), Target Count (Do Until X), and Forever default for new production bills.
+    * If Target Count is selected, enable default hitpoint range for items to count.
+    * If Target Count is selected, enable default quality range for items to count.
 * Bill Storage: enable Drop on Floor or Take to Best Stockpile default for new production bills.
 * Bill Ingredient Search Radius: set a default ingredient search radius for new production bills.
+* Crematorium: disable cremating colonist corpses by default.
 * Enable Mech Repair by Default: Yup.
 * Landmark Visibility: enable or disable Odyssey landmark visibility on the world map.
 * Auto Cut by Default: enable auto cutting on windmills and animal pens.
@@ -49,6 +53,18 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Food Policies Persist Across Games: In case you don't want to set these up every game.
 * Reading Policies Persist Across Games: In case you don't want to set these up every game.
 * Persist New Game Configuration: save new game setup (storyteller, difficulty, world size, etc.) and reuse it for the next new game.
+* Shelf-like Storage:
+    * Set default storage to be empty and priority normal for shelves, outfit stands, bookcases, and hoppers (each individually toggleable).
+    * Disable storing rotten items on shelves/outfit stands by default
+    * Disable storing tainted items on shelves/outfit stands by default
+    * Disable storing biocoded weapons and apparel on shelves/outfit stands by default
+* Stockpile Storage:
+    * Disable storing rotten items in stockpiles by default
+    * Disable storing tainted items in stockpiles by default
+    * Disable storing biocoded weapons and apparel in stockpiles by default
+* Dumping Stockpile Storage:
+    * Disable storing rotten items in dumping stockpiles by default (prevent pawns from bringing in rotting animal corpses)
+
 
 ### House Rules
 
@@ -76,20 +92,18 @@ This means that this mod attempted to load up the persisted storyteller and coul
 
 This will occur when any mod which adds custom content that has been persisted is removed: foods in food policies, apparel/weapons in apparel policies, drugs in drug policies, books in reading policies, custom storytellers, custom factions, etc.
 
+* Pretty much non-existant localization support
+
 ## Great Minds Think Alike
 
 * [New Game Plus][new_game_plus]
 * [Export Agency][export_agency]
 
-## How to Install
-
-* Unzip the contents and place them in your RimWorld/Mods folder.
-* Activate the mod in the mod menu in the game.
 
 ## Compatibity
 
 * Can be added and removed to existing saves.
-* Not extensively tested, but this should be compatible with most other mods.
+* Not extensively tested. Likely compatible with most content mods; likely incompatible with most "tweak" mods. As I use several of those mods myself, I am planning to add better compatibility support.
 
 ## License
 

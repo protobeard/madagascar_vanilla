@@ -180,19 +180,23 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Bills</text>
+                <text>General Bill Defaults</text>
                 <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>On item completion:</text>
+                <anchor>Left</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.RadioButtons">
                 <key>storeMode</key>
-                <label>On item completion:</label>
                 <defaultValue>BestStockpile</defaultValue>
                 <buttons>
                     <li>
                         <value>DropOnFloor</value>
                         <label>Drop on floor</label>
-                        </li>
+                    </li>
                     <li>
                         <value>BestStockpile</value>
                         <label>Take to best stockpile</label>
@@ -200,12 +204,155 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
                 </buttons>
             </li>
 
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Repeat type:</text>
+                <anchor>Left</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>repeatMode</key>
+                <defaultValue>RepeatCount</defaultValue>
+                <buttons>
+                    <li>
+                        <value>RepeatCount</value>
+                        <label>Do X Times</label>
+                    </li>
+                    <li>
+                        <value>TargetCount</value>
+                        <label>Do Until You Have X</label>
+                    </li>
+                    <li>
+                        <value>Forever</value>
+                        <label>Do Forever</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Hitpoint Range to Count</text>
+                <anchor>Left</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Range">
+                <key>hitpointRangeToCount</key>
+                <defaultValue>0~1</defaultValue>
+                <decimals>2</decimals>
+                <min>0</min>
+                <max>1</max>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Minimum Quality to Count</text>
+                <anchor>Left</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>minQualityToCount</key>
+                <label>Minimum Quality to Count:</label>
+                <defaultValue>Awful</defaultValue>
+                <buttons>
+                    <li>
+                        <value>Awful</value>
+                        <label>Awful</label>
+                    </li>
+                    <li>
+                        <value>Poor</value>
+                        <label>Poor</label>
+                    </li>
+                    <li>
+                        <value>Normal</value>
+                        <label>Normal</label>
+                    </li>
+                    <li>
+                        <value>Good</value>
+                        <label>Good</label>
+                    </li>
+                    <li>
+                        <value>Excellent</value>
+                        <label>Excellent</label>
+                    </li>
+                    <li>
+                        <value>Masterwork</value>
+                        <label>Masterwork</label>
+                    </li>
+                    <li>
+                        <value>Legendary</value>
+                        <label>Legendary</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Maximum Quality to Count</text>
+                <anchor>Left</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.RadioButtons">
+                <key>maxQualityToCount</key>
+                <label>Maximum Quality to Count:</label>
+                <defaultValue>Legendary</defaultValue>
+                <buttons>
+                    <li>
+                        <value>Awful</value>
+                        <label>Awful</label>
+                    </li>
+                    <li>
+                        <value>Poor</value>
+                        <label>Poor</label>
+                    </li>
+                    <li>
+                        <value>Normal</value>
+                        <label>Normal</label>
+                    </li>
+                    <li>
+                        <value>Good</value>
+                        <label>Good</label>
+                    </li>
+                    <li>
+                        <value>Excellent</value>
+                        <label>Excellent</label>
+                    </li>
+                    <li>
+                        <value>Masterwork</value>
+                        <label>Masterwork</label>
+                    </li>
+                    <li>
+                        <value>Legendary</value>
+                        <label>Legendary</label>
+                    </li>
+                </buttons>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+
             <li Class="XmlExtensions.Setting.Numeric">
                 <key>ingredientSearchRadius</key>
                 <label>Ingredient Search Radius</label>
                 <defaultValue>999</defaultValue>
                 <decimals>0</decimals>
                 <min>1</min>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Specific Bills</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableColonistCremation</key>
+                <label>Disable Cremating Colonists</label>
+                <tooltip>Sets default cremation bill on crematorium to not include colonists.</tooltip>
+                <defaultValue>false</defaultValue>
             </li>
 
 
@@ -503,7 +650,6 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
                 <tooltip>Sets default storage for biocoded items (weapons and apparel) in stockpiles to be false.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
-
 
 
             <li Class="XmlExtensions.Setting.GapLine"/>
