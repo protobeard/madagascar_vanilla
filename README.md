@@ -98,7 +98,7 @@ This will occur when any mod which adds custom content that has been persisted i
 
 * [New Game Plus][new_game_plus]
 * [Export Agency][export_agency]
-
+* [Other Strictly Quality of Life Mods][quality_of_life_collection]
 
 ## Compatibity
 
@@ -131,7 +131,7 @@ This will occur when any mod which adds custom content that has been persisted i
 [github]: https://github.com/protobeard/madagascar_vanilla/releases
 
 [protobeard]: https://github.com/protobeard
-[patreon]: https://www.patreon.com/protobeard
 
+[quality_of_life_collection]: https://steamcommunity.com/sharedfiles/filedetails/?id=3592953821
 [new_game_plus]: https://steamcommunity.com/sharedfiles/filedetails/?id=2909126210
 [export_agency]: https://steamcommunity.com/sharedfiles/filedetails/?id=1467209473
