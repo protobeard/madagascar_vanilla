@@ -21,47 +21,121 @@ namespace MadagascarVanilla.Patches
         private const string MaxQualityToCountKey = "maxQualityToCount";
         private const string IngredientSearchRadiusKey = "ingredientSearchRadius";
         
+        private const string DisableClothTextileKey = "disableClothTextile";
+        private const string DisableValuableTextilesKey = "disableValuableTextiles";
+        private const string DisableMoodImpactingTextilesKey = "disableMoodImpactingTextiles";
+        
         private const char RangeSplitter = '~';
         
         public static void Postfix(Bill_Production __instance)
         {
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting Store Mode for {__instance.Label}");
             BillStoreModeDef storeMode = DefDatabase<BillStoreModeDef>.GetNamed((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, StoreModeKey)));
             if (storeMode != null)
                 __instance.SetStoreMode(storeMode);
             
             BillRepeatModeDef repeatMode = DefDatabase<BillRepeatModeDef>.GetNamed((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, RepeatModeKey)));
             if (repeatMode != null)
-                __instance.repeatMode = repeatMode;
-
-            // TODO: there's gotta be a better way in XML Extension to do this...
-            string hitpointRangeToCount = SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HitpointRangeToCountKey);
-            List<string> rangeBoundaries = hitpointRangeToCount.Split(RangeSplitter).ToList();
-
-            if (rangeBoundaries.Count == 2)
             {
-                __instance.hpRange.min = float.Parse(rangeBoundaries[0]);
-                __instance.hpRange.max = float.Parse(rangeBoundaries[1]);
-            }
-
-            string minQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MinQualityToCountKey));
-            string maxQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MaxQualityToCountKey));
-            bool parsedMinQuality = Enum.TryParse(minQualityName, false, out QualityCategory minQualityCategory);
-            bool parsedMaxQuality = Enum.TryParse(maxQualityName, false, out QualityCategory maxQualityCategory);
-
-            if (parsedMinQuality && parsedMaxQuality)
-            {
-                // TODO: is there a way to ensure this in the XML Extension settings instead?
-                if (minQualityCategory > maxQualityCategory)
+                // BillRepeatModeDefOf.TargetCount;
+                if (repeatMode == DefDatabase<BillRepeatModeDef>.GetNamed("TargetCount"))
                 {
-                    maxQualityCategory = minQualityCategory;
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: want to set TargetCount Repeat Mode {__instance.Label}");
+                    if (__instance.recipe.WorkerCounter.CanCountProducts(__instance))
+                    {
+                        if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Can Count. Setting Target Count Repeat Mode for {__instance.Label}");
+                        
+                        // Only assign settings for TargetCount repeatMode if we're in a recipe which can count its products.
+                        // Recipes like "shred mechanoid," for example, don't work.
+                        __instance.repeatMode = repeatMode;
+                        
+                        // TODO: there's gotta be a better way in XML Extension to do this...
+                        if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting hitpoint range for {__instance.Label}");
+                        string hitpointRangeToCount = SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HitpointRangeToCountKey);
+                        List<string> rangeBoundaries = hitpointRangeToCount.Split(RangeSplitter).ToList();
+
+                        if (rangeBoundaries.Count == 2)
+                        {
+                            __instance.hpRange.min = float.Parse(rangeBoundaries[0]);
+                            __instance.hpRange.max = float.Parse(rangeBoundaries[1]);
+                        }
+
+                        if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting quality range for {__instance.Label}");
+                        string minQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MinQualityToCountKey));
+                        string maxQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MaxQualityToCountKey));
+                        bool parsedMinQuality = Enum.TryParse(minQualityName, false, out QualityCategory minQualityCategory);
+                        bool parsedMaxQuality = Enum.TryParse(maxQualityName, false, out QualityCategory maxQualityCategory);
+
+                        if (parsedMinQuality && parsedMaxQuality)
+                        {
+                            // TODO: is there a way to ensure this in the XML Extension settings instead?
+                            if (minQualityCategory > maxQualityCategory)
+                            {
+                                maxQualityCategory = minQualityCategory;
+                            }
+                            
+                            __instance.qualityRange.min = minQualityCategory;
+                            __instance.qualityRange.max = maxQualityCategory;
+                        }
+                    }
                 }
-                
-                __instance.qualityRange.min = minQualityCategory;
-                __instance.qualityRange.max = maxQualityCategory;
+                else
+                {
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Not targetCount, setting {repeatMode} Repeat Mode for {__instance.Label}");
+                    __instance.repeatMode = repeatMode;
+                }
             }
             
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting search radius for {__instance.Label}");
             float ingredientSearchRadius = float.Parse((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, IngredientSearchRadiusKey)));
             __instance.ingredientSearchRadius = ingredientSearchRadius;
+
+            // If we're a tailoring bill we need to check the ingredient disabling settings
+            if (__instance.recipe != null && __instance.recipe.recipeUsers != null && __instance.recipe.recipeUsers.Contains(DefDatabase<ThingDef>.GetNamed("ElectricTailoringBench")))
+            {
+                bool disableClothTextile = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableClothTextileKey));
+                bool disableValuableTextiles = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableValuableTextilesKey));
+                bool disableMoodImpactingTextiles = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableMoodImpactingTextilesKey));
+
+                if (disableClothTextile)
+                {
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {__instance.Label}");
+                    
+                    ThingDef cloth = DefDatabase<ThingDef>.GetNamed("Cloth");
+                    
+                    __instance.ingredientFilter.SetAllow(cloth, false);
+                }
+
+                if (disableValuableTextiles)
+                {
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {__instance.Label}");
+                    
+                    ThingDef devilstrand = DefDatabase<ThingDef>.GetNamed("DevilstrandCloth");
+                    ThingDef hyperweave = DefDatabase<ThingDef>.GetNamed("Hyperweave");
+                    ThingDef synthread = DefDatabase<ThingDef>.GetNamed("Synthread");
+                    ThingDef thrumbofur = DefDatabase<ThingDef>.GetNamed("Leather_Thrumbo");
+                    ThingDef thrumbomane = DefDatabase<ThingDef>.GetNamed("Leather_AlphaThrumbo");
+                    
+                    __instance.ingredientFilter.SetAllow(devilstrand, false);
+                    __instance.ingredientFilter.SetAllow(hyperweave, false);
+                    __instance.ingredientFilter.SetAllow(synthread, false);
+                    __instance.ingredientFilter.SetAllow(thrumbofur, false);
+                    __instance.ingredientFilter.SetAllow(thrumbomane, false);
+                }
+
+                if (disableMoodImpactingTextiles)
+                {
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {__instance.Label}");
+                    
+                    ThingDef humanLeather = DefDatabase<ThingDef>.GetNamed("Leather_Human"); 
+                    ThingDef dreadleather = DefDatabase<ThingDef>.GetNamed("Leather_Dread");
+                    
+                    __instance.ingredientFilter.SetAllow(humanLeather, false);
+                    __instance.ingredientFilter.SetAllow(dreadleather, false);
+                }
+            }
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Leaving method for {__instance.Label}");
         }
     }
 }

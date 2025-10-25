@@ -342,9 +342,39 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
                 <min>1</min>
             </li>
 
+
+
             <li Class="XmlExtensions.Setting.Gap"/>
             <li Class="XmlExtensions.Setting.Text">
-                <text>Specific Bills</text>
+                <text>Tailoring Bills</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableClothTextile</key>
+                <label>Disable Cloth</label>
+                <tooltip>Sets default ingredients for tailoring bills to not include cloth.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableValuableTextiles</key>
+                <label>Disable Valuable Textiles</label>
+                <tooltip>Sets default ingredients for tailoring bills to not include valuable textiles (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableMoodImpactingTextiles</key>
+                <label>Disable Mood Impacting Textiles</label>
+                <tooltip>Sets default ingredients for tailoring bills to not include textiles that cause mood debuffs (human leather, dread leather).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Crematorium Bills</text>
                 <anchor>Middle</anchor>
             </li>
 
