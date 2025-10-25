@@ -40,6 +40,10 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
     * If Target Count is selected, enable default quality range for items to count.
 * Bill Storage: enable Drop on Floor or Take to Best Stockpile default for new production bills.
 * Bill Ingredient Search Radius: set a default ingredient search radius for new production bills.
+* Tailoring:
+    * Disable cloth in recipes
+    * Disable valuble textiles in recipes (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane)
+    * Disable mood impacting textiles in recipes (human leather, dread leather)
 * Crematorium: disable cremating colonist corpses by default.
 * Enable Mech Repair by Default: Yup.
 * Landmark Visibility: enable or disable Odyssey landmark visibility on the world map.
