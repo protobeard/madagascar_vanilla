@@ -14,7 +14,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 ### General
 
-* Verbose Mode: make this mod log a lot. Probably you should leave this off.
+* Verbose Mode: make this mod log a lot. Probably you should leave this off. Almost certainly. Unless you're trying to debug something.
 
 ### Bug Fixes (Well, Kinda...)
 
@@ -106,12 +106,12 @@ This will occur when any mod which adds custom content that has been persisted i
 
 ## Compatibity
 
-* Can be added and removed to existing saves.
+* Can be added to and removed from existing saves.
 * Not extensively tested. Likely compatible with most content mods; likely incompatible with most "tweak" mods. As I use several of those mods myself, I am planning to add better compatibility support.
 
 ## License
 
-* [MIT][license] -- feel free to use as you see fit, including not honoring the following requests. If you want to include this mod in a mod pack, or base a larger mod off of it, I'd appreciate a heads up. Please don't upload standalone translated versions on Steam; if you wish to translate it, please create a pull request on GitHub and I'll merge it in.
+* [Unlicense][license] -- feel free to use as you see fit, including not honoring the following requests. If you want to include this mod in a mod pack, or base a larger mod off of it, I'd appreciate a heads up. Please don't upload standalone translated versions on Steam; if you wish to translate it, please create a pull request on GitHub and I'll merge it in.
 
 ## Thanks To
 
@@ -127,7 +127,7 @@ This will occur when any mod which adds custom content that has been persisted i
 
 * [GitHub][github]
 
-[license]: https://github.com/protobeard/madagascar_vanilla/blob/master/LICENSE
+[license]: https://github.com/protobeard/madagascar_vanilla/blob/master/UNLICENSE
 [harmonylib]: https://github.com/pardeike/Harmony
 [font]: https://ludeon.com/forums/index.php?topic=11022.0
 
