@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using RimWorld;
 using HarmonyLib;
 using Verse;
@@ -51,19 +53,135 @@ namespace MadagascarVanilla.Patches
             }
         }
 
-        // [HarmonyPatch(typeof(Dialog_BillConfig))]
-        // [HarmonyPatch(nameof(Dialog_BillConfig.DoWindowContents))]
-        // public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        // {
-        //     // FIXME: need to set buttonLabel to "AnyProductionSpecialist".Translate() if that's been selected.
-        //     // Whoever wrote the buttonLabel assignment line should be slapped. It's like a quintuple nested ternary? Fuck no.
-        //     //
-        //     // string buttonLabel = this.bill.PawnRestriction == null ? (!ModsConfig.IdeologyActive || !this.bill.SlavesOnly ? (!ModsConfig.BiotechActive || !this.bill.recipe.mechanitorOnlyRecipe ? (!ModsConfig.BiotechActive || !this.bill.MechsOnly ? (!ModsConfig.BiotechActive || !this.bill.NonMechsOnly ? (string) "AnyWorker".Translate() : (string) "AnyNonMech".Translate()) : (string) "AnyMech".Translate()) : (string) "AnyMechanitor".Translate()) : (string) "AnySlave".Translate()) : this.bill.PawnRestriction.LabelShortCap;
-        //     // Widgets.Dropdown<Bill_Production, Pawn>(listing3.GetRect(30f), this.bill, (Func<Bill_Production, Pawn>) (b => b.PawnRestriction), (Func<Bill_Production, IEnumerable<Widgets.DropdownMenuElement<Pawn>>>) (b => this.GeneratePawnRestrictionOptions()), buttonLabel);
-        //
-        //     
-        //     return instructions;
-        // }
+        [HarmonyPatch(typeof(Dialog_BillConfig))]
+        [HarmonyPatch(nameof(Dialog_BillConfig.DoWindowContents))]
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
+        {
+            // FIXME: need to set buttonLabel to "AnyProductionSpecialist".Translate() if that's been selected.
+            // Whoever wrote the buttonLabel assignment line should be slapped. It's like a quintuple nested ternary? Fuck no.
+            //
+            // string buttonLabel = this.bill.PawnRestriction == null ? (!ModsConfig.IdeologyActive || !this.bill.SlavesOnly ? (!ModsConfig.BiotechActive || !this.bill.recipe.mechanitorOnlyRecipe ? (!ModsConfig.BiotechActive || !this.bill.MechsOnly ? (!ModsConfig.BiotechActive || !this.bill.NonMechsOnly ? (string) "AnyWorker".Translate() : (string) "AnyNonMech".Translate()) : (string) "AnyMech".Translate()) : (string) "AnyMechanitor".Translate()) : (string) "AnySlave".Translate()) : this.bill.PawnRestriction.LabelShortCap;
+            // Widgets.Dropdown<Bill_Production, Pawn>(listing3.GetRect(30f), this.bill, (Func<Bill_Production, Pawn>) (b => b.PawnRestriction), (Func<Bill_Production, IEnumerable<Widgets.DropdownMenuElement<Pawn>>>) (b => this.GeneratePawnRestrictionOptions()), buttonLabel);
+
+            // What we want:
+            //
+            // string buttonLabel = "Whatever bs from above";
+            // BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor((Bill_Production) this.bill);
+            // if (attrs != null && attrs.ProductionSpecialistOnly)
+            //     buttonLabel = "AnyProductionSpecialist".Translate();
+            
+            CodeMatcher matcher = new CodeMatcher(lines);
+            MethodInfo getSlavesOnly = AccessTools.PropertyGetter(typeof(Bill_Production), "AnySlave");
+            MethodInfo getMechanitorOnly = AccessTools.PropertyGetter(typeof(RecipeDef), "mechanitorOnlyRecipe");
+            MethodInfo getMechsOnly = AccessTools.PropertyGetter(typeof(Bill_Production), "MechsOnly");
+            MethodInfo getNonMechsOnly = AccessTools.PropertyGetter(typeof(Bill_Production), "NonMechsOnly");
+            //MethodInfo getAnyWorker = AccessTools.PropertyGetter(typeof(Bill_Production), "AnyWorker");
+            
+            //MethodInfo updateButtonLabelMethod = SymbolExtensions.GetMethodInfo(() => UpdateButtonLabel(default, default));
+
+             // Bill_Production bp = new Bill_Production();
+             // string x = "";
+             // x = UpdateButtonLabel(bp, x);
+            
+            // A line above our target line:
+            // IL_0916: ldloc.s      listingStandard1
+            // IL_0918: ldc.r4       12
+            // IL_091d: callvirt     instance void Verse.Listing::Gap(float32)
+
+            //matcher.MatchStartForward(
+                    //new CodeMatch(OpCodes.Callvirt, getSlavesOnly))
+                    //new CodeMatch(OpCodes.Ldfld, getMechanitorOnly), 
+                    //new CodeMatch(OpCodes.Callvirt, getMechsOnly),
+                    //new CodeMatch(OpCodes.Callvirt, getNonMechsOnly)
+                    //CodeMatch.Calls(getNonMechsOnly))
+
+                    // new CodeMatch(OpCodes.Ldloc_S, "listingStandard1"),
+                    // new CodeMatch(OpCodes.Ldc_R4, 12),
+                    // new CodeMatch(OpCodes.Callvirt, "instance void Verse.Listing::Gap(float32)"))
+
+                // .ThrowIfNotMatch($"Could not find buttonLabel assignment line.")
+                // .Advance(10);
+                // .InsertAfter(
+                //     CodeInstruction.LoadArgument(0),
+                //     CodeInstruction.LoadField(typeof(RimWorld.Dialog_BillConfig), "bill"),
+                //     new CodeInstruction(OpCodes.Ldloc_S),
+                //     CodeInstruction.Call(() => UpdateButtonLabel(default, default)),
+                //     new CodeInstruction(OpCodes.Stloc_S)
+                // );
+                
+                
+                // .Insert(
+                //     new CodeInstruction(OpCodes.Ldarg_0),  // load this onto stack (Dialog_BillConfig)
+                //     new CodeInstruction(OpCodes.Ldfld, operand: "class RimWorld.Bill_Production RimWorld.Dialog_BillConfig::bill"), // get the Bill onto the stack from this: maybe?
+                //     new CodeInstruction(OpCodes.Ldloc_S, "buttonLabel"), // load buttonLabel onto the stack
+                //     new CodeInstruction(OpCodes.Call, UpdateButtonLabelMethod),
+                //     new CodeInstruction(OpCodes.Stloc_S, "buttonLabel")
+                //     );
+            
+            // return matcher.InstructionEnumeration();
+            
+            
+            List<CodeInstruction> newLines = lines.ToList();
+            // Let's do a little more sanity checking -- all of these are only references once in DoWindowContents, and in this order.
+            // So we can confirm that we've found the area we want by confirming that.
+            int anySlaveLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.operand as string == "AnySlave");
+            int anyMechanitorLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.operand as string == "AnyMechanitor");
+            int anyMechLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.operand as string == "AnyMech");
+            int anyNonMechLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.operand as string == "AnyNonMech");
+            int anyWorkerLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.operand as string == "AnyWorker");
+            
+            MethodInfo updateButtonLabelMethod = AccessTools.Method(typeof(AnyProductionSpecialistPatch), nameof(UpdateButtonLabel));
+            
+            Log.Message($"{anySlaveLineNumber}, {anyMechanitorLineNumber}, {anyMechLineNumber}, {anyNonMechLineNumber}, {anyWorkerLineNumber}");
+            
+            if (!(anySlaveLineNumber < anyMechanitorLineNumber) && (anyMechLineNumber < anyNonMechLineNumber))
+            {
+                Log.Error("Madagascar Vanilla: Failed to apply Dialog_BillConfig transpile, returning base");
+                return lines;
+            }
+
+            // IL_0a03: ldstr        "AnyWorker"
+            // IL_0a08: call         valuetype Verse.TaggedString Verse.Translator::Translate(string)
+            // IL_0a0d: call         string Verse.TaggedString::op_Implicit(valuetype Verse.TaggedString)
+            // IL_0a12: stloc.s      buttonLabel
+            //
+            // // [225 5 - 225 265]
+            // IL_0a14: ldloc.s      listing3
+            
+            int targetInsertionLineNumber = anyWorkerLineNumber + 4;
+            // copy this from an instruction that already references the local variable we want (buttonLabel).
+            object buttonLabelOperand = newLines[targetInsertionLineNumber - 1].operand;
+            
+            Log.Message("Before insertion");
+            Log.Message($"prev: {newLines[targetInsertionLineNumber - 1].opcode}, {newLines[targetInsertionLineNumber - 1].operand}");
+            Log.Message($"Target insertion line: {newLines[targetInsertionLineNumber].opcode}, {newLines[targetInsertionLineNumber].operand}");
+            Log.Message($"next: {newLines[targetInsertionLineNumber + 1].opcode}, {newLines[targetInsertionLineNumber + 1].operand}");
+            Log.Message($"next: {newLines[targetInsertionLineNumber + 2].opcode}, {newLines[targetInsertionLineNumber + 2].operand}");
+            
+            newLines.Insert(targetInsertionLineNumber, new CodeInstruction(OpCodes.Ldarg_0));
+            newLines.Insert(targetInsertionLineNumber + 1, CodeInstruction.LoadField(typeof(Dialog_BillConfig), "bill"));
+            newLines.Insert(targetInsertionLineNumber + 2, new CodeInstruction(OpCodes.Ldloc_S, buttonLabelOperand));
+            newLines.Insert(targetInsertionLineNumber + 3, new CodeInstruction(OpCodes.Call, updateButtonLabelMethod));
+            newLines.Insert(targetInsertionLineNumber + 4, new CodeInstruction(OpCodes.Stloc_S, buttonLabelOperand));
+            
+            Log.Message("After insertion");
+            Log.Message($"Target insertion line: {newLines[targetInsertionLineNumber].opcode}, {newLines[targetInsertionLineNumber].operand}");
+            Log.Message($"next: {newLines[targetInsertionLineNumber + 1].opcode}, {newLines[targetInsertionLineNumber + 1].operand}");
+            Log.Message($"next: {newLines[targetInsertionLineNumber + 2].opcode}, {newLines[targetInsertionLineNumber + 2].operand}");
+            
+            return newLines.AsEnumerable();
+        }
+
+        public static string UpdateButtonLabel(Bill_Production bill, string label)
+        {
+            Log.Message($"UpdateButtonLabel: {label}, {bill.GetUniqueLoadID()}");
+            BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+            
+            if (attrs != null && attrs.ProductionSpecialistOnly)
+                return "AnyProductionSpecialist".Translate();
+            
+            return label;
+        }
 
         // If the pawn would otherwise be allowed to start the job, check that
         // they are a production specialist and reject them if they aren't.
