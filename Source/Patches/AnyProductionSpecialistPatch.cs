@@ -11,51 +11,45 @@ using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
-    // Set bill defaults:
-    // - repeatMode
-    //  - If TargetCount, hitpointRange
-    //  - If TargetCount, qualityRange
-    // - storeMode
-    // - ingredientSearchRadius
-    //
-    // For tailoring bills, disable ingredients:
-    // - cloth
-    // - devilstrand, hyperweave, synthread, thrumbofur, thrumbomane
-    // - human leather, dread leather
+
+    // Add "Any Production Specialist" option to bill work assignment restrictions.
     [HarmonyPatch]
     public static class AnyProductionSpecialistPatch
     {
         private const string EnableProductionSpecialistOnlyBillAssignmentKey = "enableProductionSpecialistOnlyBillAssignment";
-
+        private const string ProductionSpecialistRoleName = "IdeoRole_ProductionSpecialist";
+        
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Dialog_BillConfig))]
         [HarmonyPatch("GeneratePawnRestrictionOptions")]
         public static void Postfix(Dialog_BillConfig __instance, ref IEnumerable<Widgets.DropdownMenuElement<Pawn>> __result)
         {
             bool enableProductionSpecialistOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableProductionSpecialistOnlyBillAssignmentKey));
-            if (!enableProductionSpecialistOnlyBillAssignment)
+            if (!enableProductionSpecialistOnlyBillAssignment || !ModsConfig.IdeologyActive)
                 return;
-            
-            // FIXME: only add if there are any production specialists
-            if (ModsConfig.IdeologyActive)
-            {
-                Bill_Production bill = Traverse.Create(__instance).Field("bill").GetValue<Bill_Production>();
-                
-                Widgets.DropdownMenuElement<Pawn> anyProductionSpecialistWidget = new Widgets.DropdownMenuElement<Pawn>
-                {
-                    option = new FloatMenuOption("AnyProductionSpecialist".Translate(), delegate
-                    {
-                        bill.SetAnyPawnRestriction();
-                        BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-                        if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.ProductionSpecialistOnly}");
-                        if (attrs != null)
-                            attrs.ProductionSpecialistOnly = true;
-                    }),
-                    payload = null
-                };
 
-                __result = __result.Prepend(anyProductionSpecialistWidget);
-            }
+            PreceptDef productionSpecialistRole = DefDatabase<PreceptDef>.GetNamed(ProductionSpecialistRoleName);
+            bool hasIdeoWithProductionSpecialist = Faction.OfPlayer.ideos.AllIdeos.Select(ideo => ideo.RolesListForReading.Select(role => role.def).Contains(productionSpecialistRole)).Any();
+                
+            if (!hasIdeoWithProductionSpecialist)
+                return;
+                
+            Bill_Production bill = Traverse.Create(__instance).Field("bill").GetValue<Bill_Production>();
+                
+            Widgets.DropdownMenuElement<Pawn> anyProductionSpecialistWidget = new Widgets.DropdownMenuElement<Pawn>
+            {
+                option = new FloatMenuOption("AnyProductionSpecialist".Translate(), delegate
+                {
+                    bill.SetAnyPawnRestriction();
+                    BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.ProductionSpecialistOnly}");
+                    if (attrs != null)
+                        attrs.ProductionSpecialistOnly = true;
+                }),
+                payload = null
+            };
+
+            __result = __result.Prepend(anyProductionSpecialistWidget);
         }
 
         // Whoever wrote the buttonLabel assignment line should be slapped. It's like a quintuple nested ternary? Fuck no.
@@ -216,10 +210,8 @@ namespace MadagascarVanilla.Patches
 
         public static bool IsProductionSpecialist(this Pawn pawn)
         {
-            const string productionSpecialistRoleName = "IdeoRole_ProductionSpecialist";
-        
             Precept_Role role = pawn.Ideo.GetRole(pawn);
-            PreceptDef productionSpecialistRole = DefDatabase<PreceptDef>.GetNamed(productionSpecialistRoleName);
+            PreceptDef productionSpecialistRole = DefDatabase<PreceptDef>.GetNamed(ProductionSpecialistRoleName);
             
             return role != null && role.def == productionSpecialistRole;
         }
