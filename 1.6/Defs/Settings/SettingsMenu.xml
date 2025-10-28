@@ -187,7 +187,14 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableProductionSpecialistOnlyBillAssignment</key>
                 <label>Enable Production Specialist Only Bill Assignment</label>
-                <tooltip>Adds a work assignment restriction to production bills that restricts the bill to production specialists.</tooltip>
+                <tooltip>Adds a work assignment restriction to production bills that restricts the bill to production specialists. Will only be visible if the player faction ideology has a production specialist role. Will be available for bills that were created while this feature was disabled.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableInspiredOnlyBillAssignment</key>
+                <label>Enable Inspired Only Bill Assignment</label>
+                <tooltip>Adds a work assignment restriction to production bills that restricts the bill to any pawn with a creativity inspiration. Will be available for bills that were created while this feature was disabled.</tooltip>
                 <defaultValue>false</defaultValue>
             </li>
 
