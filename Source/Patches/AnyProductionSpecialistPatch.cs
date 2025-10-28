@@ -90,17 +90,17 @@ namespace MadagascarVanilla.Patches
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(Dialog_BillConfig))]
         [HarmonyPatch(nameof(Dialog_BillConfig.DoWindowContents))]
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            List<CodeInstruction> newLines = lines.ToList();
+            List<CodeInstruction> newInstructions = instructions.ToList();
             
             // Let's do a little sanity checking -- all of these are only references once in DoWindowContents, and in this order.
             // So we can confirm that we've found the area we want by confirming that.
-            int anySlaveLineNumber = newLines.FirstIndexOf(instruction => instruction.operand as string == "AnySlave");
-            int anyMechanitorLineNumber = newLines.FirstIndexOf(instruction => instruction.operand as string == "AnyMechanitor");
-            int anyMechLineNumber = newLines.FirstIndexOf(instruction => instruction.operand as string == "AnyMech");
-            int anyNonMechLineNumber = newLines.FirstIndexOf(instruction => instruction.operand as string == "AnyNonMech");
-            int anyWorkerLineNumber = newLines.FirstIndexOf(instruction => instruction.operand as string == "AnyWorker");
+            int anySlaveLineNumber = newInstructions.FirstIndexOf(instruction => instruction.operand as string == "AnySlave");
+            int anyMechanitorLineNumber = newInstructions.FirstIndexOf(instruction => instruction.operand as string == "AnyMechanitor");
+            int anyMechLineNumber = newInstructions.FirstIndexOf(instruction => instruction.operand as string == "AnyMech");
+            int anyNonMechLineNumber = newInstructions.FirstIndexOf(instruction => instruction.operand as string == "AnyNonMech");
+            int anyWorkerLineNumber = newInstructions.FirstIndexOf(instruction => instruction.operand as string == "AnyWorker");
             
             MethodInfo updateButtonLabelMethod = AccessTools.Method(typeof(AnyProductionSpecialistPatch), nameof(UpdateButtonLabel));
             int buttonLabelLineNumber = anyWorkerLineNumber + 3;
@@ -110,38 +110,27 @@ namespace MadagascarVanilla.Patches
             if (!(anySlaveLineNumber < anyMechanitorLineNumber) || !(anyMechLineNumber < anyNonMechLineNumber))
             {
                 Log.Error("Madagascar Vanilla: Failed to apply Dialog_BillConfig transpile (failed restriction lookups), returning base");
-                return lines;
+                return instructions;
             }
             
             // copy buttonLabelOperand from an instruction that already references the local variable we want (buttonLabel).
-            if (newLines[buttonLabelLineNumber].opcode == OpCodes.Stloc_S && newLines[buttonLabelLineNumber].operand is LocalBuilder)
+            if (newInstructions[buttonLabelLineNumber].opcode == OpCodes.Stloc_S && newInstructions[buttonLabelLineNumber].operand is LocalBuilder)
             {
-                buttonLabelOperand = newLines[buttonLabelLineNumber].operand;
+                buttonLabelOperand = newInstructions[buttonLabelLineNumber].operand;
             }
             else
             {
                 Log.Error("Madagascar Vanilla: Failed to apply Dialog_BillConfig transpile (failed to find buttonLabel), returning base");
-                return lines;
+                return instructions;
             }
             
-            // Log.Message("Before insertion");
-            // Log.Message($"prev: {newLines[targetInsertionLineNumber - 1].opcode}, {newLines[targetInsertionLineNumber - 1].operand}");
-            // Log.Message($"Target insertion line: {newLines[targetInsertionLineNumber].opcode}, {newLines[targetInsertionLineNumber].operand}");
-            // Log.Message($"next: {newLines[targetInsertionLineNumber + 1].opcode}, {newLines[targetInsertionLineNumber + 1].operand}");
-            // Log.Message($"next: {newLines[targetInsertionLineNumber + 2].opcode}, {newLines[targetInsertionLineNumber + 2].operand}");
+            newInstructions.Insert(targetInsertionLineNumber, new CodeInstruction(OpCodes.Ldarg_0));
+            newInstructions.Insert(targetInsertionLineNumber + 1, CodeInstruction.LoadField(typeof(Dialog_BillConfig), "bill"));
+            newInstructions.Insert(targetInsertionLineNumber + 2, new CodeInstruction(OpCodes.Ldloc_S, buttonLabelOperand));
+            newInstructions.Insert(targetInsertionLineNumber + 3, new CodeInstruction(OpCodes.Call, updateButtonLabelMethod));
+            newInstructions.Insert(targetInsertionLineNumber + 4, new CodeInstruction(OpCodes.Stloc_S, buttonLabelOperand));
             
-            newLines.Insert(targetInsertionLineNumber, new CodeInstruction(OpCodes.Ldarg_0));
-            newLines.Insert(targetInsertionLineNumber + 1, CodeInstruction.LoadField(typeof(Dialog_BillConfig), "bill"));
-            newLines.Insert(targetInsertionLineNumber + 2, new CodeInstruction(OpCodes.Ldloc_S, buttonLabelOperand));
-            newLines.Insert(targetInsertionLineNumber + 3, new CodeInstruction(OpCodes.Call, updateButtonLabelMethod));
-            newLines.Insert(targetInsertionLineNumber + 4, new CodeInstruction(OpCodes.Stloc_S, buttonLabelOperand));
-            
-            // Log.Message("After insertion");
-            // Log.Message($"Target insertion line: {newLines[targetInsertionLineNumber].opcode}, {newLines[targetInsertionLineNumber].operand}");
-            // Log.Message($"next: {newLines[targetInsertionLineNumber + 1].opcode}, {newLines[targetInsertionLineNumber + 1].operand}");
-            // Log.Message($"next: {newLines[targetInsertionLineNumber + 2].opcode}, {newLines[targetInsertionLineNumber + 2].operand}");
-            
-            return newLines.AsEnumerable();
+            return newInstructions.AsEnumerable();
         }
 
         public static string UpdateButtonLabel(Bill_Production bill, string label)
