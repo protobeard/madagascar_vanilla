@@ -180,6 +180,19 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
+                <text>Production Bill Features</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableProductionSpecialistOnlyBillAssignment</key>
+                <label>Enable Production Specialist Only Bill Assignment</label>
+                <tooltip>Adds a work assignment restriction to production bills that restricts the bill to production specialists.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Text">
                 <text>General Bill Defaults</text>
                 <anchor>Middle</anchor>
             </li>
