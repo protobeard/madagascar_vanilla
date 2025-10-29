@@ -8,6 +8,7 @@ using HarmonyLib;
 using UnityEngine;
 using XmlExtensions;
 using XmlExtensions.Setting;
+using TraitDefOf = MadagascarVanilla.DefOfs.TraitDefOf;
 
 namespace MadagascarVanilla.Patches
 {

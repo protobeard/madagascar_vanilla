@@ -3,6 +3,7 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using XmlExtensions;
+using SpecialThingFilterDefOf = MadagascarVanilla.DefOfs.SpecialThingFilterDefOf;
 
 namespace MadagascarVanilla.Patches
 {
@@ -27,30 +28,25 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"Zone_StockpileConstructor.Postfix");
             
-            SpecialThingFilterDef rottenSpecialThingFilterDef = DefDatabase<SpecialThingFilterDef>.GetNamed("AllowRotten");
-            SpecialThingFilterDef deadmansSpecialThingFilterDef = DefDatabase<SpecialThingFilterDef>.GetNamed("AllowDeadmansApparel");
-            SpecialThingFilterDef biocodedWeaponsSpecialThingFilterDef = DefDatabase<SpecialThingFilterDef>.GetNamed("AllowBiocodedWeapons");
-            SpecialThingFilterDef biocodedApparelSpecialThingFilterDef = DefDatabase<SpecialThingFilterDef>.GetNamed("AllowBiocodedApparel");
-            
             if (preset == StorageSettingsPreset.DefaultStockpile)
             {
                 if (disableRottenStockpileStorage)
-                    __instance.settings.filter.SetAllow(rottenSpecialThingFilterDef, false);
+                    __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowRotten, false);
                 
                 if (disableDeadmansStockpileStorage)
-                     __instance.settings.filter.SetAllow(deadmansSpecialThingFilterDef, false);
+                     __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowDeadmansApparel, false);
 
                 if (disableBiocodedStockpileStorage)
                 {
-                    __instance.settings.filter.SetAllow(biocodedWeaponsSpecialThingFilterDef, false);
-                    __instance.settings.filter.SetAllow(biocodedApparelSpecialThingFilterDef, false);
+                    __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowBiocodedWeapons, false);
+                    __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowBiocodedApparel, false);
                 }
             }
             else if (preset == StorageSettingsPreset.DumpingStockpile)
             {
                 if (disableRottenDumpingStockpileStorage)
                 {
-                    __instance.settings.filter.SetAllow(rottenSpecialThingFilterDef, false);
+                    __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowRotten, false);
                 }
             }
         }

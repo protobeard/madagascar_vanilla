@@ -1,6 +1,6 @@
 using RimWorld;
 
-namespace MadagascarVanilla
+namespace MadagascarVanilla.DefOfs
 {
     [DefOf]
     public static class TraitDefOf

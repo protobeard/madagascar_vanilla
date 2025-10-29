@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using HarmonyLib;
 using MadagascarVanilla.Settings;
 using XmlExtensions;
+using GeneDefOf = MadagascarVanilla.DefOfs.GeneDefOf;
+using TraitDefOf = MadagascarVanilla.DefOfs.TraitDefOf;
 
 
 namespace MadagascarVanilla.Patches

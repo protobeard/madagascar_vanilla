@@ -4,6 +4,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using XmlExtensions.Setting;
+using PawnTableDefOf = MadagascarVanilla.DefOfs.PawnTableDefOf;
 
 namespace MadagascarVanilla.Settings
 {
@@ -34,8 +35,7 @@ namespace MadagascarVanilla.Settings
             TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid(new Rect(rect.x, rect.y, TimeAssignmentSelectorWidth, TimeAssignmentSelectorHeight));
             yOffset += TimeAssignmentSelectorHeight/2f;
             
-            PawnTableDef tableDef = DefDatabase<PawnTableDef>.GetNamed("DefaultSchedules");
-            PawnTable table = new PawnTable(tableDef, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)rect.width, (int)(rect.height - yOffset));
+            PawnTable table = new PawnTable(PawnTableDefOf.DefaultSchedules, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)rect.width, (int)(rect.height - yOffset));
             
             PawnColumnWorker_DefaultTimetable pcwdt = new PawnColumnWorker_DefaultTimetable();
             

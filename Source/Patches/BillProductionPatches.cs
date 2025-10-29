@@ -65,7 +65,7 @@ namespace MadagascarVanilla.Patches
             __instance.ingredientSearchRadius = ingredientSearchRadius;
 
             // If we're a tailoring bill we need to check the ingredient disabling settings
-            if (__instance.recipe != null && __instance.recipe.recipeUsers != null && __instance.recipe.recipeUsers.Contains(DefDatabase<ThingDef>.GetNamed("ElectricTailoringBench")))
+            if (__instance.recipe != null && __instance.recipe.recipeUsers != null && __instance.recipe.recipeUsers.Contains(DefOfs.ThingDefOf.ElectricTailoringBench))
             {
                 DisableTailoringIngredients(__instance);
             }

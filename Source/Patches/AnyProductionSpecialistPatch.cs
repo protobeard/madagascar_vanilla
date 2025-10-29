@@ -8,6 +8,7 @@ using HarmonyLib;
 using Verse;
 using Verse.AI;
 using XmlExtensions;
+using PreceptDefOf = MadagascarVanilla.DefOfs.PreceptDefOf;
 
 namespace MadagascarVanilla.Patches
 {

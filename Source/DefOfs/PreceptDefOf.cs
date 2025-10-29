@@ -1,7 +1,6 @@
-using Verse;
 using RimWorld;
 
-namespace MadagascarVanilla
+namespace MadagascarVanilla.DefOfs
 {
     [DefOf]
     public static class PreceptDefOf

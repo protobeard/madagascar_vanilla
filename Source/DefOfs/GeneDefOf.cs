@@ -1,7 +1,7 @@
-using Verse;
 using RimWorld;
+using Verse;
 
-namespace MadagascarVanilla
+namespace MadagascarVanilla.DefOfs
 {
     [DefOf]
     public static class GeneDefOf
