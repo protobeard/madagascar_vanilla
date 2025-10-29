@@ -117,37 +117,27 @@ namespace MadagascarVanilla.Patches
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
                 
-                ThingDef cloth = DefDatabase<ThingDef>.GetNamed("Cloth");
-                
-                bill.ingredientFilter.SetAllow(cloth, false);
+                bill.ingredientFilter.SetAllow(ThingDefOf.Cloth, false);
             }
 
             if (disableValuableTextiles)
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
-                
-                ThingDef devilstrand = DefDatabase<ThingDef>.GetNamed("DevilstrandCloth");
-                ThingDef hyperweave = DefDatabase<ThingDef>.GetNamed("Hyperweave");
-                ThingDef synthread = DefDatabase<ThingDef>.GetNamed("Synthread");
-                ThingDef thrumbofur = DefDatabase<ThingDef>.GetNamed("Leather_Thrumbo");
-                ThingDef thrumbomane = DefDatabase<ThingDef>.GetNamed("Leather_AlphaThrumbo");
-                
-                bill.ingredientFilter.SetAllow(devilstrand, false);
-                bill.ingredientFilter.SetAllow(hyperweave, false);
-                bill.ingredientFilter.SetAllow(synthread, false);
-                bill.ingredientFilter.SetAllow(thrumbofur, false);
-                bill.ingredientFilter.SetAllow(thrumbomane, false);
+
+                foreach (ThingDef textile in DefDatabase<ThingDef>.AllDefs.Where(td => td.HasModExtension<ValuableTextileExtension>() && td.GetModExtension<ValuableTextileExtension>().ValuableTextile))
+                {
+                    bill.ingredientFilter.SetAllow(textile, false);
+                }
             }
 
             if (disableMoodImpactingTextiles)
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
                 
-                ThingDef humanLeather = DefDatabase<ThingDef>.GetNamed("Leather_Human"); 
-                ThingDef dreadleather = DefDatabase<ThingDef>.GetNamed("Leather_Dread");
-                
-                bill.ingredientFilter.SetAllow(humanLeather, false);
-                bill.ingredientFilter.SetAllow(dreadleather, false);
+                foreach (ThingDef textile in DefDatabase<ThingDef>.AllDefs.Where(td => td.HasModExtension<MoodAlteringTextileExtension>() && td.GetModExtension<MoodAlteringTextileExtension>().MoodAlteringTextile))
+                {
+                    bill.ingredientFilter.SetAllow(textile, false);
+                }
             }
         }
     }

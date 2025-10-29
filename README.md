@@ -19,6 +19,11 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 ### Bug Fixes (Well, Kinda...)
 
 * Display Correct Milk Type on Animal Fullness Labels: Boomables produce chemfuel, not milk.
+
+### (Very Small) Features
+
+* Add Production Specialist Only work restriction option to bills
+* Add Inspired Pawn Only work restriction option to bills
 * Show Traits in Outfit Assignment: just like for Drug Policies.
 
 ### Quality of Life
@@ -27,10 +32,10 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Allow Goodwill Reward: enable or disable goodwill rewards from factions.
 * Allow Honor Reward: enable or disable honor rewards from factions.
 * Override Default Schedules: enable custom schedules to be assigned to different types of pawns on recruitment: Never Sleep, Night Shift, Biphasic, and Day Shift. These schedules are assigned like so:
-    * Never Sleep to BodyMastery, Never Sleep gene pawns
-    * Night Shift to NightOwl, UV Sensitive pawns
-    * Biphasic to Very Sleepy, Sleepy gene pawns
-    * Day Shift to Low Sleep gene, "Normal" pawns
+    * Never Sleep to BodyMastery and Never Sleep gene pawns
+    * Night Shift to NightOwl and UV Sensitive pawns
+    * Biphasic to Very Sleepy and Sleepy gene pawns
+    * Day Shift to Low Sleep gene and "Normal" pawns
 * Automatically Expand Home: enable or disable automatically expanding the Home area.
 * Auto Rebuild in Home: enable or disable automatically rebuilding in the Home area.
 * Starting Areas: provide a list of areas which will be automatically created on each new game (e.g., "Work, Inside, Safe").
@@ -42,8 +47,8 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Bill Ingredient Search Radius: set a default ingredient search radius for new production bills.
 * Tailoring:
     * Disable cloth in recipes
-    * Disable valuble textiles in recipes (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane)
-    * Disable mood impacting textiles in recipes (human leather, dread leather)
+    * Disable valuble textiles in recipes (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane). Modders note: what counts as "valuable" can be extended via XML patches.
+    * Disable mood impacting textiles in recipes (human leather, dread leather). Modders note: what counts as "mood altering" can be extended via XML patches.
 * Crematorium: disable cremating colonist corpses by default.
 * Enable Mech Repair by Default: Yup.
 * Landmark Visibility: enable or disable Odyssey landmark visibility on the world map.
@@ -69,7 +74,6 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Dumping Stockpile Storage:
     * Disable storing rotten items in dumping stockpiles by default (prevent pawns from bringing in rotting animal corpses)
 
-
 ### House Rules
 
 * Make all Mechanitor Chips Nonflammable: instead of just the Signal Chip
@@ -80,7 +84,6 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Toxic Fallout Immune Devilstrand: it takes so long to grow already.
 * Hydroponic Devilstrand: allow devilstrand to be grown in hydroponics.
 * Adjust Gauranlen Pruning speed: I always feel like this is just too much work.
-
 
 ## Balance
 

@@ -70,6 +70,7 @@
     <ItemGroup>
         <Compile Include="GeneDefOf.cs" />
         <Compile Include="MadagascarVanillaMod.cs" />
+        <Compile Include="MoodAlteringTextileExtension.cs" />
         <Compile Include="Patches\AddTraitsToOutfitAssignmentRow.cs" />
         <Compile Include="Patches\AnyProductionSpecialistPatch.cs" />
         <Compile Include="Patches\AutoCutPatch.cs" />
@@ -94,6 +95,7 @@
         <Compile Include="Settings\MedicalDefaults.cs" />
         <Compile Include="Settings\ScheduleDefaults.cs" />
         <Compile Include="TraitDefOf.cs" />
+        <Compile Include="ValuableTextileExtension.cs" />
         <Compile Include="WorldComponent.cs" />
     </ItemGroup>
     <ItemGroup>
