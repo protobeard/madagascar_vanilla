@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>PolicyPersistanceSettings</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <settings>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Policy Persistance</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistApparelPolicies</key>
+                <label>Apparel Policies Persist Across Games</label>
+                <tooltip>Apparel policies persist across new games -- make your desired set of outfits once and keep them forever.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistDrugPolicies</key>
+                <label>Drug Policies Persist Across Games</label>
+                <tooltip>Drug policies persist across new games -- make your desired set of drug policies once and keep them forever.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistFoodPolicies</key>
+                <label>Food Policies Persist Across Games</label>
+                <tooltip>Food policies persist across new games -- make your desired set of food policies once and keep them forever.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistReadingPolicies</key>
+                <label>Reading Policies Persist Across Games</label>
+                <tooltip>Reading policies persist across new games -- make your desired set of reading policies once and keep them forever.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>persistMedicalSettings</key>
+                <label>Medical Defaults Persist Across Games</label>
+                <tooltip>Persist medical care default settings across games -- can set pawns to Herbal Medicine default once and never worry again (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="MadagascarVanilla.Settings.MedicalDefaults" />
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

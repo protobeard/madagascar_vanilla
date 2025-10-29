@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>MainSettingsMenu</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <label>Madagascar Vanilla</label>
+        <settings>
+
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Many changes require a restart to take effect.</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>verboseMode</key>
+                <label>Verbose Mode</label>
+                <tooltip>Print lots of log messages. Useful for debugging.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>BugFixSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>UISettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>NewGameConfigurationSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>PolicyPersistanceSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>ScheduleSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>AreaSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>StorageDefaultSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>BillSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>PrisonerSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>MechanitorSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>OdysseyQuestSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.EmbedMenu">
+                <menu>PlantSettings</menu>
+            </li>
+
+            <li Class="XmlExtensions.Setting.GapLine"/>
+            <li Class="XmlExtensions.Setting.Gap"/>
+
+            <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
+            <li Class="XmlExtensions.Setting.ResetSettings" />
+
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

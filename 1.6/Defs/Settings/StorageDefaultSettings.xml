@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>StorageDefaultSettings</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <settings>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Storage Defaults</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearShelfStorage</key>
+                <label>Clear Default Shelf Storage</label>
+                <tooltip>Sets default storage on shelves to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearBookcaseStorage</key>
+                <label>Clear Default Bookcase Storage</label>
+                <tooltip>Sets default storage on bookcases to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearOutfitStandStorage</key>
+                <label>Clear Default Outfit Stand Storage</label>
+                <tooltip>Sets default storage on outfit stands to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>clearHopperStorage</key>
+                <label>Clear Default Hopper Storage</label>
+                <tooltip>Sets default storage on hoppers to be empty and priority to be normal.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenShelfStorage</key>
+                <label>Disable Storing Rotten Items on Shelves</label>
+                <tooltip>Sets default storage for rotten items on shelves to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenStockpileStorage</key>
+                <label>Disable Storing Rotten Items in Stockpiles</label>
+                <tooltip>Sets default storage for rotten items in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRottenDumpingStockpileStorage</key>
+                <label>Disable Storing Rotten Items in Dumping Stockpiles</label>
+                <tooltip>Sets default storage for rotten items in dumping stockpiles to be false. This can be useful to prevent pawns from bringing random rotting animal corpses to dumping stockpiles.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableDeadmansShelfStorage</key>
+                <label>Disable Storing Tainted Items on Shelves</label>
+                <tooltip>Sets default storage for tainted items on shelves and outfit stands to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableDeadmansStockpileStorage</key>
+                <label>Disable Storing Tainted Items in Stockpiles</label>
+                <tooltip>Sets default storage for tainted items in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableBiocodedShelfStorage</key>
+                <label>Disable Storing Biocoded Items on Shelves</label>
+                <tooltip>Sets default storage for biocoded items (weapons and apparel) on shelves and outfit stands to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableBiocodedStockpileStorage</key>
+                <label>Disable Storing Biocoded Items in Stockpiles</label>
+                <tooltip>Sets default storage for biocoded items (weapons and apparel) in stockpiles to be false.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

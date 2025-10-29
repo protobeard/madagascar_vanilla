@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>BugFixSettings</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <settings>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Small Bug Fixes</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableCompMilkableDisplayProperItem</key>
+                <label>Display Correct Milk Type on Animal Fullness Labels</label>
+                <tooltip>Instead of labeling all resource producing animals with "Milk Fullness" show the actual resource produced (e.g., Boomalopes are now labeled with "Chemfuel Fullness") (vanilla default is false, but should honestly just be true. This is much more of a bug fix than a setting).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

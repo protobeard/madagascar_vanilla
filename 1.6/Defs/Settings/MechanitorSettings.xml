@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>MechanitorSettings</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <settings>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Mechanitor Settings</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableMechRepair</key>
+                <label>Enable Mech Repair by Default</label>
+                <tooltip>Enable automatically repairing colony mechs by default (vanilla default is false).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>nonflammableMechResourceChips</key>
+                <label>Make all Mechanitor Chips Nonflammable</label>
+                <tooltip>Make all mechanitor chips (signal, power focus, nano structuring) non flammable (vanilla default is only signal chips).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>

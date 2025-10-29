@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <XmlExtensions.SettingsMenuDef>
+        <defName>ScheduleSettings</defName>
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <settings>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Schedule Setup</text>
+                <anchor>Middle</anchor>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Gap"/>
+            <li Class="XmlExtensions.Setting.Text">
+                <text>Overrride the default RimWorld schedule with those specified below, with the following rules (assuming all options below are enabled):
+
+                 NeverSleep                 |             Night Shift            |            Biphasic           |     Day Shift
+BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Normal
+
+This only modifies the pawns initial schedule upon recruitment; their schedule can always be changed afterwards in game.
+                </text>
+            </li>
+
+            <li Class="MadagascarVanilla.Settings.ScheduleDefaults" />
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialBodyMasterySchedule</key>
+                <label>Assign Body Mastery pawns the Never Sleep Schedule</label>
+                <tooltip>Assign any pawns with the Body Mastery trait the Never Sleep schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialNeverSleepGeneSchedule</key>
+                <label>Assign Never Sleep pawns the Never Sleep Schedule</label>
+                <tooltip>Assign any pawns with the Never Sleep gene the Never Sleep schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialNightOwlSchedule</key>
+                <label>Assign Night Owl pawns the Night Shift Schedule</label>
+                <tooltip>Assign any pawns with the Night Owl trait the Night Owl schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialUVSensitiveSchedule</key>
+                <label>Assign UV Sensitive pawns the Night Shift Schedule</label>
+                <tooltip>Assign pawns with UV sensitive genes (Dirtmoles, Sanguophages, etc.) the Night Shift schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialSleepyGeneSchedule</key>
+                <label>Assign Sleepy Pawns the Biphasic Schedule</label>
+                <tooltip>Assign pawns that have sleep modifying genes (Very Sleepy, Sleepy) the Biphasic schedule.</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>initialSchedule</key>
+                <label>Assign "Normal" Pawns Day Shift</label>
+                <tooltip>Assign any pawns that don't meet the above criteria the Day Shift schedule (note that this includes pawns with the Low Sleep gene).</tooltip>
+                <defaultValue>false</defaultValue>
+            </li>
+        </settings>
+    </XmlExtensions.SettingsMenuDef>
+
+</Defs>
