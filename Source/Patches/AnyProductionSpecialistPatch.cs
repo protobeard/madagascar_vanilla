@@ -18,7 +18,6 @@ namespace MadagascarVanilla.Patches
     {
         private const string EnableProductionSpecialistOnlyBillAssignmentKey = "enableProductionSpecialistOnlyBillAssignment";
         private const string EnableInspiredOnlyBillAssignmentKey = "enableInspiredOnlyBillAssignment";
-        private const string ProductionSpecialistRoleName = "IdeoRole_ProductionSpecialist";
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Dialog_BillConfig))]
@@ -30,8 +29,7 @@ namespace MadagascarVanilla.Patches
 
             if (enableProductionSpecialistOnlyBillAssignment && ModsConfig.IdeologyActive)
             {
-                PreceptDef productionSpecialistRole = DefDatabase<PreceptDef>.GetNamed(ProductionSpecialistRoleName);
-                bool hasIdeoWithProductionSpecialist = Faction.OfPlayer.ideos.AllIdeos.Select(ideo => ideo.RolesListForReading.Select(role => role.def).Contains(productionSpecialistRole)).Any();
+                bool hasIdeoWithProductionSpecialist = Faction.OfPlayer.ideos.AllIdeos.Select(ideo => ideo.RolesListForReading.Select(role => role.def).Contains(PreceptDefOf.IdeoRole_ProductionSpecialist)).Any();
 
                 if (hasIdeoWithProductionSpecialist)
                 {
@@ -45,7 +43,10 @@ namespace MadagascarVanilla.Patches
                             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
                             if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.ProductionSpecialistOnly}");
                             if (attrs != null)
+                            { 
+                                attrs.ResetAttributes();
                                 attrs.ProductionSpecialistOnly = true;
+                            }
                         }),
                         payload = null
                     }; 
@@ -65,7 +66,10 @@ namespace MadagascarVanilla.Patches
                         BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
                         if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.InspiredOnly}");
                         if (attrs != null)
+                        {
+                            attrs.ResetAttributes();
                             attrs.InspiredOnly = true;
+                        }
                     }),
                     payload = null
                 };
@@ -158,6 +162,58 @@ namespace MadagascarVanilla.Patches
             
             return label;
         }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Bill))]
+        [HarmonyPatch(nameof(Bill.SetAnyPawnRestriction))]
+        public static void SetAnyPawnRestrictionPostfix(Bill __instance)
+        {
+            if (!(__instance is Bill_Production bill))
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyPawnRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
+            BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+            attrs?.ResetAttributes();
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Bill))]
+        [HarmonyPatch(nameof(Bill.SetAnySlaveRestriction))]
+        public static void SetAnySlaveRestrictionPostfix(Bill __instance)
+        {
+            if (!(__instance is Bill_Production bill))
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnySlaveRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
+            BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+            attrs?.ResetAttributes();
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Bill))]
+        [HarmonyPatch(nameof(Bill.SetAnyMechRestriction))]
+        public static void SetAnyMechRestrictionPostfix(Bill __instance)
+        {
+            if (!(__instance is Bill_Production bill))
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyMechRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
+            BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+            attrs?.ResetAttributes();
+        }
+        
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Bill))]
+        [HarmonyPatch(nameof(Bill.SetAnyNonMechRestriction))]
+        public static void SetAnyNonMechRestrictionPostfix(Bill __instance)
+        {
+            if (!(__instance is Bill_Production bill))
+                return;
+            
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyNonMechRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
+            BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
+            attrs?.ResetAttributes();
+        }
 
         // If the pawn would otherwise be allowed to start the job, check that
         // they are a production specialist and reject them if they aren't.
@@ -231,8 +287,14 @@ namespace MadagascarVanilla.Patches
             
             public BillAdditionalAttributes(Bill_Production bill)
             {
-                this.Bill = bill;
+                Bill = bill;
                 AdditionalAttributesMap.Add(bill.GetUniqueLoadID(), this);
+            }
+
+            public void ResetAttributes()
+            {
+                ProductionSpecialistOnly = false;
+                InspiredOnly = false;
             }
             
             public void ExposeData()
@@ -251,9 +313,7 @@ namespace MadagascarVanilla.Patches
         public static bool IsProductionSpecialist(this Pawn pawn)
         {
             Precept_Role role = pawn.Ideo.GetRole(pawn);
-            PreceptDef productionSpecialistRole = DefDatabase<PreceptDef>.GetNamed(ProductionSpecialistRoleName);
-            
-            return role != null && role.def == productionSpecialistRole;
+            return role != null && role.def == PreceptDefOf.IdeoRole_ProductionSpecialist;
         }
     }
 }
