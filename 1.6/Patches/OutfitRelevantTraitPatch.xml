@@ -3,15 +3,15 @@
 
     <Operation Class="XmlExtensions.OptionalPatch">
         <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableMoodImpactingTextiles</key>
+        <key>disableValuableTextiles</key>
         <defaultValue>false</defaultValue>
         <caseTrue>
 
             <Operation Class="PatchOperationAddModExtension">
-                <xpath>/Defs/ThingDef[defName="Leather_Human" or defName="Leather_Dread"]</xpath>
+                <xpath>/Defs/TraitDef[defName="Bloodlust" or defName="Brawler" or defName="Cannibal" or defName="Nudist" or defName="Psychopath"]</xpath>
                 <value>
-                    <li Class="MadagascarVanilla.ModExtensions.MoodAlteringTextileExtension">
-                        <MoodAlteringTextile>true</MoodAlteringTextile>
+                    <li Class="MadagascarVanilla.ModExtensions.OutfitRelevantTraitExtension">
+                        <OutfitRelevant>true</OutfitRelevant>
                     </li>
                 </value>
             </Operation>

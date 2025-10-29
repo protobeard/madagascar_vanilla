@@ -10,7 +10,7 @@
             <Operation Class="PatchOperationAddModExtension">
                 <xpath>/Defs/ThingDef[defName="DevilstrandCloth" or defName="Hyperweave" or defName="Synthread" or defName="Leather_Thrumbo" or defName="Leather_AlphaThrumbo"]</xpath>
                 <value>
-                    <li Class="MadagascarVanilla.ValuableTextileExtension">
+                    <li Class="MadagascarVanilla.ModExtensions.ValuableTextileExtension">
                         <ValuableTextile>true</ValuableTextile>
                     </li>
                 </value>

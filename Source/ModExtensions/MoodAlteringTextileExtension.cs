@@ -1,6 +1,6 @@
 using Verse;
 
-namespace MadagascarVanilla
+namespace MadagascarVanilla.ModExtensions
 {
     public class MoodAlteringTextileExtension : DefModExtension
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using HarmonyLib;
+using MadagascarVanilla.ModExtensions;
 using Verse;
 using XmlExtensions;
 
