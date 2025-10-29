@@ -16,7 +16,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("RunInt")]
     public static class LongerOdysseyQuestsPatch
     {
-        private const string OdysseyQuestExtensionMultipler = "odysseyQuestExtensionMultipler";
+        private const string OdysseyQuestExtensionMultiplerKey = "odysseyQuestExtensionMultipler";
         
         // The RunInt() method uses a readonly variable TimeoutDays to compute how many delayTicks the quest should
         // have before expiring, then passes that along to a couple relevant other objects. Since TicksPerDay is a nice
@@ -33,24 +33,24 @@ namespace MadagascarVanilla.Patches
         // IL_00cc: ldc.i4       60000 // 0x0000ea60
         // IL_00d1: mul
         // IL_00d2: stloc.s      delayTicks
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            int questExtensionMultiplier = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestExtensionMultipler));
+            int questExtensionMultiplier = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestExtensionMultiplerKey));
             int ticksPerDayExtension = GenDate.TicksPerDay * questExtensionMultiplier;
             
-            List<CodeInstruction> newLines = lines.ToList();
-            int referenceLineNumber = newLines.FirstIndexOf((CodeInstruction instruction) => instruction.opcode == OpCodes.Ldc_I4 && (int) instruction.operand == GenDate.TicksPerDay);
+            List<CodeInstruction> newInstructions = instructions.ToList();
+            int referenceLineNumber = newInstructions.FirstIndexOf((CodeInstruction instruction) => instruction.opcode == OpCodes.Ldc_I4 && (int) instruction.operand == GenDate.TicksPerDay);
 
             if (referenceLineNumber != -1)
             {
-                newLines[referenceLineNumber] = new CodeInstruction(OpCodes.Ldc_I4, operand: ticksPerDayExtension);
-                return newLines.AsEnumerable();
+                newInstructions[referenceLineNumber] = new CodeInstruction(OpCodes.Ldc_I4, operand: ticksPerDayExtension);
+                return newInstructions.AsEnumerable();
             }
             else
             {
                 Log.Error("Madagascar Vanilla: Failed to apply odyssey quest time extension transpile, returning base");
             }
-            return lines;
+            return instructions;
         }
     }
 }

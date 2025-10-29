@@ -11,11 +11,11 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(MethodType.Constructor)]
     public static class MechRepairableOnPatch
     {
-        private const string EnableMechRepair = "enableMechRepair";
+        private const string EnableMechRepairKey = "enableMechRepair";
         
         public static void Postfix(CompMechRepairable __instance)
         {
-            bool enableMechRepair = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableMechRepair));
+            bool enableMechRepair = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableMechRepairKey));
             
             __instance.autoRepair = enableMechRepair;
         }

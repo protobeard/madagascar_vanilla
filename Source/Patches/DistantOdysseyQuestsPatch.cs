@@ -16,7 +16,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("TryFindSiteTile")]
     public static class DistantOdysseyQuestsPatch
     {
-        private const string OdysseyQuestRangeExtender = "odysseyQuestRangeExtender";
+        private const string OdysseyQuestRangeExtenderKey = "odysseyQuestRangeExtender";
         private const char RangeSplitter = '~';
         
         // QuestNode_Root_Asteroid.TryFindSiteTile uses two constants for the min and max distance from the colony,
@@ -26,7 +26,7 @@ namespace MadagascarVanilla.Patches
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
         {
             
-            string extendOdysseySubquests = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestRangeExtender));
+            string extendOdysseySubquests = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestRangeExtenderKey));
             List<string> rangeBoundaries = extendOdysseySubquests.Split(RangeSplitter).ToList();
             
             if (rangeBoundaries.Count != 2)

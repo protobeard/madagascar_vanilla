@@ -13,7 +13,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(MethodType.Getter)]
     public static class MoreGravshipSubquestsPatch
     {
-        private const string AllowAdditionalGravshipSubquests = "allowXAdditionalGravshipSubquests";
+        private const string AllowAdditionalGravshipSubquestsKey = "allowXAdditionalGravshipSubquests";
         
         // Recheck pendingSubQuestCount against the user specified maxAllowedGravshipSubquests
         // and modify the return value of CanGenerateSubquest if there are fewer subquests, enough
@@ -23,7 +23,7 @@ namespace MadagascarVanilla.Patches
         // better to do a couple rechecks than a Prefix patch which completely duplicates the original code.
         public static void Postfix(QuestPart_SubquestGenerator_Gravcores __instance, float ___lastSubquestTick, ref bool __result)
         {
-            int maxAllowedGravshipSubquests = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AllowAdditionalGravshipSubquests));
+            int maxAllowedGravshipSubquests = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AllowAdditionalGravshipSubquestsKey));
             
             // If the original method returned false
             if (!__result)

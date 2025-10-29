@@ -23,7 +23,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(PawnColumnWorker_Outfit.DoCell))]
     public static class AddTraitsToOutfitAssignmentRowPatch
     {
-        private const string AddTraitsToOutFitAssignmentRow = "addTraitsToOutFitAssignmentRow";
+        private const string AddTraitsToOutFitAssignmentRowKey = "addTraitsToOutFitAssignmentRow";
         
         private static readonly List<TraitDef> OutfitRelevantTraitDefs = new List<TraitDef>
         {
@@ -39,7 +39,7 @@ namespace MadagascarVanilla.Patches
         public static bool Prefix(PawnColumnWorker_Outfit __instance, Rect rect, Pawn pawn)
         {
             // Let the original method run if setting is false
-            bool addTraitsToOutFitAssignmentRow = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AddTraitsToOutFitAssignmentRow));
+            bool addTraitsToOutFitAssignmentRow = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AddTraitsToOutFitAssignmentRowKey));
             if (!addTraitsToOutFitAssignmentRow)
                 return true;
             

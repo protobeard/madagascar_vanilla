@@ -10,11 +10,11 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(CompMilkable.CompInspectStringExtra))]
     public static class MilkableDisplayPatch
     {
-        private const string EnableCompMilkableDisplayProperItem = "enableCompMilkableDisplayProperItem";
+        private const string EnableCompMilkableDisplayProperItemKey = "enableCompMilkableDisplayProperItem";
         
         public static void Postfix(CompMilkable __instance, ref string __result)
         {
-            bool enableCompMilkableDisplayProperItem = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableCompMilkableDisplayProperItem));
+            bool enableCompMilkableDisplayProperItem = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableCompMilkableDisplayProperItemKey));
 
             // Bail if there is no inspect string or the type of resource being produced is milk.
             if (__result == null || __instance.Props.milkDef.IsMilk())

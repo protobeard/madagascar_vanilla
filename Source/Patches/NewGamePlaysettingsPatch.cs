@@ -8,21 +8,21 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch]
     public static class NewGamePlaysettingsPatches
     {
-        public const string LandmarkVisibilitySetting = "showExpandingLandmarks";
-        public const string AutoHomeAreaSetting = "autoHomeArea";
-        public const string AutoRebuildSetting = "autoRebuild";
-        public const string UseWorkPrioritiesSetting = "useWorkPriorities";
+        public const string LandmarkVisibilityKey = "showExpandingLandmarks";
+        public const string AutoHomeAreaKey = "autoHomeArea";
+        public const string AutoRebuildKey = "autoRebuild";
+        public const string UseWorkPrioritiesKey = "useWorkPriorities";
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(PlaySettings))]
         [HarmonyPatch(MethodType.Constructor)]
         public static void PlaySettingsConstructorPostfix(PlaySettings __instance)
         {
-            bool landmarkVisibilitySetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, LandmarkVisibilitySetting));
-            bool autoHomeAreaSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AutoHomeAreaSetting));
-            bool autoRebuildSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AutoRebuildSetting));
+            bool landmarkVisibilitySetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, LandmarkVisibilityKey));
+            bool autoHomeAreaSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AutoHomeAreaKey));
+            bool autoRebuildSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AutoRebuildKey));
             
-            bool useWorkPrioritiesSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, UseWorkPrioritiesSetting));
+            bool useWorkPrioritiesSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, UseWorkPrioritiesKey));
             
             __instance.showExpandingLandmarks = landmarkVisibilitySetting;
             __instance.autoHomeArea = autoHomeAreaSetting;

@@ -11,7 +11,7 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(PawnComponentsUtility.AddAndRemoveDynamicComponents))]
     public static class StandYourGroundPatch
     {
-        private const string HostilityRewardsPreference = "hostilityResponse";
+        private const string HostilityRewardsKey = "hostilityResponse";
         
         // by performing the same checks as AddAndRemoveDynamicComponents does, instead of it
         // creating the PlayerSettings when they are null, we should be doing so (and thus preventing it from ever doing so)
@@ -33,7 +33,7 @@ namespace MadagascarVanilla.Patches
     
              if ((pawnFactionIsPlayer || pawnHostFactionIsPlayer || pawn.IsOnHoldingPlatform) && pawn.playerSettings == null)
              {
-                 HostilityResponseMode hostilityResponse = (HostilityResponseMode) Enum.Parse(typeof(HostilityResponseMode), (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HostilityRewardsPreference)));
+                 HostilityResponseMode hostilityResponse = (HostilityResponseMode) Enum.Parse(typeof(HostilityResponseMode), (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HostilityRewardsKey)));
                  
                  pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                  pawn.playerSettings.hostilityResponse = hostilityResponse;

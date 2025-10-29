@@ -14,10 +14,10 @@ namespace MadagascarVanilla.Patches
     public static class PersistPolicies
     {
         // FIXME: move these into MadagascarVanillaMod
-        private const string PersistApparelPolicies = "persistApparelPolicies";
-        private const string PersistDrugPolicies = "persistDrugPolicies";
-        private const string PersistFoodPolicies = "persistFoodPolicies";
-        private const string PersistReadingPolicies = "persistReadingPolicies";
+        private const string PersistApparelPoliciesKey = "persistApparelPolicies";
+        private const string PersistDrugPoliciesKey = "persistDrugPolicies";
+        private const string PersistFoodPoliciesKey = "persistFoodPolicies";
+        private const string PersistReadingPoliciesKey = "persistReadingPolicies";
         
         [HarmonyPatch(typeof(Window))]
         [HarmonyPatch(nameof(Window.PostClose))]
@@ -51,7 +51,7 @@ namespace MadagascarVanilla.Patches
 
         private static void DialogApparelPolicyPostfix(Window __instance)
         {
-            bool persistApparelPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistApparelPolicies));
+            bool persistApparelPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistApparelPoliciesKey));
             if (!persistApparelPolicies)
                 return;
             
@@ -68,7 +68,7 @@ namespace MadagascarVanilla.Patches
         
         private static void DialogDrugPolicyPostfix(Window __instance)
         {
-            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPolicies));
+            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPoliciesKey));
             if (!persistDrugPolicies)
                 return;
             
@@ -85,7 +85,7 @@ namespace MadagascarVanilla.Patches
         
         private static void DialogFoodPolicyPostfix(Window __instance)
         {
-            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPolicies));
+            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPoliciesKey));
             if (!persistFoodPolicies)
                 return;
             
@@ -102,7 +102,7 @@ namespace MadagascarVanilla.Patches
         
         private static void DialogReadingPolicyPostfix(Window __instance)
         {
-            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPolicies));
+            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPoliciesKey));
             if (!persistReadingPolicies)
                 return;
             
@@ -124,7 +124,7 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(OutfitDatabase __instance)
         {
             // Bail if persisting apparel policies is disabled, or there are no policies to load
-            bool persistApparelPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistApparelPolicies));
+            bool persistApparelPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistApparelPoliciesKey));
             if (!persistApparelPolicies || MadagascarVanillaMod.Persistables.ApparelPolicies == null || !MadagascarVanillaMod.Persistables.ApparelPolicies.Any()) 
                 return;
             
@@ -143,7 +143,7 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(DrugPolicyDatabase __instance)
         {
             // Bail if persisting drug policies is disabled, or there are no policies to load
-            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPolicies));
+            bool persistDrugPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistDrugPoliciesKey));
             if (!persistDrugPolicies || MadagascarVanillaMod.Persistables.DrugPolicies == null || !MadagascarVanillaMod.Persistables.DrugPolicies.Any()) 
                 return;
             
@@ -162,7 +162,7 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(FoodRestrictionDatabase __instance)
         {
             // Bail if persisting food policies is disabled, or there are no policies to load
-            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPolicies));
+            bool persistFoodPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistFoodPoliciesKey));
             if (!persistFoodPolicies || MadagascarVanillaMod.Persistables.FoodPolicies == null || !MadagascarVanillaMod.Persistables.FoodPolicies.Any()) 
                 return;
             
@@ -181,7 +181,7 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(ReadingPolicyDatabase __instance)
         {
             // Bail if persisting reading policies is disabled, or there are no policies to load
-            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPolicies));
+            bool persistReadingPolicies = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistReadingPoliciesKey));
             if (!persistReadingPolicies || MadagascarVanillaMod.Persistables.ReadingPolicies == null || !MadagascarVanillaMod.Persistables.ReadingPolicies.Any()) 
                 return;
             

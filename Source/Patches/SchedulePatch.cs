@@ -37,12 +37,12 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(PawnComponentsUtility.AddAndRemoveDynamicComponents))]
     public static class SchedulePatch
     {
-        private const string InitialSchedule = "initialSchedule";
-        private const string InitialNightOwlSchedule = "initialNightOwlSchedule";
-        private const string InitialBodyMasterySchedule = "initialBodyMasterySchedule";
-        private const string InitialUVSensitiveSchedule = "initialUVSensitiveSchedule";
-        private const string InitialSleepyGeneSchedule = "initialSleepyGeneSchedule";
-        private const string InitialNeverSleepGeneSchedule = "initialNeverSleepGeneSchedule";
+        private const string InitialScheduleKey = "initialSchedule";
+        private const string InitialNightOwlScheduleKey = "initialNightOwlSchedule";
+        private const string InitialBodyMasteryScheduleKey = "initialBodyMasterySchedule";
+        private const string InitialUVSensitiveScheduleKey = "initialUVSensitiveSchedule";
+        private const string InitialSleepyGeneScheduleKey = "initialSleepyGeneSchedule";
+        private const string InitialNeverSleepGeneScheduleKey = "initialNeverSleepGeneSchedule";
         
         // Give pawns initial schedules that better reflect their traits and genes as well as
         // ensuring that all pawns recreate at the same time.
@@ -52,12 +52,12 @@ namespace MadagascarVanilla.Patches
             if (pawn?.story == null)
                 return;
             
-            bool initialSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSchedule));
-            bool initialNightOwlSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNightOwlSchedule));
-            bool initialBodyMasterySchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialBodyMasterySchedule));
-            bool initialUVSensitiveSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialUVSensitiveSchedule));
-            bool initialSleepyGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSleepyGeneSchedule));
-            bool initialNeverSleepGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNeverSleepGeneSchedule));
+            bool initialSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialScheduleKey));
+            bool initialNightOwlSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNightOwlScheduleKey));
+            bool initialBodyMasterySchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialBodyMasteryScheduleKey));
+            bool initialUVSensitiveSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialUVSensitiveScheduleKey));
+            bool initialSleepyGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialSleepyGeneScheduleKey));
+            bool initialNeverSleepGeneSchedule = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, InitialNeverSleepGeneScheduleKey));
             
             // If the pawn has already had their schedule set, is not of the players faction, not humanlike, or does not have a timetable, no-op.
             Faction faction = pawn.Faction;

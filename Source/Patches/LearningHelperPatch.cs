@@ -16,11 +16,11 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("DoMapControls")]
     public static class LearningHelperPatch
     {
-        private const string HideLearningHelperButton = "hideLearningHelperButton";
+        private const string HideLearningHelperButtonKey = "hideLearningHelperButton";
         
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
         {
-            bool hideLearningHelperButton = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HideLearningHelperButton));
+            bool hideLearningHelperButton = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HideLearningHelperButtonKey));
             
             if (!hideLearningHelperButton)
                 return lines;
