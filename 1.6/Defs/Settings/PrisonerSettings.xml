@@ -7,20 +7,25 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Prisoners</text>
+                <tKey>madagascarvanilla_prisonersText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableAutoStrip</key>
                 <label>Auto Strip Prisoners</label>
+                <tKey>madagascarvanilla_enableAutoStripLabel</tKey>
                 <tooltip>Enable auto stripping prisoners by default (vanilla default is false).</tooltip>
+                <tKeyTip>madagascarvanilla_enableAutoStripTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableAutoStripArrestedColonist</key>
                 <label>Auto Strip Arrested Colonists</label>
+                <tKey>madagascarvanilla_enableAutoStripArrestedColonistLabel</tKey>
                 <tooltip>Enable auto stripping colonists by default when arrested (vanilla default is false).</tooltip>
+                <tKeyTip>madagascarvanilla_enableAutoStripArrestedColonistTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
         </settings>

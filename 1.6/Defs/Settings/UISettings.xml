@@ -7,20 +7,25 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>User Interface/Controls</text>
+                <tKey>madagascarvanilla_uiText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>hideLearningHelperButton</key>
                 <label>Hide Learning Helper Button</label>
+                <tKey>madagascarvanilla_hideLearningHelperButtonLabel</tKey>
                 <tooltip>Hide learning helper button on the bottom right of the map.</tooltip>
+                <tKeyTip>madagascarvanilla_hideLearningHelperButtonTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>addTraitsToOutFitAssignmentRow</key>
                 <label>Show Traits in Outfit Assignment</label>
+                <tKey>madagascarvanilla_addTraitsToOutFitAssignmentRowLabel</tKey>
                 <tooltip>Show relevant traits (Nudist, Bloodlust, etc.) in the UI for pawn outfit assignment (vanilla is false). Just like how drug related traits are shown for drug policy assignments.</tooltip>
+                <tKeyTip>madagascarvanilla_addTraitsToOutFitAssignmentRowTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
         </settings>

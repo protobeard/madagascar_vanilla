@@ -7,31 +7,38 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Production Bill Features</text>
+                <tKey>madagascarvanilla_productionBillsText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableProductionSpecialistOnlyBillAssignment</key>
                 <label>Enable Production Specialist Only Bill Assignment</label>
+                <tKey>madagascarvanilla_enableProductionSpecialistOnlyBillAssignmentLabel</tKey>
                 <tooltip>Adds a work assignment restriction to production bills that restricts the bill to production specialists. Will only be visible if the player faction ideology has a production specialist role. Will be available for bills that were created while this feature was disabled.</tooltip>
+                <tKeyTip>madagascarvanilla_enableProductionSpecialistOnlyBillAssignmentTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableInspiredOnlyBillAssignment</key>
                 <label>Enable Inspired Only Bill Assignment</label>
+                <tKey>madagascarvanilla_enableInspiredOnlyBillAssignmentLabel</tKey>
                 <tooltip>Adds a work assignment restriction to production bills that restricts the bill to any pawn with a creativity inspiration. Will be available for bills that were created while this feature was disabled.</tooltip>
+                <tKeyTip>madagascarvanilla_enableInspiredOnlyBillAssignmentTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>General Bill Defaults</text>
+                <tKey>madagascarvanilla_generalBillsText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>On item completion:</text>
+                <tKey>madagascarvanilla_onCompletionText</tKey>
                 <anchor>Left</anchor>
             </li>
 
@@ -42,10 +49,12 @@
                     <li>
                         <value>DropOnFloor</value>
                         <label>Drop on floor</label>
+                        <tKey>madagascarvanilla_dropOnFloorLabel</tKey>
                     </li>
                     <li>
                         <value>BestStockpile</value>
                         <label>Take to best stockpile</label>
+                        <tKey>madagascarvanilla_bestStockpileLabel</tKey>
                     </li>
                 </buttons>
             </li>
@@ -55,6 +64,7 @@
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Repeat type:</text>
+                <tKey>madagascarvanilla_repeatTypeText</tKey>
                 <anchor>Left</anchor>
             </li>
 
@@ -65,14 +75,17 @@
                     <li>
                         <value>RepeatCount</value>
                         <label>Do X Times</label>
+                        <tKey>madagascarvanilla_repeatCountLabel</tKey>
                     </li>
                     <li>
                         <value>TargetCount</value>
                         <label>Do Until You Have X</label>
+                        <tKey>madagascarvanilla_targetCountLabel</tKey>
                     </li>
                     <li>
                         <value>Forever</value>
                         <label>Do Forever</label>
+                        <tKey>madagascarvanilla_foreverLabel</tKey>
                     </li>
                 </buttons>
             </li>
@@ -81,6 +94,7 @@
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Hitpoint Range to Count</text>
+                <tKey>madagascarvanilla_hitpointRangeText</tKey>
                 <anchor>Left</anchor>
             </li>
 
@@ -96,41 +110,50 @@
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Minimum Quality to Count</text>
+                <tKey>madagascarvanilla_minimumQualityText</tKey>
                 <anchor>Left</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.RadioButtons">
                 <key>minQualityToCount</key>
                 <label>Minimum Quality to Count:</label>
+                <tKey>madagascarvanilla_minQualityToCountLabel</tKey>
                 <defaultValue>Awful</defaultValue>
                 <buttons>
                     <li>
                         <value>Awful</value>
                         <label>Awful</label>
+                        <tKey>madagascarvanilla_awfulLabel</tKey>
                     </li>
                     <li>
                         <value>Poor</value>
                         <label>Poor</label>
+                        <tKey>madagascarvanilla_poorLabel</tKey>
                     </li>
                     <li>
                         <value>Normal</value>
                         <label>Normal</label>
+                        <tKey>madagascarvanilla_normalLabel</tKey>
                     </li>
                     <li>
                         <value>Good</value>
                         <label>Good</label>
+                        <tKey>madagascarvanilla_goodLabel</tKey>
                     </li>
                     <li>
                         <value>Excellent</value>
                         <label>Excellent</label>
+                        <tKey>madagascarvanilla_excellentLabel</tKey>
                     </li>
                     <li>
                         <value>Masterwork</value>
                         <label>Masterwork</label>
+                        <tKey>madagascarvanilla_masterworkLabel</tKey>
                     </li>
                     <li>
                         <value>Legendary</value>
                         <label>Legendary</label>
+                        <tKey>madagascarvanilla_legendaryLabel</tKey>
                     </li>
                 </buttons>
             </li>
@@ -139,6 +162,7 @@
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Maximum Quality to Count</text>
+                <tKey>madagascarvanilla_maximumQualityText</tKey>
                 <anchor>Left</anchor>
             </li>
 
@@ -150,30 +174,37 @@
                     <li>
                         <value>Awful</value>
                         <label>Awful</label>
+                        <tKey>madagascarvanilla_awfulLabel</tKey>
                     </li>
                     <li>
                         <value>Poor</value>
                         <label>Poor</label>
+                        <tKey>madagascarvanilla_poorLabel</tKey>
                     </li>
                     <li>
                         <value>Normal</value>
                         <label>Normal</label>
+                        <tKey>madagascarvanilla_normalLabel</tKey>
                     </li>
                     <li>
                         <value>Good</value>
                         <label>Good</label>
+                        <tKey>madagascarvanilla_goodLabel</tKey>
                     </li>
                     <li>
                         <value>Excellent</value>
                         <label>Excellent</label>
+                        <tKey>madagascarvanilla_excellentLabel</tKey>
                     </li>
                     <li>
                         <value>Masterwork</value>
                         <label>Masterwork</label>
+                        <tKey>madagascarvanilla_masterworkLabel</tKey>
                     </li>
                     <li>
                         <value>Legendary</value>
                         <label>Legendary</label>
+                        <tKey>madagascarvanilla_legendaryLabel</tKey>
                     </li>
                 </buttons>
             </li>
@@ -183,6 +214,7 @@
             <li Class="XmlExtensions.Setting.Numeric">
                 <key>ingredientSearchRadius</key>
                 <label>Ingredient Search Radius</label>
+                <tKey>madagascarvanilla_ingredientSearchRadiusLabel</tKey>
                 <defaultValue>999</defaultValue>
                 <decimals>0</decimals>
                 <min>1</min>
@@ -193,27 +225,34 @@
             <li Class="XmlExtensions.Setting.Gap"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Tailoring Bills</text>
+                <tKey>madagascarvanilla_tailoringBillsText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>disableClothTextile</key>
                 <label>Disable Cloth</label>
+                <tKey>madagascarvanilla_disableClothTextileLabel</tKey>
                 <tooltip>Sets default ingredients for tailoring bills to not include cloth.</tooltip>
+                <tKeyTip>madagascarvanilla_disableClothTextileTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>disableValuableTextiles</key>
                 <label>Disable Valuable Textiles</label>
+                <tKey>madagascarvanilla_disableValuableTextilesLabel</tKey>
                 <tooltip>Sets default ingredients for tailoring bills to not include valuable textiles (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane).</tooltip>
+                <tKeyTip>madagascarvanilla_disableValuableTextilesTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>disableMoodImpactingTextiles</key>
                 <label>Disable Mood Impacting Textiles</label>
+                <tKey>madagascarvanilla_disableMoodImpactingTextilesLabel</tKey>
                 <tooltip>Sets default ingredients for tailoring bills to not include textiles that cause mood debuffs (human leather, dread leather).</tooltip>
+                <tKeyTip>madagascarvanilla_disableMoodImpactingTextilesTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
@@ -221,13 +260,16 @@
             <li Class="XmlExtensions.Setting.Gap"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Crematorium Bills</text>
+                <tKey>madagascarvanilla_crematoriumBillsText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>disableColonistCremation</key>
                 <label>Disable Cremating Colonists</label>
+                <tKey>madagascarvanilla_disableColonistCremationLabel</tKey>
                 <tooltip>Sets default cremation bill on crematorium to not include colonists.</tooltip>
+                <tKeyTip>madagascarvanilla_disableColonistCremationTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
         </settings>

@@ -5,10 +5,12 @@
         <defName>MainSettingsMenu</defName>
         <modId>com.protobeard.madagascarvanilla</modId>
         <label>Madagascar Vanilla</label>
+        <tKey>madagascarvanilla_modName</tKey>
         <settings>
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Many changes require a restart to take effect.</text>
+                <tKey>madagascarvanilla_restartWarningText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
@@ -18,7 +20,9 @@
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>verboseMode</key>
                 <label>Verbose Mode</label>
+                <tKey>madagascarvanilla_verboseModeLabel</tKey>
                 <tooltip>Print lots of log messages. Useful for debugging.</tooltip>
+                <tKeyTip>madagascarvanilla_verboseModeTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 

@@ -7,35 +7,43 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Plant Changes</text>
+                <tKey>madagascarvanilla_plantChangesText</tKey>
                 <tooltip>All of these are off by default in vanilla.</tooltip>
+                <tKeyTip>madagascarvanilla_plantChangesTooltip</tKeyTip>
                 <anchor>Middle</anchor>
             </li>
-
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>hydroponicDevilstrand</key>
                 <label>Hydroponic Devilstrand</label>
+                <tKey>madagascarvanilla_hydroponicDevilstrandLabel</tKey>
                 <tooltip>Devilstrand can be grown in hydroponic basins.</tooltip>
+                <tKeyTip>madagascarvanilla_hydroponicDevilstrandTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>falloutImmuneDevilstrand</key>
                 <label>Toxic Fallout Immune Devilstrand</label>
+                <tKey>madagascarvanilla_falloutImmuneDevilstrandLabel</tKey>
                 <tooltip>Devilstrand is immune to toxic fallout.</tooltip>
+                <tKeyTip>madagascarvanilla_falloutImmuneDevilstrandTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>falloutImmuneToxipotatos</key>
                 <label>Toxic Fallout Immune Toxipotatos</label>
+                <tKey>madagascarvanilla_falloutImmuneToxipotatosLabel</tKey>
                 <tooltip>Toxipotatos are immune to toxic fallout.</tooltip>
+                <tKeyTip>madagascarvanilla_falloutImmunToxipotatosTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Numeric">
                 <key>gauralenPruningSpeedMultipler</key>
                 <label>Multiply Gauralen Pruning Speed by X</label>
+                <tKey>madagascarvanilla_gauralenPruningSpeedMultiplerLabel</tKey>
                 <defaultValue>1</defaultValue>
                 <decimals>0</decimals>
                 <min>1</min>
@@ -46,13 +54,16 @@
             <li Class="XmlExtensions.Setting.GapLine"/>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Auto Cutting</text>
+                <tKey>madagascarvanilla_autoCuttingText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableAutoCut</key>
                 <label>Auto Cut by Default</label>
+                <tKey>madagascarvanilla_enableAutoCutLabel</tKey>
                 <tooltip>Enable auto cutting on wind turbines and animal pens by default (vanilla default is false).</tooltip>
+                <tKeyTip>madagascarvanilla_enableAutoCutTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
         </settings>

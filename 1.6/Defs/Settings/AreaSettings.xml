@@ -7,30 +7,37 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Areas</text>
+                <tKey>madagascarvanilla_areasText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>autoHomeArea</key>
                 <label>Automatically Expand Home</label>
+                <tKey>madagascarvanilla_autoHomeAreaLabel</tKey>
                 <tooltip>Automatically expand the Home area (vanilla is true)</tooltip>
+                <tKeyTip>madagascarvanilla_autoHomeAreaTooltip</tKeyTip>
                 <defaultValue>true</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>autoRebuild</key>
                 <label>Auto Rebuild in Home</label>
+                <tKey>madagascarvanilla_autoRebuildLabel</tKey>
                 <tooltip>Automatically rebuild buildings in the Home area which get destroyed (vanilla is false)</tooltip>
+                <tKeyTip>madagascarvanilla_autoRebuildTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
 
             <li Class="XmlExtensions.Setting.Text">
                 <text>Comma separated list of areas to start a new game with (e.g., "Ship, Ship+, Work, Inside, Safe, Clean, Slaughter"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</text>
+                <tKey>madagascarvanilla_areasListText</tKey>
             </li>
 
             <li Class="XmlExtensions.Setting.Textbox">
                 <key>startingAreasList</key>
                 <label>Starting Areas:</label>
+                <tKey>madagascarvanilla_startingAreasListLabel</tKey>
                 <defaultValue></defaultValue>
             </li>
         </settings>

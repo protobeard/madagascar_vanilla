@@ -7,13 +7,16 @@
         <settings>
             <li Class="XmlExtensions.Setting.Text">
                 <text>Small Bug Fixes</text>
+                <tKey>madagascarvanilla_bugFixesText</tKey>
                 <anchor>Middle</anchor>
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableCompMilkableDisplayProperItem</key>
                 <label>Display Correct Milk Type on Animal Fullness Labels</label>
+                <tKey>madagascarvanilla_enableCompMilkableDisplayProperItemLabel</tKey>
                 <tooltip>Instead of labeling all resource producing animals with "Milk Fullness" show the actual resource produced (e.g., Boomalopes are now labeled with "Chemfuel Fullness") (vanilla default is false, but should honestly just be true. This is much more of a bug fix than a setting).</tooltip>
+                <tKeyTip>madagascarvanilla_enableCompMilkableDisplayProperItemTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
         </settings>
