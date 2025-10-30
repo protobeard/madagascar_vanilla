@@ -8,7 +8,11 @@ namespace MadagascarVanilla.DefOfs
     {
         public static SpecialThingFilterDef AllowRotten;
         public static SpecialThingFilterDef AllowDeadmansApparel;
+        
+        [MayRequireRoyalty]
         public static SpecialThingFilterDef AllowBiocodedWeapons;
+        
+        [MayRequireRoyalty]
         public static SpecialThingFilterDef AllowBiocodedApparel;
     }
 }
