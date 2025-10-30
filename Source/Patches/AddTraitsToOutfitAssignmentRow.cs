@@ -8,8 +8,6 @@ using HarmonyLib;
 using MadagascarVanilla.ModExtensions;
 using UnityEngine;
 using XmlExtensions;
-using XmlExtensions.Setting;
-using TraitDefOf = MadagascarVanilla.DefOfs.TraitDefOf;
 
 namespace MadagascarVanilla.Patches
 {
@@ -24,15 +22,6 @@ namespace MadagascarVanilla.Patches
     public static class AddTraitsToOutfitAssignmentRowPatch
     {
         private const string AddTraitsToOutFitAssignmentRowKey = "addTraitsToOutFitAssignmentRow";
-        
-        private static readonly List<TraitDef> OutfitRelevantTraitDefs = new List<TraitDef>
-        {
-            RimWorld.TraitDefOf.Bloodlust,
-            RimWorld.TraitDefOf.Brawler,
-            TraitDefOf.Cannibal,
-            RimWorld.TraitDefOf.Nudist,
-            RimWorld.TraitDefOf.Psychopath,
-        };
         
         // Check the pawn for traits that impact what types of apparel they are happy to wear,
         // then display them on the Assignment menu.
