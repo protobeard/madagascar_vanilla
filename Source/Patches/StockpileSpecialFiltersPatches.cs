@@ -36,7 +36,7 @@ namespace MadagascarVanilla.Patches
                 if (disableDeadmansStockpileStorage)
                      __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowDeadmansApparel, false);
 
-                if (disableBiocodedStockpileStorage)
+                if (disableBiocodedStockpileStorage && ModsConfig.RoyaltyActive)
                 {
                     __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowBiocodedWeapons, false);
                     __instance.settings.filter.SetAllow(SpecialThingFilterDefOf.AllowBiocodedApparel, false);

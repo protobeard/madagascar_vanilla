@@ -1,5 +1,6 @@
 using RimWorld;
 using HarmonyLib;
+using Verse;
 using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
@@ -24,7 +25,9 @@ namespace MadagascarVanilla.Patches
             
             bool useWorkPrioritiesSetting = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, UseWorkPrioritiesKey));
             
-            __instance.showExpandingLandmarks = landmarkVisibilitySetting;
+            if (ModsConfig.OdysseyActive)
+                __instance.showExpandingLandmarks = landmarkVisibilitySetting;
+            
             __instance.autoHomeArea = autoHomeAreaSetting;
             __instance.autoRebuild = autoRebuildSetting;
             

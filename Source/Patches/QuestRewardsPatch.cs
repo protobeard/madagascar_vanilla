@@ -21,7 +21,9 @@ namespace MadagascarVanilla.Patches
             bool royalFavorRewards = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, RoyalFavorRewardsKey));
             
             __instance.allowGoodwillRewards = goodwillRewards;
-            __instance.allowRoyalFavorRewards = royalFavorRewards;
+            
+            if (ModsConfig.RoyaltyActive)
+                __instance.allowRoyalFavorRewards = royalFavorRewards;
         }
     }
 }
