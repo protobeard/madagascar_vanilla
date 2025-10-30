@@ -105,7 +105,7 @@ namespace MadagascarVanilla.Settings
                 if (!ModsConfig.IdeologyActive && medicalDefaultKey == SlaveMedicalDefault ||
                     !ModsConfig.AnomalyActive && medicalDefaultKey == GhoulMedicalDefault ||
                     !ModsConfig.AnomalyActive && medicalDefaultKey == EntityMedicalDefault)
-                    return;
+                    continue;
                 
                 // Add a row for the setting
                 DoRow(rect, ref y2, medicalCareCategory, medicalDefaultKey, medicalDefaultHelp.Item1, medicalDefaultHelp.Item2);
