@@ -8,7 +8,7 @@
         <caseTrue>
 
             <Operation Class="PatchOperationAddModExtension">
-                <xpath>/Defs/ThingDef[defName="Leather_Human"]</xpath>
+                <xpath>/Defs/ThingDef[defName="Leather_Dread"]</xpath>
                 <value>
                     <li Class="MadagascarVanilla.ModExtensions.MoodAlteringTextileExtension">
                         <MoodAlteringTextile>true</MoodAlteringTextile>

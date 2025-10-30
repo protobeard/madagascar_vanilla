@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+    <!-- Empty Storage and Normal Priority -->
+
+    <Operation Class="XmlExtensions.OptionalPatch">
+        <modId>com.protobeard.madagascarvanilla</modId>
+        <key>clearOutfitStandStorage</key>
+        <defaultValue>false</defaultValue>
+        <caseTrue>
+
+            <Operation Class="PatchOperationReplace">
+                <xpath>/Defs/ThingDef[@Name="OutfitStandBase"]/building/defaultStorageSettings</xpath>
+                <value>
+                    <defaultStorageSettings>
+                        <priority>Normal</priority>
+                        <filter>
+                            <categories />
+                        </filter>
+                    </defaultStorageSettings>
+                </value>
+            </Operation>
+
+        </caseTrue>
+    </Operation>
+
+</Patch>
+
