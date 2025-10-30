@@ -8,26 +8,6 @@
     </supportedVersions>
     <modDependencies>
         <li>
-            <packageId>Ludeon.RimWorld.Royalty</packageId>
-            <displayName>Royalty</displayName>
-        </li>
-        <li>
-            <packageId>Ludeon.RimWorld.Ideology</packageId>
-            <displayName>Ideology</displayName>
-        </li>
-        <li>
-            <packageId>Ludeon.RimWorld.Biotech</packageId>
-            <displayName>Biotech</displayName>
-        </li>
-        <li>
-            <packageId>Ludeon.RimWorld.Anomaly</packageId>
-            <displayName>Anomaly</displayName>
-        </li>
-        <li>
-            <packageId>Ludeon.RimWorld.Odyssey</packageId>
-            <displayName>Odyssey</displayName>
-        </li>
-        <li>
             <packageId>imranfish.xmlextensions</packageId>
             <displayName>XML Extensions</displayName>
             <downloadUrl>https://github.com/15adhami/XmlExtensions/releases</downloadUrl>
