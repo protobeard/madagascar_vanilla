@@ -87,7 +87,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 ## Balance
 
-I'd say that 95% of this mod is simple quality of life, with no implact on balance. The other 5% has some small impact, such as allowing players to configure Toxipotatos to life through toxic fallout, or extending the duration of Odyssey quests to more easily accomodate a 100% planet coverage playstyle. Please see the "What does it do exactly" second for a more complete list of all changes, and remember that every change is opt-in.
+I'd say that 95% of this mod is simple quality of life, with no implact on balance. The other 5% has some small impact, such as allowing players to configure Toxipotatos to live through toxic fallout, or extending the duration of Odyssey quests to more easily accomodate a 100% planet coverage playstyle. Please see the "What does it do exactly" section for a more complete list of all changes, and remember that every change is opt-in.
 
 ## Known Issues
 
@@ -120,6 +120,7 @@ This will occur when any mod which adds custom content that has been persisted i
 
 * Pardeike for [Harmony][harmonylib]
 * Marnador for [RimWorld Font][font]
+* The community in the RimWorld mod development discord server.
 
 ## Authors
 
