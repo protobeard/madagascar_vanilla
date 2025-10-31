@@ -57,6 +57,14 @@
             </li>
 
             <li Class="MadagascarVanilla.Settings.MedicalDefaults" />
+
+            <li Class="XmlExtensions.Setting.Button">
+                <label>Reset Medical Defaults</label>
+                <actions>
+                    <li Class="MadagascarVanilla.Settings.ResetMedicalDefaultsAction"/>
+                </actions>
+            </li>
+
         </settings>
     </XmlExtensions.SettingsMenuDef>
 

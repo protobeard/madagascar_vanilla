@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
-using UnityEngine.Windows;
 using Verse;
 using Verse.Sound;
-
 using XmlExtensions;
+using XmlExtensions.Action;
 using XmlExtensions.Setting;
 
 namespace MadagascarVanilla.Settings
@@ -43,6 +43,23 @@ namespace MadagascarVanilla.Settings
             { EntityMedicalDefault, "defaultCareForEntities" },
         };
         
+        // Mod setting name to Playsettings default MedicalCareCategory value
+        public static readonly Dictionary<string, MedicalCareCategory> MedicalDefaultsCareDict = new Dictionary<string, MedicalCareCategory>()
+        {
+            { ColonistMedicalDefault, MedicalCareCategory.Best },
+            { PrisonerMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { SlaveMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { GhoulMedicalDefault, MedicalCareCategory.NoMeds },
+            { TamedAnimalMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { FriendlyMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { NeutralMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { HostileMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { NoFactionMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { WildlifeMedicalDefault, MedicalCareCategory.HerbalOrWorse },
+            { EntityMedicalDefault, MedicalCareCategory.NoMeds },
+        };
+        
+        // Mod setting name to Dialog_MedicalDefaults label and tooltip/description
         public static readonly Dictionary<string, (string, string)> MedicalDefaultsSettingToHelpDict = new Dictionary<string, (string label, string tip)>()
         {
             { ColonistMedicalDefault, ("MedGroupColonists", "MedGroupColonistsDesc") },
@@ -171,6 +188,96 @@ namespace MadagascarVanilla.Settings
             if (UnityEngine.Input.GetMouseButton(0))
                 return;
             medicalCarePainting = false;
+        }
+        
+        // Pull the mod medical default settings out and assign them to the playsettings in game.
+        public static void LoadMedicalSettingsIntoPlaySettings(PlaySettings playSettings)
+        {
+            Traverse traverse = Traverse.Create(playSettings);
+            
+            foreach (var (medicalDefaultKey, medicalDefaultField) in MedicalDefaults.MedicalDefaultsDict)
+            {
+                if (MadagascarVanillaMod.Verbose())
+                {
+                    Log.Message($"medical default key: {medicalDefaultKey}");
+                    Log.Message($"medicalDefaultField: {medicalDefaultField}");
+                }
+
+                bool medicalCategorySettingExists = SettingsManager.TryGetSetting(MadagascarVanillaMod.ModId, medicalDefaultKey, out string medicalCareCategoryName);
+                if (!medicalCategorySettingExists)
+                    continue;
+
+                if (MadagascarVanillaMod.Verbose())
+                    Log.Message($"medicalCareCategoryName: {medicalCareCategoryName}\n\n");
+                
+                if (medicalCareCategoryName != null)
+                {
+                    bool parsed = Enum.TryParse(medicalCareCategoryName, false, out MedicalCareCategory medicalCareCategory);
+                    if (!parsed)
+                    {
+                        Log.Error($"Unknown medical category: {medicalCareCategoryName}");
+                        continue;
+                    }
+                    
+                    traverse.Field(medicalDefaultField).SetValue(medicalCareCategory);
+                    
+                    if (MadagascarVanillaMod.Verbose())
+                        Log.Message($"medicalCareCategory for {medicalDefaultField}: {medicalCareCategory}");
+                }
+            }
+        }
+        
+        // Save the medical default settings from PlaySettings into our mod settings.
+        // Ideology and Anomaly add pawn types, and if not active we don't want to overwrite our mod settings
+        // with the game defaults.
+        public static void PersistMedicalSettings(PlaySettings playSettings)
+        {
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.ColonistMedicalDefault, playSettings.defaultCareForColonist.ToString());
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PrisonerMedicalDefault, playSettings.defaultCareForPrisoner.ToString());
+            if (ModsConfig.IdeologyActive)
+                SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.SlaveMedicalDefault, playSettings.defaultCareForSlave.ToString());
+                
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.TamedAnimalMedicalDefault, playSettings.defaultCareForTamedAnimal.ToString());
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.WildlifeMedicalDefault, playSettings.defaultCareForWildlife.ToString());
+                
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.FriendlyMedicalDefault, playSettings.defaultCareForFriendlyFaction.ToString());
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.NeutralMedicalDefault, playSettings.defaultCareForNeutralFaction.ToString());
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.HostileMedicalDefault, playSettings.defaultCareForHostileFaction.ToString());
+            SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.NoFactionMedicalDefault, playSettings.defaultCareForNoFaction.ToString());
+
+            if (ModsConfig.AnomalyActive)
+            {
+                SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.GhoulMedicalDefault, playSettings.defaultCareForGhouls.ToString());
+                SettingsManager.SetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.EntityMedicalDefault, playSettings.defaultCareForEntities.ToString());
+            }
+            
+            // Save settings to disk, just like the XML Extensions Settings does when the mod settings
+            // window closes. Necessary here so that when a player changes medical default settings in
+            // game (and not in the mod options window) they will be persisted across game restarts.
+            LoadedModManager.GetMod(typeof (XmlMod)).WriteSettings();
+        }
+
+        // Reset all medical defaults mod settings to RimWorld defaults
+        public static void ResetMedicalDefaults()
+        {
+            foreach ((string medicalDefaultSettingKey, MedicalCareCategory category) in MedicalDefaultsCareDict)
+            {
+                SettingsManager.SetSetting(MadagascarVanillaMod.ModId, medicalDefaultSettingKey, category.ToString());
+            }
+            
+            // Save settings to disk, just like the XML Extensions Settings does when the mod settings
+            // window closes. Necessary here so that when a player changes medical default settings in
+            // game (and not in the mod options window) they will be persisted across game restarts.
+            LoadedModManager.GetMod(typeof (XmlMod)).WriteSettings();
+        }
+    }
+    
+    public class ResetMedicalDefaultsAction : ActionContainer
+    {
+        protected override bool ApplyAction()
+        {
+            MedicalDefaults.ResetMedicalDefaults();
+            return true;
         }
     }
 }
