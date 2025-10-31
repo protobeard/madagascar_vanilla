@@ -42,12 +42,9 @@ namespace MadagascarVanilla.Patches
                         {
                             bill.SetAnyPawnRestriction();
                             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-                            if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.ProductionSpecialistOnly}");
-                            if (attrs != null)
-                            { 
-                                attrs.ResetAttributes();
-                                attrs.ProductionSpecialistOnly = true;
-                            }
+                            if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs.ProductionSpecialistOnly}");
+                            attrs.ResetAttributes();
+                            attrs.ProductionSpecialistOnly = true;
                         }),
                         payload = null
                     }; 
@@ -65,12 +62,9 @@ namespace MadagascarVanilla.Patches
                     {
                         bill.SetAnyPawnRestriction();
                         BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-                        if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs?.InspiredOnly}");
-                        if (attrs != null)
-                        {
-                            attrs.ResetAttributes();
-                            attrs.InspiredOnly = true;
-                        }
+                        if (MadagascarVanillaMod.Verbose()) Log.Message($"GeneratePawnRestrictionOptions: {bill.GetUniqueLoadID()} attrs: {attrs.InspiredOnly}");
+                        attrs.ResetAttributes();
+                        attrs.InspiredOnly = true;
                     }),
                     payload = null
                 };
@@ -148,12 +142,6 @@ namespace MadagascarVanilla.Patches
 
             if (MadagascarVanillaMod.Verbose()) Log.Message($"UpdateButtonLabel: {label}, {bill.GetUniqueLoadID()}");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-
-            if (attrs == null)
-            {
-                if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill {bill.Label} has no BillAdditionalAttributes. Likely created while Madagascar Vanilla Bill extensions were disabled. Skipping.");
-                return label;
-            }
             
             if (enableProductionSpecialistOnlyBillAssignment && attrs.ProductionSpecialistOnly)
                 return "AnyProductionSpecialist".Translate();
@@ -174,7 +162,7 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyPawnRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-            attrs?.ResetAttributes();
+            attrs.ResetAttributes();
         }
         
         [HarmonyPostfix]
@@ -187,7 +175,7 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnySlaveRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-            attrs?.ResetAttributes();
+            attrs.ResetAttributes();
         }
         
         [HarmonyPostfix]
@@ -200,7 +188,7 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyMechRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-            attrs?.ResetAttributes();
+            attrs.ResetAttributes();
         }
         
         [HarmonyPostfix]
@@ -213,7 +201,7 @@ namespace MadagascarVanilla.Patches
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill_Production.SetAnyNonMechRestriction: {bill.GetUniqueLoadID()} setting extension attrs to false.");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
-            attrs?.ResetAttributes();
+            attrs.ResetAttributes();
         }
 
         // If the pawn would otherwise be allowed to start the job, check that
@@ -223,19 +211,14 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Bill.PawnAllowedToStartAnew))]
         public static void Postfix(Bill __instance, Pawn p, ref bool __result)
         {
-            if (__instance is Bill_Production)
+            if (__instance is Bill_Production bill)
             {
                 bool enableProductionSpecialistOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableProductionSpecialistOnlyBillAssignmentKey));
                 bool enableInspiredOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableInspiredOnlyBillAssignmentKey));
                 if (!enableProductionSpecialistOnlyBillAssignment && !enableInspiredOnlyBillAssignment)
                     return;
             
-                BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor((Bill_Production) __instance);
-                 if (attrs == null)
-                {
-                    if (MadagascarVanillaMod.Verbose()) Log.Message($"Bill {__instance.Label} has no BillAdditionalAttributes. Likely created while Madagascar Vanilla Bill extensions were disabled. Skipping.");
-                    return;
-                }
+                BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
                  
                 if (ModsConfig.IdeologyActive && __result && attrs.ProductionSpecialistOnly)
                 {
@@ -305,7 +288,12 @@ namespace MadagascarVanilla.Patches
 
             public static BillAdditionalAttributes GetAttributesFor(Bill_Production bill)
             {
-                return AdditionalAttributesMap.TryGetValue(bill.GetUniqueLoadID(), out BillAdditionalAttributes result) ? result : null;
+                return AdditionalAttributesMap.TryGetValue(bill.GetUniqueLoadID(), out BillAdditionalAttributes result) ? result : new BillAdditionalAttributes(bill);
+            }
+
+            public static List<BillAdditionalAttributes> AllAdditionalAttributes()
+            {
+                return AdditionalAttributesMap.Values.ToList();
             }
         }
         
