@@ -90,7 +90,15 @@
             <li Class="XmlExtensions.Setting.Gap"/>
 
             <!-- Reset settings to defaults, which are set up to be what vanilla does. -->
-            <li Class="XmlExtensions.Setting.ResetSettings" />
+            <li Class="XmlExtensions.Setting.Button">
+                <label>Reset Settings</label>
+                <confirm>true</confirm>
+                <actions>
+                    <li Class="XmlExtensions.Action.ResetSettings"/>
+                    <li Class="MadagascarVanilla.Settings.ResetMedicalDefaultsAction"/>
+                    <li Class="MadagascarVanilla.Settings.ResetSchedulesAction"/>
+                </actions>
+            </li>
 
         </settings>
     </XmlExtensions.SettingsMenuDef>
