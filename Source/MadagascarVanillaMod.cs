@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
-using MadagascarVanilla.Patches;
 using MadagascarVanilla.Settings;
 using RimWorld;
 using RimWorld.Planet;

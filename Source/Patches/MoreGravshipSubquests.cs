@@ -1,8 +1,6 @@
-using System;
 using RimWorld;
 using Verse;
 using HarmonyLib;
-using RimWorld.QuestGen;
 using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
