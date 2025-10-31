@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using XmlExtensions.Action;
 using XmlExtensions.Setting;
 using PawnTableDefOf = MadagascarVanilla.DefOfs.PawnTableDefOf;
 
@@ -193,27 +194,37 @@ namespace MadagascarVanilla.Settings
 
             return pawns;
         }
-        
-        public class PawnColumnWorker_DefaultTimetable : PawnColumnWorker_Timetable
+    }
+    
+    public class PawnColumnWorker_DefaultTimetable : PawnColumnWorker_Timetable
+    {
+        public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
-            public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
+            // confirm that pawn name matches a ScheduleType -- settings file hasn't gotten weird.
+            bool parsed = Enum.TryParse(pawn.Name.ToString(), false, out MadagascarVanillaPersistables.ScheduleType scheduleType);
+            if (!parsed)
             {
-                // confirm that pawn name matches a ScheduleType -- settings file hasn't gotten weird.
-                bool parsed = Enum.TryParse(pawn.Name.ToString(), false, out MadagascarVanillaPersistables.ScheduleType scheduleType);
-                if (!parsed)
-                {
-                    if (MadagascarVanillaMod.Verbose()) Log.Message($"Trying to set {scheduleType} to {pawn.Name}, an unknown schedule type.");
-                    return;
-                }
-                
-                MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[scheduleType] = pawn.timetable.times;
-                
-                base.DoCell(rect, pawn, table);
-                
-                MadagascarVanillaMod.Instance.WriteSettings();
+                if (MadagascarVanillaMod.Verbose()) Log.Message($"Trying to set {scheduleType} to {pawn.Name}, an unknown schedule type.");
+                return;
             }
+            
+            MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[scheduleType] = pawn.timetable.times;
+            
+            base.DoCell(rect, pawn, table);
+            
+            MadagascarVanillaMod.Instance.WriteSettings();
         }
-        
-
+    }
+    
+    // Clear the schedulesDictionary, then regenerate the defaults by accessing it.
+    public class ResetSchedulesAction : ActionContainer
+    {
+        protected override bool ApplyAction()
+        {
+            MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary = null;
+            MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary.GetHashCode();
+            MadagascarVanillaMod.Instance.WriteSettings();
+            return true;
+        }
     }
 }

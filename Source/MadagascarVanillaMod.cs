@@ -116,14 +116,17 @@ namespace MadagascarVanilla
         }
         
         private Dictionary<ScheduleType, List<TimeAssignmentDef>> _defaultSchedulesDictionary;
-        public Dictionary<ScheduleType, List<TimeAssignmentDef>> DefaultSchedulesDictionary =>
-            _defaultSchedulesDictionary ??= new Dictionary<ScheduleType, List<TimeAssignmentDef>>()
+        public Dictionary<ScheduleType, List<TimeAssignmentDef>> DefaultSchedulesDictionary
+        {
+            get => _defaultSchedulesDictionary ??= new Dictionary<ScheduleType, List<TimeAssignmentDef>>()
             {
-                { ScheduleType.DayShift, GeneratePawnTimeAssignments(ScheduleType.DayShift) },
-                { ScheduleType.NightShift, GeneratePawnTimeAssignments(ScheduleType.NightShift) },
-                { ScheduleType.Biphasic, GeneratePawnTimeAssignments(ScheduleType.Biphasic) },
+                { ScheduleType.DayShift, GeneratePawnTimeAssignments(ScheduleType.DayShift) }, 
+                { ScheduleType.NightShift, GeneratePawnTimeAssignments(ScheduleType.NightShift) }, 
+                { ScheduleType.Biphasic, GeneratePawnTimeAssignments(ScheduleType.Biphasic) }, 
                 { ScheduleType.NeverSleep, GeneratePawnTimeAssignments(ScheduleType.NeverSleep) }
             };
+            set => _defaultSchedulesDictionary = value;
+        }
 
         // this should only be run if there are no timetables in the settings file.
         private List<TimeAssignmentDef> GeneratePawnTimeAssignments(ScheduleType type)

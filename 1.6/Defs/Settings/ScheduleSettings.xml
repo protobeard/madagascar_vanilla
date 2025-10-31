@@ -25,6 +25,13 @@ This only modifies the pawns initial schedule upon recruitment; their schedule c
 
             <li Class="MadagascarVanilla.Settings.ScheduleDefaults" />
 
+            <li Class="XmlExtensions.Setting.Button">
+                <label>Reset Schedules</label>
+                <actions>
+                    <li Class="MadagascarVanilla.Settings.ResetSchedulesAction"/>
+                </actions>
+            </li>
+
             <li Class="XmlExtensions.Setting.Checkbox">
                 <key>initialBodyMasterySchedule</key>
                 <label>Assign Body Mastery pawns the Never Sleep Schedule</label>
