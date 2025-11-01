@@ -67,11 +67,13 @@
     <ItemGroup>
         <Compile Include="Alerts\AlertSleepingAlone.cs" />
         <Compile Include="ClassExtensions\Pawn.cs" />
+        <Compile Include="ClassExtensions\ThingDef.cs" />
         <Compile Include="DefOfs\GeneDefOf.cs" />
         <Compile Include="DefOfs\PawnTableDefOf.cs" />
         <Compile Include="DefOfs\PreceptDefOf.cs" />
         <Compile Include="DefOfs\SpecialThingFilterDefOf.cs" />
         <Compile Include="DefOfs\ThingDefOf.cs" />
+        <Compile Include="DefOfs\ThoughtDefOf.cs" />
         <Compile Include="DefOfs\TraitDefOf.cs" />
         <Compile Include="MadagascarVanillaMod.cs" />
         <Compile Include="ModExtensions\MoodAlteringTextileExtension.cs" />
