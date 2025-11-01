@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using RimWorld;
 using HarmonyLib;
+using MadagascarVanilla.ClassExtensions;
 using Verse;
 using Verse.AI;
 using XmlExtensions;
@@ -295,14 +296,6 @@ namespace MadagascarVanilla.Patches
             {
                 return AdditionalAttributesMap.Values.ToList();
             }
-        }
-        
-        // PAWN EXTENSION METHODS
-
-        public static bool IsProductionSpecialist(this Pawn pawn)
-        {
-            Precept_Role role = pawn.Ideo.GetRole(pawn);
-            return role != null && role.def == PreceptDefOf.IdeoRole_ProductionSpecialist;
         }
     }
 }

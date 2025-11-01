@@ -175,5 +175,4 @@ namespace MadagascarVanilla
             Scribe_Collections.Look(ref _defaultSchedulesDictionary, "defaultSchedulesDictionary", LookMode.Value, LookMode.Def);
         }
     }
-
 }

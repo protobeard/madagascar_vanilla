@@ -15,4 +15,7 @@
     <AnyCreativityInspired>Any Inspired Worker</AnyCreativityInspired>
     <NotInspired>Not inspired</NotInspired>
 
+    <ColonistsSleepingAlone>{0} colonists sleeping alone</ColonistsSleepingAlone>
+    <ColonistsSleepingAloneDesc>These colonists are sleeping alone and are not happy about it:\n{0}\n\nYou should probably assign them to share a bed with their lover or spouse.</ColonistsSleepingAloneDesc>
+
 </LanguageData>
