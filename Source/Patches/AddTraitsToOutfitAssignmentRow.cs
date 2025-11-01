@@ -5,6 +5,7 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 using HarmonyLib;
+using MadagascarVanilla.ClassExtensions;
 using MadagascarVanilla.ModExtensions;
 using UnityEngine;
 using XmlExtensions;
@@ -66,8 +67,8 @@ namespace MadagascarVanilla.Patches
                 if (pawn.story?.traits != null)
                 {
                     var outfitRelevantTraits = DefDatabase<TraitDef>.AllDefs.Where(td => td.HasModExtension<OutfitRelevantTraitExtension>() && td.GetModExtension<OutfitRelevantTraitExtension>().OutfitRelevant);
-                    var pawnMatchingTraitLabels = outfitRelevantTraits.Where(traitDef => pawn.story.traits.HasTrait(traitDef)).Select(traitDef => pawn.story.traits.GetTrait(traitDef).Label);
-
+                    var pawnMatchingTraitLabels = outfitRelevantTraits.Where(pawn.HasTrait).Select(traitDef => pawn.story.traits.GetTrait(traitDef).Label);
+                    
                     if (pawnMatchingTraitLabels.Any())
                         text += " (" + String.Join(", ", pawnMatchingTraitLabels) + ")";
                 }

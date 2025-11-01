@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 using PreceptDefOf = MadagascarVanilla.DefOfs.PreceptDefOf;
 using ThoughtDefOf = MadagascarVanilla.DefOfs.ThoughtDefOf;
@@ -20,6 +18,11 @@ namespace MadagascarVanilla.ClassExtensions
             ThoughtWorker_WantToSleepWithSpouseOrLover worker = new ThoughtWorker_WantToSleepWithSpouseOrLover();
             worker.def = ThoughtDefOf.WantToSleepWithSpouseOrLover;
             return worker.CurrentState(p).Active;
+        }
+
+        public static bool HasTrait(this Pawn pawn, TraitDef trait)
+        {
+            return pawn.story.traits.HasTrait(trait);
         }
     }
 }
