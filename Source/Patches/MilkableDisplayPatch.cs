@@ -1,5 +1,6 @@
 using RimWorld;
 using HarmonyLib;
+using MadagascarVanilla.ClassExtensions;
 using Verse;
 using XmlExtensions;
 
@@ -26,13 +27,6 @@ namespace MadagascarVanilla.Patches
                 __result += " " + "MilkableResourceFullness".Translate() + ": ";
                 __result += __instance.Fullness.ToStringPercent();
             }
-        }
-        
-        public static bool IsMilk(this ThingDef def)
-        {
-            if (def.label.Contains("Milk"))
-                return true;
-            return false;
         }
     }
 }
