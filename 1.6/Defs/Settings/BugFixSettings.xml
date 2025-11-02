@@ -12,6 +12,15 @@
             </li>
 
             <li Class="XmlExtensions.Setting.Checkbox">
+                <key>disableRemovingApparelWhileBleeding</key>
+                <label>Disable Pawns Changing Clothes While Bleeding out</label>
+                <tKey>madagascarvanilla_disableRemovingApparelWhileBleedingabel</tKey>
+                <tooltip>Pawns no longer attempt to change their clothes if they are actively bleeding.</tooltip>
+                <tKeyTip>madagascarvanilla_disableRemovingApparelWhileBleedingTooltip</tKeyTip>
+                <defaultValue>false</defaultValue>
+            </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
                 <key>enableCompMilkableDisplayProperItem</key>
                 <label>Display Correct Milk Type on Animal Fullness Labels</label>
                 <tKey>madagascarvanilla_enableCompMilkableDisplayProperItemLabel</tKey>

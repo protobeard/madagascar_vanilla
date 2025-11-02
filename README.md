@@ -18,6 +18,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 ### Bug Fixes (Well, Kinda...)
 
+* Disable pawns changing clothes while bleeding
 * Display Correct Milk Type on Animal Fullness Labels: Boomables produce chemfuel, not milk.
 
 ### (Very Small) Features
