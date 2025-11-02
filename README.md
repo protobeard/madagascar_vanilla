@@ -25,6 +25,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Add Production Specialist Only work restriction option to bills
 * Add Inspired Pawn Only work restriction option to bills
 * Show Traits in Outfit Assignment: just like for Drug Policies. Modders note: what traits count as "outfit relevant" can be extended via XML patches.
+* Alert for pawns sleeping alone who don't want to be.
 
 ### Quality of Life
 

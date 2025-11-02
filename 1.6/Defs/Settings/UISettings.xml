@@ -28,6 +28,15 @@
                 <tKeyTip>madagascarvanilla_addTraitsToOutFitAssignmentRowTooltip</tKeyTip>
                 <defaultValue>false</defaultValue>
             </li>
+
+            <li Class="XmlExtensions.Setting.Checkbox">
+                <key>enableSleepingAloneAlert</key>
+                <label>Enable Sleeping Alone Alert</label>
+                <tKey>madagascarvanilla_enableSleepingAloneAlertLabel</tKey>
+                <tooltip>Show an alert if colonists are sleeping alone and don't want to be.</tooltip>
+                <tKeyTip>madagascarvanilla_enableSleepingAloneAlertTooltip</tKeyTip>
+                <defaultValue>false</defaultValue>
+            </li>
         </settings>
     </XmlExtensions.SettingsMenuDef>
 
