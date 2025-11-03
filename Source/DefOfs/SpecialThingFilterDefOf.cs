@@ -14,5 +14,10 @@ namespace MadagascarVanilla.DefOfs
         
         [MayRequireRoyalty]
         public static SpecialThingFilterDef AllowBiocodedApparel;
+        
+        static SpecialThingFilterDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(SpecialThingFilterDefOf));
+        }
     }
 }

@@ -7,5 +7,10 @@ namespace MadagascarVanilla.DefOfs
     {
         [MayRequireIdeology] 
         public static PreceptDef IdeoRole_ProductionSpecialist;
+        
+        static PreceptDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDefOf));
+        }
     }
 }

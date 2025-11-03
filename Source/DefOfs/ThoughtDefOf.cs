@@ -7,5 +7,10 @@ namespace MadagascarVanilla.DefOfs
     public static class ThoughtDefOf
     {
         public static ThoughtDef WantToSleepWithSpouseOrLover;
+        
+        static ThoughtDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDefOf));
+        }
     }
 }

@@ -19,5 +19,10 @@ namespace MadagascarVanilla.DefOfs
         public static GeneDef UVSensitivity_Mild;
         [MayRequireBiotech] 
         public static GeneDef UVSensitivity_Intense;
+        
+        static GeneDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(GeneDefOf));
+        }
     }
 }

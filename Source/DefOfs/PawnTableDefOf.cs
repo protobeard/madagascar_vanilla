@@ -6,5 +6,10 @@ namespace MadagascarVanilla.DefOfs
     public static class PawnTableDefOf
     {
         public static PawnTableDef DefaultSchedules;
+        
+        static PawnTableDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(PawnTableDefOf));
+        }
     }
 }

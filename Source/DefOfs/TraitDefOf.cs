@@ -10,5 +10,10 @@ namespace MadagascarVanilla.DefOfs
         
         [MayRequireAnomaly]
         public static TraitDef BodyMastery;
+        
+        static TraitDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
+        }
     }
 }

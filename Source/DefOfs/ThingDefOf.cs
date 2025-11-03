@@ -7,5 +7,10 @@ namespace MadagascarVanilla.DefOfs
     public static class ThingDefOf
     {
         public static ThingDef ElectricTailoringBench;
+        
+        static ThingDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(ThingDefOf));
+        }
     }
 }
