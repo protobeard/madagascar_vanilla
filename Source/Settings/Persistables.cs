@@ -207,19 +207,9 @@ namespace MadagascarVanilla.Settings
         
         // Mechanitor
         public bool EnableMechRepair;
-        public bool EnableNonflammableMechResourceChips; // FIXME: not strictly QOL
         
-        // Odyssey // FIXME: not strictly QOL
+        // Odyssey 
         public bool EnableShowExpandingLandmarks;
-        public int AllowXGravshipSubquests = 3;
-        public int OdysseyQuestExtensionMultiplier = 1;
-        public IntRange OdysseyQuestRangeExtender = new IntRange(1, 3);
-        
-        // Plants // FIXME: not QOL
-        public bool EnableHydroponicDevilstrand;
-        public bool EnableFalloutImmuneDevilstrand;
-        public bool EnableFalloutImmuneToxipotatos;
-        public int GauralenPruningSpeedMultiplier = 1;
         
         // AutoCut (Wind Turbines and Animal Pens)
         public bool EnableAutoCut;
@@ -287,10 +277,6 @@ namespace MadagascarVanilla.Settings
             listingStandard.Gap();
             
             DoOdysseyQuestSettingsContent(rect, listingStandard);
-            listingStandard.GapLine();
-            listingStandard.Gap();
-            
-            DoPlantSettingsContent(rect, listingStandard);
             listingStandard.GapLine();
             listingStandard.Gap();
             
@@ -440,19 +426,9 @@ namespace MadagascarVanilla.Settings
             
             // Persist Mechanitor
             Scribe_Values.Look(ref EnableMechRepair, "enableMechRepair");
-            Scribe_Values.Look(ref EnableNonflammableMechResourceChips, "enableNonflammableMechResourceChips");
             
             // Persist Odyssey
             Scribe_Values.Look(ref EnableShowExpandingLandmarks, "enableShowExpandingLandmarks");
-            Scribe_Values.Look(ref AllowXGravshipSubquests, "allowXGravshipSubquests");
-            Scribe_Values.Look(ref OdysseyQuestExtensionMultiplier, "odysseyQuestExtensionMultiplier");
-            Scribe_Values.Look(ref OdysseyQuestRangeExtender, "odysseyQuestRangeExtender");
-            
-            // Persist Plants
-            Scribe_Values.Look(ref EnableHydroponicDevilstrand, "enableHydroponicDevilstrand");
-            Scribe_Values.Look(ref EnableFalloutImmuneDevilstrand, "enableFalloutImmuneDevilstrand");
-            Scribe_Values.Look(ref EnableFalloutImmuneToxipotatos, "enableFalloutImmuneToxipotatos");
-            Scribe_Values.Look(ref GauralenPruningSpeedMultiplier, "gauralenPruningSpeedMultiplier");
             
             // Persist AutoCut
             Scribe_Values.Look(ref EnableAutoCut, "enableAutoCut");

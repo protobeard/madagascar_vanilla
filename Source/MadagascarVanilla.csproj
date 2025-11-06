@@ -83,16 +83,12 @@
         <Compile Include="Patches\AutoCutPatch.cs" />
         <Compile Include="Patches\AutoStripPrisonersPatch.cs" />
         <Compile Include="Patches\BillProductionPatches.cs" />
-        <Compile Include="Patches\DistantOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\DontRemoveApparelWhileBleeding.cs" />
-        <Compile Include="Patches\GauranlenTreePatch.cs" />
         <Compile Include="Patches\LearningHelperPatch.cs" />
         <Compile Include="Patches\MilkableDisplayPatch.cs" />
         <Compile Include="Patches\NewGamePlaysettingsPatch.cs" />
-        <Compile Include="Patches\LongerOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\MechRepairableOn.cs" />
         <Compile Include="Patches\MedicalDefaultsPatch.cs" />
-        <Compile Include="Patches\MoreGravshipSubquests.cs" />
         <Compile Include="Patches\NewGameSetupPatches.cs" />
         <Compile Include="Patches\PersistPolicies.cs" />
         <Compile Include="Patches\QuestRewardsPatch.cs" />
@@ -109,7 +105,6 @@
         <Compile Include="Settings\NewGameConfigurationSettings.cs" />
         <Compile Include="Settings\OdysseyQuestSettings.cs" />
         <Compile Include="Settings\Persistables.cs" />
-        <Compile Include="Settings\PlantSettings.cs" />
         <Compile Include="Settings\PolicyPersistanceSettings.cs" />
         <Compile Include="Settings\PrisonerSettings.cs" />
         <Compile Include="Settings\ScheduleSettings.cs" />

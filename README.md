@@ -30,7 +30,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 ### Quality of Life
 
-* Stand Your Ground: set a default value for pawn hostility response.
+* Default Hostility Response: set a default value for pawn hostility response.
 * Allow Goodwill Reward: enable or disable goodwill rewards from factions.
 * Allow Honor Reward: enable or disable honor rewards from factions.
 * Override Default Schedules: enable custom schedules to be assigned to different types of pawns on recruitment: Never Sleep, Night Shift, Biphasic, and Day Shift. These schedules are assigned like so:
@@ -76,20 +76,13 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 * Dumping Stockpile Storage:
     * Disable storing rotten items in dumping stockpiles by default (prevent pawns from bringing in rotting animal corpses)
 
-### House Rules
-
-* Make all Mechanitor Chips Nonflammable: instead of just the Signal Chip
-* Extend Odyssey Quest Expiration time: nice for 100% worlds. Amount can be configured.
-* Extend Odyssey Quest Spawn Distance: nice for 100% worlds. Amount can be configured.
-* Allow Additional Gravship Subquests: nice for 100% worlds. Amount can be configured.
-* Toxic Fallout Immune Toxipotatos: seems on brand.
-* Toxic Fallout Immune Devilstrand: it takes so long to grow already.
-* Hydroponic Devilstrand: allow devilstrand to be grown in hydroponics.
-* Adjust Gauranlen Pruning speed: I always feel like this is just too much work.
-
 ## Balance
 
-I'd say that 95% of this mod is simple quality of life, with no implact on balance. The other 5% has some small impact, such as allowing players to configure Toxipotatos to live through toxic fallout, or extending the duration of Odyssey quests to more easily accomodate a 100% planet coverage playstyle. Please see the "What does it do exactly" section for a more complete list of all changes, and remember that every change is opt-in.
+This mod only contains strict quality of life features. By that I mean that I don't believe any reasonable person could argue that any feature included in this mod gives the player any advantage. Most options simply reduce tedious tasks that must be done each new game, or make tasks which are possible simpler to execute (e.g., the "Inspired Pawn Only" option on production bills -- this can be accomplished manually in vanilla by waiting until a pawn is inspired, then assigning the bill to that pawn. My feature just makes that process a bit less tedious.).
+
+Please let me know if you disagree about any feature.
+
+Also, note that I have nothing against mods which give the player advantages, I just want *this* mod to be focused on things that don't. Please see my mod House Rules for options that range a bit further outside quality of life.
 
 ## Known Issues
 

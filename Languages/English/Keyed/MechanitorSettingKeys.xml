@@ -3,11 +3,7 @@
 
     <MV_MechanitorSettingsTitle>Mechanitor Settings</MV_MechanitorSettingsTitle>
 
-
     <MV_EnableMechRepair>Enable Mech Repair by Default</MV_EnableMechRepair>
     <MV_EnableMechRepairTooltip>Enable automatically repairing colony mechs by default.</MV_EnableMechRepairTooltip>
-
-    <MV_EnableNonflammableMechResourceChips>Make all Mechanitor Chips Nonflammable</MV_EnableNonflammableMechResourceChips>
-    <MV_EnableNonflammableMechResourceChipsTooltip>Make all mechanitor chips (signal, power focus, nano structuring) non flammable (vanilla default is only signal chips).</MV_EnableNonflammableMechResourceChipsTooltip>
 
 </LanguageData>

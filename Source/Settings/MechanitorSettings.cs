@@ -13,7 +13,6 @@ namespace MadagascarVanilla.Settings
             listingStandard.Label("MV_MechanitorSettingsTitle".Translate());
             
             listingStandard.CheckboxLabeled("MV_EnableMechRepair".Translate(), ref EnableMechRepair, "MV_EnableMechRepairTooltip".Translate());
-            listingStandard.CheckboxLabeled("MV_EnableNonflammableMechResourceChips".Translate(), ref EnableNonflammableMechResourceChips, "MV_EnableNonflammableMechResourceChipsTooltip".Translate());
             
             //listingStandard.End();
         }
