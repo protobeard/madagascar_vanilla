@@ -3,7 +3,6 @@ using System.Linq;
 using RimWorld;
 using Verse;
 using HarmonyLib;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -11,14 +10,10 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(AreaManager.AddStartingAreas))]
     public static class AreasPatch
     {
-        private const string StartingAreasListKey = "startingAreasList";
-        private const char StartingAreaDelimiter = ',';
         
         public static void Postfix(AreaManager __instance)
         {
-            string startingAreasString = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, StartingAreasListKey));
-            List<string> startingAreasList = startingAreasString.Split(StartingAreaDelimiter).Select(s => s.Trim()).ToList();
-
+            List<string> startingAreasList = MadagascarVanillaMod.Persistables.StartingAreasList;
             if (!startingAreasList.Any() || (startingAreasList.Count == 1 && startingAreasList.First().NullOrEmpty())) 
                 return;
             

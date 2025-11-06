@@ -2,7 +2,6 @@ using RimWorld;
 using HarmonyLib;
 using Verse;
 using Verse.AI;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -11,12 +10,9 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("TryGiveJob")]
     public static class DontRemoveApparelWhileBleeding
     {
-        private const string DisableRemovingApparelWhileBleedingKey = "disableRemovingApparelWhileBleeding";
-        
         public static bool Prefix(Pawn pawn, ref Job __result)
         {
-            bool disableRemovingApparelWhileBleedingKey = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableRemovingApparelWhileBleedingKey));
-            if (!disableRemovingApparelWhileBleedingKey)
+            if (!MadagascarVanillaMod.Persistables.DisableRemovingApparelWhileBleeding)
                 return true;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"checking BleedRateTotal > 0 for {pawn.Name}");

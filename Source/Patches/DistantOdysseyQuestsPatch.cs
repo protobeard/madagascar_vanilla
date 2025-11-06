@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 using Verse;
 using HarmonyLib;
 using RimWorld.QuestGen;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -13,24 +12,14 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("TryFindSiteTile")]
     public static class DistantOdysseyQuestsPatch
     {
-        private const string OdysseyQuestRangeExtenderKey = "odysseyQuestRangeExtender";
-        private const char RangeSplitter = '~';
-        
         // QuestNode_Root_Asteroid.TryFindSiteTile uses two constants for the min and max distance from the colony,
         // so we can't just change them in a Prefix and let the method run as normal. A Postfix would pretty much
         // have to duplicate all the logic in the original method. So, to allow the original method to run
         // we need a Transpiler so that we can insert our new min and max values on the one line they are used.
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
         {
-            
-            string extendOdysseySubquests = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestRangeExtenderKey));
-            List<string> rangeBoundaries = extendOdysseySubquests.Split(RangeSplitter).ToList();
-            
-            if (rangeBoundaries.Count != 2)
-                return lines;
-            
-            float min = float.Parse(rangeBoundaries[0]);
-            float max = float.Parse(rangeBoundaries[1]);
+            float min = MadagascarVanillaMod.Persistables.OdysseyQuestRangeExtender.min;
+            float max = MadagascarVanillaMod.Persistables.OdysseyQuestRangeExtender.max;
             
             // Looking for:
             //

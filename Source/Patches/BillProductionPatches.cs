@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using HarmonyLib;
 using MadagascarVanilla.ModExtensions;
 using Verse;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -25,35 +23,21 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(new Type[] {typeof(RecipeDef), typeof(Precept_ThingStyle)})]
     public static class BillProductionPatches
     {
-        private const string StoreModeKey = "storeMode";
-        private const string RepeatModeKey = "repeatMode";
-        private const string HitpointRangeToCountKey = "hitpointRangeToCount";
-        private const string MinQualityToCountKey = "minQualityToCount";
-        private const string MaxQualityToCountKey = "maxQualityToCount";
-        private const string IngredientSearchRadiusKey = "ingredientSearchRadius";
-        
-        private const string DisableClothTextileKey = "disableClothTextile";
-        private const string DisableValuableTextilesKey = "disableValuableTextiles";
-        private const string DisableMoodImpactingTextilesKey = "disableMoodImpactingTextiles";
-        
-        private const char RangeSplitter = '~';
         
         public static void Postfix(Bill_Production __instance)
         {
             if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting Store Mode for {__instance.Label}");
-            BillStoreModeDef storeMode = DefDatabase<BillStoreModeDef>.GetNamed((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, StoreModeKey)));
-            if (storeMode != null)
-                __instance.SetStoreMode(storeMode);
+            if (MadagascarVanillaMod.Persistables.BillStoreMode != null)
+                __instance.SetStoreMode(MadagascarVanillaMod.Persistables.BillStoreMode);
             
-            BillRepeatModeDef repeatMode = DefDatabase<BillRepeatModeDef>.GetNamed((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, RepeatModeKey)));
-            if (repeatMode != null)
+            if (MadagascarVanillaMod.Persistables.BillRepeatMode != null)
             {
                 // Only assign settings for TargetCount RepeatMode if we're in a recipe which can count its products.
                 // Recipes like "shred mechanoid," for example, don't work with TargetCount.
-                if (repeatMode != BillRepeatModeDefOf.TargetCount)
+                if (MadagascarVanillaMod.Persistables.BillRepeatMode != BillRepeatModeDefOf.TargetCount)
                 {
-                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting {repeatMode} Repeat Mode for {__instance.Label}");
-                    __instance.repeatMode = repeatMode;
+                    if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting {MadagascarVanillaMod.Persistables.BillRepeatMode} Repeat Mode for {__instance.Label}");
+                    __instance.repeatMode = MadagascarVanillaMod.Persistables.BillRepeatMode;
                 } 
                 else if (__instance.recipe.WorkerCounter.CanCountProducts(__instance))
                 {
@@ -62,8 +46,7 @@ namespace MadagascarVanilla.Patches
             }
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting search radius for {__instance.Label}");
-            float ingredientSearchRadius = float.Parse((SettingsManager.GetSetting(MadagascarVanillaMod.ModId, IngredientSearchRadiusKey)));
-            __instance.ingredientSearchRadius = ingredientSearchRadius;
+            __instance.ingredientSearchRadius = MadagascarVanillaMod.Persistables.IngredientSearchRadius;
 
             // If we're a tailoring bill we need to check the ingredient disabling settings
             if (__instance.recipe != null && __instance.recipe.recipeUsers != null && __instance.recipe.recipeUsers.Contains(DefOfs.ThingDefOf.ElectricTailoringBench))
@@ -80,48 +63,27 @@ namespace MadagascarVanilla.Patches
                 
             bill.repeatMode = BillRepeatModeDefOf.TargetCount;
             
-            // TODO: there's gotta be a better way in XML Extension to do this...
-            //if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting hitpoint range for {__instance.Label}");
-            string hitpointRangeToCount = SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HitpointRangeToCountKey);
-            List<string> rangeBoundaries = hitpointRangeToCount.Split(RangeSplitter).ToList();
+            bill.hpRange.min = MadagascarVanillaMod.Persistables.HitpointRangeToCount.min;
+            bill.hpRange.max = MadagascarVanillaMod.Persistables.HitpointRangeToCount.max;
 
-            if (rangeBoundaries.Count == 2)
-            {
-                bill.hpRange.min = float.Parse(rangeBoundaries[0]);
-                bill.hpRange.max = float.Parse(rangeBoundaries[1]);
-            }
-
-            //if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Setting quality range for {__instance.Label}");
-            string minQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MinQualityToCountKey));
-            string maxQualityName = (SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MaxQualityToCountKey));
-            bool parsedMinQuality = Enum.TryParse(minQualityName, false, out QualityCategory minQualityCategory);
-            bool parsedMaxQuality = Enum.TryParse(maxQualityName, false, out QualityCategory maxQualityCategory);
-
-            if (parsedMinQuality && parsedMaxQuality)
-            {
-                // TODO: is there a way to ensure this in the XML Extension settings instead?
-                if (minQualityCategory > maxQualityCategory)
-                    maxQualityCategory = minQualityCategory;
-                
-                bill.qualityRange.min = minQualityCategory;
-                bill.qualityRange.max = maxQualityCategory;
-            }
+            // FIXME: is there a way to ensure this in the setter instead
+            if (MadagascarVanillaMod.Persistables.MinQualityToCount > MadagascarVanillaMod.Persistables.MaxQualityToCount)
+                MadagascarVanillaMod.Persistables.MaxQualityToCount = MadagascarVanillaMod.Persistables.MinQualityToCount;
+            
+            bill.qualityRange.min = MadagascarVanillaMod.Persistables.MinQualityToCount;
+            bill.qualityRange.max = MadagascarVanillaMod.Persistables.MaxQualityToCount;
         }
 
         private static void DisableTailoringIngredients(Bill_Production bill)
         {
-            bool disableClothTextile = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableClothTextileKey));
-            bool disableValuableTextiles = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableValuableTextilesKey));
-            bool disableMoodImpactingTextiles = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, DisableMoodImpactingTextilesKey));
-            
-            if (disableClothTextile)
+            if (MadagascarVanillaMod.Persistables.DisableClothTextile)
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
                 
                 bill.ingredientFilter.SetAllow(ThingDefOf.Cloth, false);
             }
 
-            if (disableValuableTextiles)
+            if (MadagascarVanillaMod.Persistables.DisableValuableTextiles)
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
 
@@ -131,7 +93,7 @@ namespace MadagascarVanilla.Patches
                 }
             }
 
-            if (disableMoodImpactingTextiles)
+            if (MadagascarVanillaMod.Persistables.DisableMoodImpactingTextiles)
             {
                 if (MadagascarVanillaMod.Verbose()) Log.Message($"BillProductionPatches.Postfix: Disabling textiles for {bill.Label}");
                 

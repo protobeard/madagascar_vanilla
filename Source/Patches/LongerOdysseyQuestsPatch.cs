@@ -5,7 +5,6 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using RimWorld.QuestGen;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -14,8 +13,6 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("RunInt")]
     public static class LongerOdysseyQuestsPatch
     {
-        private const string OdysseyQuestExtensionMultiplerKey = "odysseyQuestExtensionMultipler";
-        
         // The RunInt() method uses a readonly variable TimeoutDays to compute how many delayTicks the quest should
         // have before expiring, then passes that along to a couple relevant other objects. Since TicksPerDay is a nice
         // easy number to find, we can home in on that line and add our extension multiplier in right as RunInt()
@@ -33,8 +30,7 @@ namespace MadagascarVanilla.Patches
         // IL_00d2: stloc.s      delayTicks
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            int questExtensionMultiplier = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, OdysseyQuestExtensionMultiplerKey));
-            int ticksPerDayExtension = GenDate.TicksPerDay * questExtensionMultiplier;
+            int ticksPerDayExtension = GenDate.TicksPerDay * MadagascarVanillaMod.Persistables.OdysseyQuestExtensionMultiplier;
             
             List<CodeInstruction> newInstructions = instructions.ToList();
             int referenceLineNumber = newInstructions.FirstIndexOf((CodeInstruction instruction) => instruction.opcode == OpCodes.Ldc_I4 && (int) instruction.operand == GenDate.TicksPerDay);

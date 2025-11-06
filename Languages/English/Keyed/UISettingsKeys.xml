@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_UISettingsTitle>User Interface/Controls</MV_UISettingsTitle>
+
+    <MV_DisableLearningHelperButton>Hide Learning Helper Button</MV_DisableLearningHelperButton>
+    <MV_DisableLearningHelperButtonTooltip>Hide learning helper button on the bottom right of the map.</MV_DisableLearningHelperButtonTooltip>
+
+    <MV_EnableTraitsInOutFitAssignmentRow>Show Traits in Outfit Assignment</MV_EnableTraitsInOutFitAssignmentRow>
+    <MV_EnableTraitsInOutFitAssignmentRowTooltip>Show relevant traits (Nudist, Bloodlust, etc.) in the UI for pawn outfit assignment. Just like how drug related traits are shown for drug policy assignments.</MV_EnableTraitsInOutFitAssignmentRowTooltip>
+
+    <MV_EnableSleepingAloneAlert>Enable Sleeping Alone Alert</MV_EnableSleepingAloneAlert>
+    <MV_EnableSleepingAloneAlertTooltip>Show an alert if colonists are sleeping alone and don't want to be.</MV_EnableSleepingAloneAlertTooltip>
+
+</LanguageData>

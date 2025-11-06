@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_ScheduleSettingsTitle>Schedule Setup</MV_ScheduleSettingsTitle>
+    <MV_ScheduleSettingsDescription>Overrride the default RimWorld schedule with those specified below, with the following rules (assuming all options below are enabled):
+
+                 NeverSleep                 |             Night Shift            |            Biphasic           |     Day Shift
+BodyMastery/Never Sleep Gene > NightOwl > UV Sensitive > Very Sleepy > Sleepy > Low Sleep > Normal
+
+This only modifies the pawns initial schedule upon recruitment; their schedule can always be changed afterwards in game.</MV_ScheduleSettingsDescription>
+
+    <MV_ResetSchedules>Reset Schedules</MV_ResetSchedules>
+
+    <MV_EnableBodyMasterySchedule>Assign Body Mastery pawns the Never Sleep Schedule</MV_EnableBodyMasterySchedule>
+    <MV_EnableBodyMasteryScheduleTooltip>Assign any pawns with the Body Mastery trait the Never Sleep schedule.</MV_EnableBodyMasteryScheduleTooltip>
+
+    <MV_EnableNeverSleepGeneSchedule>Assign Never Sleep pawns the Never Sleep Schedule</MV_EnableNeverSleepGeneSchedule>
+    <MV_EnableNeverSleepGeneScheduleTooltip>Assign any pawns with the Never Sleep gene the Never Sleep schedule.</MV_EnableNeverSleepGeneScheduleTooltip>
+
+    <MV_EnableNightOwlSchedule>Assign Night Owl pawns the Night Shift Schedule</MV_EnableNightOwlSchedule>
+    <MV_EnableNightOwlScheduleTooltip>Assign any pawns with the Night Owl trait the Night Owl schedule.</MV_EnableNightOwlScheduleTooltip>
+
+    <MV_EnableUVSensitiveSchedule>Assign UV Sensitive pawns the Night Shift Schedule</MV_EnableUVSensitiveSchedule>
+    <MV_EnableUVSensitiveScheduleTooltip>Assign pawns with UV sensitive genes (Dirtmoles, Sanguophages, etc.) the Night Shift schedule.</MV_EnableUVSensitiveScheduleTooltip>
+
+    <MV_EnableSleepyGeneSchedule>Assign Sleepy Pawns the Biphasic Schedule</MV_EnableSleepyGeneSchedule>
+    <MV_EnableSleepyGeneScheduleTooltip>Assign pawns that have sleep modifying genes (Very Sleepy, Sleepy) the Biphasic schedule.</MV_EnableSleepyGeneScheduleTooltip>
+
+    <MV_EnableInitialSchedule>Assign "Normal" Pawns Day Shift</MV_EnableInitialSchedule>
+    <MV_EnableInitialScheduleTooltip>Assign any pawns that don't meet the above criteria the Day Shift schedule (note that this includes pawns with the Low Sleep gene).</MV_EnableInitialScheduleTooltip>
+
+</LanguageData>

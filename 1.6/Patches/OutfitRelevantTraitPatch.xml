@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableValuableTextiles</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
-
-            <Operation Class="PatchOperationAddModExtension">
-                <xpath>/Defs/TraitDef[defName="Bloodlust" or defName="Brawler" or defName="Cannibal" or defName="Nudist" or defName="Psychopath"]</xpath>
-                <value>
-                    <li Class="MadagascarVanilla.ModExtensions.OutfitRelevantTraitExtension">
-                        <OutfitRelevant>true</OutfitRelevant>
-                    </li>
-                </value>
-            </Operation>
-
-        </caseTrue>
+    <Operation Class="PatchOperationAddModExtension">
+        <xpath>/Defs/TraitDef[defName="Bloodlust" or defName="Brawler" or defName="Cannibal" or defName="Nudist" or defName="Psychopath"]</xpath>
+        <value>
+            <li Class="MadagascarVanilla.ModExtensions.OutfitRelevantTraitExtension">
+                <OutfitRelevant>true</OutfitRelevant>
+            </li>
+        </value>
     </Operation>
 
 </Patch>

@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableMoodImpactingTextiles</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
-
-            <Operation Class="PatchOperationAddModExtension">
-                <xpath>/Defs/ThingDef[defName="Leather_Human"]</xpath>
-                <value>
-                    <li Class="MadagascarVanilla.ModExtensions.MoodAlteringTextileExtension">
-                        <MoodAlteringTextile>true</MoodAlteringTextile>
-                    </li>
-                </value>
-            </Operation>
-
-        </caseTrue>
+    <Operation Class="PatchOperationAddModExtension">
+        <xpath>/Defs/ThingDef[defName="Leather_Human"]</xpath>
+        <value>
+            <li Class="MadagascarVanilla.ModExtensions.MoodAlteringTextileExtension">
+                <MoodAlteringTextile>true</MoodAlteringTextile>
+            </li>
+        </value>
     </Operation>
+
 
 </Patch>

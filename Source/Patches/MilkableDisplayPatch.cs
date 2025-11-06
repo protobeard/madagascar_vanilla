@@ -2,7 +2,6 @@ using RimWorld;
 using HarmonyLib;
 using MadagascarVanilla.ClassExtensions;
 using Verse;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -11,17 +10,13 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(CompMilkable.CompInspectStringExtra))]
     public static class MilkableDisplayPatch
     {
-        private const string EnableCompMilkableDisplayProperItemKey = "enableCompMilkableDisplayProperItem";
-        
         public static void Postfix(CompMilkable __instance, ref string __result)
         {
-            bool enableCompMilkableDisplayProperItem = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableCompMilkableDisplayProperItemKey));
-
             // Bail if there is no inspect string or the type of resource being produced is milk.
             if (__result == null || __instance.Props.milkDef.IsMilk())
                 return;
             
-            if (enableCompMilkableDisplayProperItem)
+            if (MadagascarVanillaMod.Persistables.EnableCompMilkableDisplayProperItem)
             {
                 __result = __instance.Props.milkDef.LabelCap;
                 __result += " " + "MilkableResourceFullness".Translate() + ": ";

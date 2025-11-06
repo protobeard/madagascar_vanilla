@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>nonflammableMechResourceChips</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
+    <Operation Class="MadagascarVanilla.PatchOperations.OptionalPatch">
+        <key>EnableNonflammableMechResourceChips</key>
+        <match Class="PatchOperationAdd">
 
-            <Operation Class="PatchOperationAdd">
-                <xpath>/Defs/ThingDef[@Name="MechResourceBase"]/statBases</xpath>
-                <value>
-                    <Flammability>0</Flammability>
-                </value>
-            </Operation>
+            <xpath>/Defs/ThingDef[@Name="MechResourceBase"]/statBases</xpath>
+            <value>
+                <Flammability>0</Flammability>
+            </value>
 
-        </caseTrue>
+        </match>
     </Operation>
 
 </Patch>

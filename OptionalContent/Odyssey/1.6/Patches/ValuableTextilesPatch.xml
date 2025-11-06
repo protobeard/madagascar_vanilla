@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableValuableTextiles</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
-
-            <Operation Class="PatchOperationAddModExtension">
-                <xpath>/Defs/ThingDef[defName="Leather_AlphaThrumbo"]</xpath>
-                <value>
-                    <li Class="MadagascarVanilla.ModExtensions.ValuableTextileExtension">
-                        <ValuableTextile>true</ValuableTextile>
-                    </li>
-                </value>
-            </Operation>
-
-        </caseTrue>
+    <Operation Class="PatchOperationAddModExtension">
+        <xpath>/Defs/ThingDef[defName="Leather_AlphaThrumbo"]</xpath>
+        <value>
+            <li Class="MadagascarVanilla.ModExtensions.ValuableTextileExtension">
+                <ValuableTextile>true</ValuableTextile>
+            </li>
+        </value>
     </Operation>
 
 </Patch>

@@ -6,8 +6,7 @@ using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
-using XmlExtensions;
-using static MadagascarVanilla.MadagascarVanillaPersistables;
+using static MadagascarVanilla.Settings.MadagascarVanillaPersistables;
 
 namespace MadagascarVanilla.Patches
 {
@@ -15,9 +14,6 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch]
     public static class NewGameSetupPatches
     {
-        private const string PersistNewGameSetupKey = "persistNewGameSetup";
-        private static bool PersistNewGameSetup;
-        
         // Track whether we've loaded our settings since the user can go forward and back through
         // the new game setup UI, and we don't want to overwrite any changes they may have made
         // on each page.
@@ -31,7 +27,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("DoBack")]
         public static void PageDoBackPostfix(Page __instance)
         {
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
 
             switch (__instance)
@@ -62,8 +58,7 @@ namespace MadagascarVanilla.Patches
         {
             // Since this is the first part of new game setup cache the setting for whether we are persisting
             // settings. The rest of the time we can just check this value.
-            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectScenario.PreOpen");
@@ -79,7 +74,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void SelectScenarioCanDoNextPostfix(Page_SelectScenario __instance, bool __result)
         {
-            if (!PersistNewGameSetup || ScenarioSettingsLoaded)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup || ScenarioSettingsLoaded)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
@@ -109,7 +104,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Page_SelectStoryteller.PreOpen))]
         public static void SelectStorytellerPreOpenPostfix(Page_SelectStoryteller __instance)
         { 
-            if (!PersistNewGameSetup || StorytellerSettingsLoaded || __instance == null)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup || StorytellerSettingsLoaded || __instance == null)
                 return;
 
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.PreOpen");
@@ -146,7 +141,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void SelectStorytellerCanDoNextPostfix(Page_SelectStoryteller __instance, bool __result)
         {
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStoryteller.CanDoNext");
@@ -165,8 +160,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Page_SelectStorytellerInGame.PreClose))]
         private static void SelectStorytellerInGamePreClosePostfix()
         {
-            PersistNewGameSetup = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, PersistNewGameSetupKey));
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_SelectStorytellerInGame.PreClose");
@@ -210,7 +204,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Page_CreateWorldParams.PreOpen))]
         public static void CreateWorldParamsPreOpenPostfix(Page_CreateWorldParams __instance)
         {
-            if (!PersistNewGameSetup || WorldGeneratorSettingsLoaded || __instance == null)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup || WorldGeneratorSettingsLoaded || __instance == null)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_CreateWorldParams.PreOpen");
@@ -276,7 +270,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("CanDoNext")]
         public static void CreateWorldParamsCanDoNextPostfix(Page_CreateWorldParams __instance, bool __result)
         {
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
             
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_CreateWorldParams.CanDoNext");
@@ -313,7 +307,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(nameof(Window.PreOpen))]
         public static void WindowPreOpenPostfix(Window __instance)
         {
-            if (!PersistNewGameSetup || IdeoligionSettingsLoaded || !(__instance is Page_ChooseIdeoPreset page))
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup || IdeoligionSettingsLoaded || !(__instance is Page_ChooseIdeoPreset page))
                 return;
                         
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.PreOpen");
@@ -415,7 +409,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("DoNext")]
         public static void ChooseIdeoPresetDoNextPostfix(Page_ChooseIdeoPreset __instance)
         {
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
                         
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ChooseIdeoPreset.DoNext");
@@ -442,7 +436,7 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("DoNext")]
         public static void ConfigureStartingPawnsDoNextPostfix(Page_ConfigureStartingPawns __instance)
         {
-            if (!PersistNewGameSetup)
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingNewGameSetup)
                 return;
                         
             if (MadagascarVanillaMod.Verbose()) Log.Message($"MadagascarVanilla.Page_ConfigureStartingPawns.DoNext");

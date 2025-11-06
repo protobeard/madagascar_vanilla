@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_PlantSettingsTitle>Plant Changes</MV_PlantSettingsTitle>
+
+    <MV_EnableHydroponicDevilstrand>Hydroponic Devilstrand</MV_EnableHydroponicDevilstrand>
+    <MV_EnableHydroponicDevilstrandTooltip>Devilstrand can be grown in hydroponic basins.</MV_EnableHydroponicDevilstrandTooltip>
+
+    <MV_EnableFalloutImmuneDevilstrand>Toxic Fallout Immune Devilstrand</MV_EnableFalloutImmuneDevilstrand>
+    <MV_EnableFalloutImmuneDevilstrandTooltip>Devilstrand is immune to toxic fallout.</MV_EnableFalloutImmuneDevilstrandTooltip>
+
+    <MV_EnableFalloutImmuneToxipotatos>Toxic Fallout Immune Toxipotatos</MV_EnableFalloutImmuneToxipotatos>
+    <MV_EnableFalloutImmuneToxipotatosTooltip>Toxipotatos are immune to toxic fallout.</MV_EnableFalloutImmuneToxipotatosTooltip>
+
+    <MV_GauralenPruningSpeedMultiplier>Multiply Gauralen Pruning Speed by X</MV_GauralenPruningSpeedMultiplier>
+    <MV_GauralenPruningSpeedMultiplierTooltip></MV_GauralenPruningSpeedMultiplierTooltip>
+
+    <MV_EnableAutoCut>Enable Auto Cut by Default</MV_EnableAutoCut>
+    <MV_EnableAutoCutTooltip>Enable auto cutting on wind turbines and animal pens by default.</MV_EnableAutoCutTooltip>
+
+</LanguageData>

@@ -8,7 +8,6 @@ using HarmonyLib;
 using MadagascarVanilla.ClassExtensions;
 using Verse;
 using Verse.AI;
-using XmlExtensions;
 using PreceptDefOf = MadagascarVanilla.DefOfs.PreceptDefOf;
 
 namespace MadagascarVanilla.Patches
@@ -18,18 +17,14 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch]
     public static class AnyProductionSpecialistPatch
     {
-        private const string EnableProductionSpecialistOnlyBillAssignmentKey = "enableProductionSpecialistOnlyBillAssignment";
-        private const string EnableInspiredOnlyBillAssignmentKey = "enableInspiredOnlyBillAssignment";
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Dialog_BillConfig))]
         [HarmonyPatch("GeneratePawnRestrictionOptions")]
         public static void Postfix(Dialog_BillConfig __instance, ref IEnumerable<Widgets.DropdownMenuElement<Pawn>> __result)
         {
-            bool enableProductionSpecialistOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableProductionSpecialistOnlyBillAssignmentKey));
-            bool enableInspiredOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableInspiredOnlyBillAssignmentKey));
 
-            if (enableProductionSpecialistOnlyBillAssignment && ModsConfig.IdeologyActive)
+            if (MadagascarVanillaMod.Persistables.EnableProductionSpecialistOnlyBillAssignment && ModsConfig.IdeologyActive)
             {
                 bool hasIdeoWithProductionSpecialist = Faction.OfPlayer.ideos.AllIdeos.Select(ideo => ideo.RolesListForReading.Select(role => role.def).Contains(PreceptDefOf.IdeoRole_ProductionSpecialist)).Any();
 
@@ -39,7 +34,7 @@ namespace MadagascarVanilla.Patches
                 
                     Widgets.DropdownMenuElement<Pawn> anyProductionSpecialistWidget = new Widgets.DropdownMenuElement<Pawn>
                     {
-                        option = new FloatMenuOption("AnyProductionSpecialist".Translate(), delegate
+                        option = new FloatMenuOption("MV_AnyProductionSpecialist".Translate(), delegate
                         {
                             bill.SetAnyPawnRestriction();
                             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
@@ -53,13 +48,13 @@ namespace MadagascarVanilla.Patches
                 }
             }
 
-            if (enableInspiredOnlyBillAssignment)
+            if (MadagascarVanillaMod.Persistables.EnableInspiredOnlyBillAssignment)
             {
                 Bill_Production bill = Traverse.Create(__instance).Field("bill").GetValue<Bill_Production>();
                  
                 Widgets.DropdownMenuElement<Pawn> anyInspiredWidget = new Widgets.DropdownMenuElement<Pawn>
                 {
-                    option = new FloatMenuOption("AnyCreativityInspired".Translate(), delegate
+                    option = new FloatMenuOption("MV_AnyCreativityInspired".Translate(), delegate
                     {
                         bill.SetAnyPawnRestriction();
                         BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
@@ -135,20 +130,17 @@ namespace MadagascarVanilla.Patches
 
         public static string UpdateButtonLabel(Bill_Production bill, string label)
         {
-            bool enableProductionSpecialistOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableProductionSpecialistOnlyBillAssignmentKey));
-            bool enableInspiredOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableInspiredOnlyBillAssignmentKey));
-
-            if (!enableProductionSpecialistOnlyBillAssignment && !enableInspiredOnlyBillAssignment)
+            if (!MadagascarVanillaMod.Persistables.EnableProductionSpecialistOnlyBillAssignment && !MadagascarVanillaMod.Persistables.EnableInspiredOnlyBillAssignment)
                 return label;
 
             if (MadagascarVanillaMod.Verbose()) Log.Message($"UpdateButtonLabel: {label}, {bill.GetUniqueLoadID()}");
             BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
             
-            if (enableProductionSpecialistOnlyBillAssignment && attrs.ProductionSpecialistOnly)
-                return "AnyProductionSpecialist".Translate();
+            if (MadagascarVanillaMod.Persistables.EnableProductionSpecialistOnlyBillAssignment && attrs.ProductionSpecialistOnly)
+                return "MV_AnyProductionSpecialist".Translate();
 
-            if (enableInspiredOnlyBillAssignment && attrs.InspiredOnly)
-                return "AnyCreativityInspired".Translate();
+            if (MadagascarVanillaMod.Persistables.EnableInspiredOnlyBillAssignment && attrs.InspiredOnly)
+                return "MV_AnyCreativityInspired".Translate();
             
             return label;
         }
@@ -214,9 +206,7 @@ namespace MadagascarVanilla.Patches
         {
             if (__instance is Bill_Production bill)
             {
-                bool enableProductionSpecialistOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableProductionSpecialistOnlyBillAssignmentKey));
-                bool enableInspiredOnlyBillAssignment = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableInspiredOnlyBillAssignmentKey));
-                if (!enableProductionSpecialistOnlyBillAssignment && !enableInspiredOnlyBillAssignment)
+                if (!MadagascarVanillaMod.Persistables.EnableProductionSpecialistOnlyBillAssignment && !MadagascarVanillaMod.Persistables.EnableInspiredOnlyBillAssignment)
                     return;
             
                 BillAdditionalAttributes attrs = BillAdditionalAttributes.GetAttributesFor(bill);
@@ -227,7 +217,7 @@ namespace MadagascarVanilla.Patches
                     __result = p.IsProductionSpecialist();
 
                     if (!__result)
-                        JobFailReason.Is("NotAProductionSpecialist".Translate());
+                        JobFailReason.Is("MV_NotAProductionSpecialist".Translate());
                 }
                 
                 if (__result && attrs.InspiredOnly)
@@ -236,7 +226,7 @@ namespace MadagascarVanilla.Patches
                     __result = p.InspirationDef == InspirationDefOf.Inspired_Creativity;
 
                     if (!__result)
-                        JobFailReason.Is("NotInspired".Translate());
+                        JobFailReason.Is("MV_NotInspired".Translate());
                 }
             }
         }

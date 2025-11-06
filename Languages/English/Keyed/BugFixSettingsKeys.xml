@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_BugFixesTitle>Small Bug Fixes</MV_BugFixesTitle>
+
+    <MV_DisableRemovingApparelWhileBleeding>Disable Pawns Changing Clothes While Bleeding</MV_DisableRemovingApparelWhileBleeding>
+    <MV_DisableRemovingApparelWhileBleedingTooltip>Pawns no longer attempt to change their clothes if they are actively bleeding.</MV_DisableRemovingApparelWhileBleedingTooltip>
+
+    <MV_EnableCompMilkableDisplayProperItem>Display Correct Milk Type on Animal Fullness Labels</MV_EnableCompMilkableDisplayProperItem>
+    <MV_EnableCompMilkableDisplayProperItemTooltip>Instead of labeling all resource producing animals with "Milk Fullness" show the actual resource produced (e.g., Boomalopes are now labeled with "Chemfuel Fullness") (vanilla default is false, but should honestly just be true. This is much more of a bug fix than a setting).</MV_EnableCompMilkableDisplayProperItemTooltip>
+
+</LanguageData>

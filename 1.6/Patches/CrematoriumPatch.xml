@@ -2,19 +2,15 @@
 
 <Patch>
 
-    <!-- Empty Storage and Normal Priority -->
+    <!-- Disable Colonist Cremation -->
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>disableColonistCremation</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
+    <Operation Class="MadagascarVanilla.PatchOperations.OptionalPatch">
+        <key>DisableColonistCremation</key>
+        <match Class="PatchOperationRemove">
 
-            <Operation Class="PatchOperationRemove">
-                <xpath>/Defs/RecipeDef[defName="CremateCorpse"]/defaultIngredientFilter/specialFiltersToAllow/li[text()="AllowCorpsesColonist"]</xpath>
-            </Operation>
+            <xpath>/Defs/RecipeDef[defName="CremateCorpse"]/defaultIngredientFilter/specialFiltersToAllow/li[text()="AllowCorpsesColonist"]</xpath>
 
-        </caseTrue>
+        </match>
     </Operation>
 
 </Patch>

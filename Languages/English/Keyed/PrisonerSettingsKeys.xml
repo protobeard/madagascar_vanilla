@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_PrisonerSettingsTitle>Prisoner Settings</MV_PrisonerSettingsTitle>
+
+    <MV_EnableAutoStrip>Auto Strip Prisoners</MV_EnableAutoStrip>
+    <MV_EnableAutoStripTooltip>Enable auto stripping prisoners by default.</MV_EnableAutoStripTooltip>
+
+    <MV_EnableAutoStripArrestedColonist>Auto Strip Arrested Colonists</MV_EnableAutoStripArrestedColonist>
+    <MV_EnableAutoStripArrestedColonistTooltip>Enable auto stripping colonists by default when arrested.</MV_EnableAutoStripArrestedColonistTooltip>
+
+</LanguageData>

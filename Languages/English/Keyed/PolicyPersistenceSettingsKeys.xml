@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_PolicyPersistenceSettingsTitle>Policy Persistance</MV_PolicyPersistenceSettingsTitle>
+
+    <MV_EnablePersistingApparelPolicies>Apparel Policies Persist Across Games</MV_EnablePersistingApparelPolicies>
+    <MV_EnablePersistingApparelPoliciesTooltip>Apparel policies persist across new games -- make your desired set of outfits once and keep them forever.</MV_EnablePersistingApparelPoliciesTooltip>
+
+    <MV_EnablePersistingDrugPolicies>Drug Policies Persist Across Games</MV_EnablePersistingDrugPolicies>
+    <MV_EnablePersistingDrugPoliciesTooltip>Drug policies persist across new games -- make your desired set of drug policies once and keep them forever.</MV_EnablePersistingDrugPoliciesTooltip>
+
+    <MV_EnablePersistingFoodPolicies>Food Policies Persist Across Games</MV_EnablePersistingFoodPolicies>
+    <MV_EnablePersistingFoodPoliciesTooltip>Food policies persist across new games -- make your desired set of food policies once and keep them forever.</MV_EnablePersistingFoodPoliciesTooltip>
+
+    <MV_EnablePersistingReadingPolicies>Reading Policies Persist Across Games</MV_EnablePersistingReadingPolicies>
+    <MV_EnablePersistingReadingPoliciesTooltip>Reading policies persist across new games -- make your desired set of reading policies once and keep them forever.</MV_EnablePersistingReadingPoliciesTooltip>
+
+    <MV_EnablePersistingMedicalSettings>Medical Defaults Persist Across Games</MV_EnablePersistingMedicalSettings>
+    <MV_EnablePersistingMedicalSettingsTooltip>Persist medical care default settings across games -- can set pawns to Herbal Medicine default once and never worry again.</MV_EnablePersistingMedicalSettingsTooltip>
+
+    <MV_ResetMedicalDefaults>Reset Medical Defaults</MV_ResetMedicalDefaults>
+
+</LanguageData>

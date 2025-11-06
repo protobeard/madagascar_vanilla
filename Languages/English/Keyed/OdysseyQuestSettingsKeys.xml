@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_OdysseyQuestSettingsTitle>Odyssey</MV_OdysseyQuestSettingsTitle>
+
+    <MV_EnableShowExpandingLandmarks>Enable Landmark Visibility</MV_EnableShowExpandingLandmarks>
+    <MV_EnableShowExpandingLandmarksTooltip>Show landmarks on world map by default -- no need to turn it on again every game.</MV_EnableShowExpandingLandmarksTooltip>
+
+    <MV_OdysseyQuestsTitle>Odyssey Quests</MV_OdysseyQuestsTitle>
+    <MV_OdysseyQuestDescription>For 100% worlds it can be nice to have additional time for Odyssey space site quests so that traveling around the world is not as punishing. You can also increase the distance at which these quests are located to further enhance the world traveling vibe (note that grav ship quests are not impacted as they can already appear far away from the colony).</MV_OdysseyQuestDescription>
+
+    <MV_AllowXGravshipSubquests>Allow X Gravship Subquests (vanilla default is 3)</MV_AllowXGravshipSubquests>
+    <MV_AllowXGravshipSubquestsTooltip></MV_AllowXGravshipSubquestsTooltip>
+
+    <MV_OdysseyQuestExtensionMultiplier>Multiply Odyssey Quest Expiration Time by X</MV_OdysseyQuestExtensionMultiplier>
+    <MV_OdysseyQuestExtensionMultiplierTooltip>(vanilla default is 1, I'd recommend 2-3 for a 100% world)</MV_OdysseyQuestExtensionMultiplierTooltip>
+
+    <MV_OdysseyQuestRangeExtender>Odyssey Quest Generation Distance (vanilla default is 1~3, I'd recommend 1~5 for a 100% world):</MV_OdysseyQuestRangeExtender>
+    <MV_OdysseyQuestRangeExtenderTooltip></MV_OdysseyQuestRangeExtenderTooltip>
+
+</LanguageData>

@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 using RimWorld;
 using Verse;
 using HarmonyLib;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -13,13 +12,9 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch("DoMapControls")]
     public static class LearningHelperPatch
     {
-        private const string HideLearningHelperButtonKey = "hideLearningHelperButton";
-        
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> lines)
         {
-            bool hideLearningHelperButton = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, HideLearningHelperButtonKey));
-            
-            if (!hideLearningHelperButton)
+            if (!MadagascarVanillaMod.Persistables.DisableLearningHelperButton)
                 return lines;
             
             // Looking for:

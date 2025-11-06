@@ -1,8 +1,6 @@
 using RimWorld;
 using HarmonyLib;
-using MadagascarVanilla.Settings;
 using Verse;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -31,10 +29,9 @@ namespace MadagascarVanilla.Patches
             if (!(__instance is Dialog_MedicalDefaults))
                 return;
             
-            bool persistMedicalSettings = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PersistMedicalSettingsKey));
             PlaySettings playSettings = Find.PlaySettings;
-            if (persistMedicalSettings && playSettings != null)
-                MedicalDefaults.PersistMedicalSettings(playSettings);
+            if (MadagascarVanillaMod.Persistables.EnablePersistingMedicalSettings && playSettings != null)
+                MadagascarVanillaMod.Persistables.PersistMedicalSettings(playSettings);
         }
         
         // Load mod medical settings into Playsettings before opening the medical defaults dialog window.
@@ -48,10 +45,9 @@ namespace MadagascarVanilla.Patches
             if (!(__instance is Dialog_MedicalDefaults))
                 return;
             
-            bool persistMedicalSettings = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PersistMedicalSettingsKey));
             PlaySettings playSettings = Find.PlaySettings;
-            if (persistMedicalSettings && playSettings != null)
-                MedicalDefaults.LoadMedicalSettingsIntoPlaySettings(playSettings);
+            if (MadagascarVanillaMod.Persistables.EnablePersistingMedicalSettings && playSettings != null)
+                MadagascarVanillaMod.Persistables.LoadMedicalSettingsIntoPlaySettings(playSettings);
         }
         
         // Load mod medical settings into Playsettings on game load (in case they have been modified outside the game).
@@ -60,9 +56,8 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch("LoadGame")]
         public static void LoadGamePostfix(Game __instance)
         {
-            bool persistMedicalSettings = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PersistMedicalSettingsKey));
-            if (persistMedicalSettings)
-                MedicalDefaults.LoadMedicalSettingsIntoPlaySettings(__instance.playSettings);
+            if (MadagascarVanillaMod.Persistables.EnablePersistingMedicalSettings)
+                MadagascarVanillaMod.Persistables.LoadMedicalSettingsIntoPlaySettings(__instance.playSettings);
         }
         
         // On New Game after PlaySetting instantiation pull the medical default settings from our mod settings
@@ -72,9 +67,8 @@ namespace MadagascarVanilla.Patches
         [HarmonyPatch(MethodType.Constructor)]
         public static void PlaySettingsConstructorPostfix(PlaySettings __instance)
         {
-            bool persistMedicalSettings = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, MedicalDefaults.PersistMedicalSettingsKey));
-            if (persistMedicalSettings)
-                MedicalDefaults.LoadMedicalSettingsIntoPlaySettings(__instance);
+            if (MadagascarVanillaMod.Persistables.EnablePersistingMedicalSettings)
+                MadagascarVanillaMod.Persistables.LoadMedicalSettingsIntoPlaySettings(__instance);
         }
     }
 }

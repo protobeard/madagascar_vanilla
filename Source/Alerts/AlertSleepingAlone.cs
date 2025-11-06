@@ -3,15 +3,12 @@ using System.Text;
 using MadagascarVanilla.ClassExtensions;
 using RimWorld;
 using Verse;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Alerts
 {
  
     public class AlertSleepingAlone : Alert
     {
-        private const string enableSleepingAloneAlertKey = "enableSleepingAloneAlert";
-                
         private List<Pawn> sleepingAloneColonistsResult = new List<Pawn>();
 
         private StringBuilder sb = new StringBuilder();
@@ -39,7 +36,7 @@ namespace MadagascarVanilla.Alerts
 
         public override string GetLabel()
         {
-            return "ColonistsSleepingAlone".Translate(sleepingAloneColonistsResult.Count.ToStringCached());
+            return "MV_ColonistsSleepingAlone".Translate(sleepingAloneColonistsResult.Count.ToStringCached());
         }
 
         public override TaggedString GetExplanation()
@@ -49,14 +46,12 @@ namespace MadagascarVanilla.Alerts
             {
                 sb.AppendLine("  - " + pawn.NameShortColored.Resolve());
             }
-            return "ColonistsSleepingAloneDesc".Translate(sb.ToString().TrimEndNewlines());
+            return "MV_ColonistsSleepingAloneDesc".Translate(sb.ToString().TrimEndNewlines());
         }
 
         public override AlertReport GetReport()
         {
-            bool enableSleepingAloneAlert = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, enableSleepingAloneAlertKey));
-
-            if (enableSleepingAloneAlert)
+            if (MadagascarVanillaMod.Persistables.EnableSleepingAloneAlert)
                 return AlertReport.CulpritsAre(SleepingAloneColonists);
             
             return AlertReport.Inactive;

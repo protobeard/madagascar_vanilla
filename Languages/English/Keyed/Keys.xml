@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-    <MilkableResourceFullness>Fullness</MilkableResourceFullness>
+    <MV_MilkableResourceFullness>Fullness</MV_MilkableResourceFullness>
 
     <!-- Default Schedule labels -->
     <DayShift>Day Shift</DayShift>
@@ -9,13 +9,13 @@
     <NeverSleep>Never Sleep</NeverSleep>
     <Biphasic>Biphasic</Biphasic>
 
-    <AnyProductionSpecialist>Any Production Specialist</AnyProductionSpecialist>
-    <NotAProductionSpecialist>Not a production specialist</NotAProductionSpecialist>
+    <MV_AnyProductionSpecialist>Any Production Specialist</MV_AnyProductionSpecialist>
+    <MV_NotAProductionSpecialist>Not a production specialist</MV_NotAProductionSpecialist>
 
-    <AnyCreativityInspired>Any Inspired Worker</AnyCreativityInspired>
-    <NotInspired>Not inspired</NotInspired>
+    <MV_AnyCreativityInspired>Any Inspired Worker</MV_AnyCreativityInspired>
+    <MV_NotInspired>Not inspired</MV_NotInspired>
 
-    <ColonistsSleepingAlone>{0} colonists sleeping alone</ColonistsSleepingAlone>
-    <ColonistsSleepingAloneDesc>These colonists are sleeping alone and are not happy about it:\n{0}\n\nYou should probably assign them to share a bed with their lover or spouse.</ColonistsSleepingAloneDesc>
+    <MV_ColonistsSleepingAlone>{0} colonists sleeping alone</MV_ColonistsSleepingAlone>
+    <MV_ColonistsSleepingAloneDesc>These colonists are sleeping alone and are not happy about it:\n{0}\n\nYou should probably assign them to share a bed with their lover or spouse.</MV_ColonistsSleepingAloneDesc>
 
 </LanguageData>

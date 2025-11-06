@@ -8,7 +8,6 @@ using HarmonyLib;
 using MadagascarVanilla.ClassExtensions;
 using MadagascarVanilla.ModExtensions;
 using UnityEngine;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -22,15 +21,13 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(nameof(PawnColumnWorker_Outfit.DoCell))]
     public static class AddTraitsToOutfitAssignmentRowPatch
     {
-        private const string AddTraitsToOutFitAssignmentRowKey = "addTraitsToOutFitAssignmentRow";
         
         // Check the pawn for traits that impact what types of apparel they are happy to wear,
         // then display them on the Assignment menu.
         public static bool Prefix(PawnColumnWorker_Outfit __instance, Rect rect, Pawn pawn)
         {
             // Let the original method run if setting is false
-            bool addTraitsToOutFitAssignmentRow = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AddTraitsToOutFitAssignmentRowKey));
-            if (!addTraitsToOutFitAssignmentRow)
+            if (!MadagascarVanillaMod.Persistables.EnableTraitsInOutFitAssignmentRow)
                 return true;
             
             // Let the original method run if we can't find the private menuGenerator method.

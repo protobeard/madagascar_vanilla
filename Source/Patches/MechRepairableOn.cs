@@ -1,6 +1,5 @@
 using RimWorld;
 using HarmonyLib;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -9,13 +8,9 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(MethodType.Constructor)]
     public static class MechRepairableOnPatch
     {
-        private const string EnableMechRepairKey = "enableMechRepair";
-        
         public static void Postfix(CompMechRepairable __instance)
         {
-            bool enableMechRepair = bool.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, EnableMechRepairKey));
-            
-            __instance.autoRepair = enableMechRepair;
+            __instance.autoRepair = MadagascarVanillaMod.Persistables.EnableMechRepair;
         }
     }
 }

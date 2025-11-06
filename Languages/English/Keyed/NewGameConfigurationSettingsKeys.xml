@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_NewGameConfigurationSettingsTitle>Storyteller Settings</MV_NewGameConfigurationSettingsTitle>
+
+    <MV_EnablePersistingNewGameSetup>Persist New Game Configuration</MV_EnablePersistingNewGameSetup>
+    <MV_EnablePersistingNewGameSetupTooltip>Save new game setup (storyteller, difficulty, world size, etc.) and reuse it for the next new game.</MV_EnablePersistingNewGameSetupTooltip>
+
+    <MV_WorkPrioritiesTitle>Work Priorities</MV_WorkPrioritiesTitle>
+
+    <MV_EnableWorkPriorities>Use Manual Priorities</MV_EnableWorkPriorities>
+    <MV_EnableWorkPrioritiesTooltip>Use manual work priorities rather than boolean.</MV_EnableWorkPrioritiesTooltip>
+
+    <MV_QuestRewardsTitle>Acceptable Quest Rewards</MV_QuestRewardsTitle>
+
+    <MV_DisableGoodwillRewards>Disable Goodwill Rewards</MV_DisableGoodwillRewards>
+    <MV_DisableGoodwillRewardsTooltip>Set default value of allow goodwill rewards from factions.</MV_DisableGoodwillRewardsTooltip>
+
+    <MV_DisableRoyalFavorRewards>Disable Honor as Reward</MV_DisableRoyalFavorRewards>
+    <MV_DisableRoyalFavorRewardsTooltip>Set default value of allow honor as reward from factions.</MV_DisableRoyalFavorRewardsTooltip>
+
+    <MV_DefaultHostilityResponse>Hostility Response</MV_DefaultHostilityResponse>
+    <MV_DefaultHostilityResponseTooltip>Set default pawn hostility response (vanilla is Flee).</MV_DefaultHostilityResponseTooltip>
+
+</LanguageData>

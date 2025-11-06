@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_ProductionBillSettingsTitle>Production Bill Features</MV_ProductionBillSettingsTitle>
+
+    <MV_EnableProductionSpecialistOnlyBillAssignment>Enable Production Specialist Only Bill Assignment</MV_EnableProductionSpecialistOnlyBillAssignment>
+    <MV_EnableProductionSpecialistOnlyBillAssignmentTooltip>Adds a work assignment restriction to production bills that restricts the bill to production specialists. Will only be visible if the player faction ideology has a production specialist role.</MV_EnableProductionSpecialistOnlyBillAssignmentTooltip>
+
+    <MV_EnableInspiredOnlyBillAssignment>Enable Inspired Only Bill Assignment</MV_EnableInspiredOnlyBillAssignment>
+    <MV_EnableInspiredOnlyBillAssignmentTooltip>Adds a work assignment restriction to production bills that restricts the bill to any pawn with a creativity inspiration.</MV_EnableInspiredOnlyBillAssignmentTooltip>
+
+    <MV_GeneralBillDefaultsTitle>General Bill Defaults</MV_GeneralBillDefaultsTitle>
+
+    <MV_IngredientSearchRadius>Ingredient Search Radius</MV_IngredientSearchRadius>
+    <MV_IngredientSearchRadiusTooltip></MV_IngredientSearchRadiusTooltip>
+
+    <MV_BillStoreMode>Store Mode</MV_BillStoreMode>
+    <MV_BillStoreModeTooltip>Default storage choice for production bills.</MV_BillStoreModeTooltip>
+
+    <MV_BillRepeatMode>Repeat Mode</MV_BillRepeatMode>
+    <MV_BillRepeatModeTooltip>Default repeat choice for production bills.</MV_BillRepeatModeTooltip>
+
+    <MV_HitpointRangeToCount>Hitpoint Range to Count</MV_HitpointRangeToCount>
+    <MV_HitpointRangeToCountTooltip>Hitpoint range to count for TargetCount bills.</MV_HitpointRangeToCountTooltip>
+
+    <MV_QualityToCountMin>Minimum Quality to Count</MV_QualityToCountMin>
+    <MV_QualityToCountMinTooltip>Minimum quality to count for TargetCount bills.</MV_QualityToCountMinTooltip>
+
+    <MV_QualityToCountMax>Maximum Quality to Count</MV_QualityToCountMax>
+    <MV_QualityToCountMaxTooltip>Maximum quality to count for TargetCount bills.</MV_QualityToCountMaxTooltip>
+
+    <MV_TailoringBillsTitle>Tailoring Bills</MV_TailoringBillsTitle>
+
+    <MV_DisableClothTextile>Disable Cloth</MV_DisableClothTextile>
+    <MV_DisableClothTextileTooltip>Sets default ingredients for tailoring bills to not include cloth.</MV_DisableClothTextileTooltip>
+
+    <MV_DisableValuableTextiles>Disable Valuable Textiles</MV_DisableValuableTextiles>
+    <MV_DisableValuableTextilesTooltip>Sets default ingredients for tailoring bills to not include valuable textiles (devilstrand, hyperweave, synthread, thrumbofur, thrumbomane).</MV_DisableValuableTextilesTooltip>
+
+    <MV_DisableMoodImpactingTextiles>Disable Mood Impacting Textiles</MV_DisableMoodImpactingTextiles>
+    <MV_DisableMoodImpactingTextilesTooltip>Sets default ingredients for tailoring bills to not include textiles that cause mood debuffs (human leather, dread leather).</MV_DisableMoodImpactingTextilesTooltip>
+
+    <MV_CrematoriumTitle>Crematorium Bills</MV_CrematoriumTitle>
+
+    <MV_DisableColonistCremation>Disable Cremating Colonists</MV_DisableColonistCremation>
+    <MV_DisableColonistCremationTooltip>Sets default cremation bill on crematorium to not include colonists.</MV_DisableColonistCremationTooltip>
+
+</LanguageData>

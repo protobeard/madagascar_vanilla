@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_StorageDefaultSettingsTitle>Storage Defaults</MV_StorageDefaultSettingsTitle>
+
+    <MV_EnableClearShelfStorage>Clear Default Shelf Storage</MV_EnableClearShelfStorage>
+    <MV_EnableClearShelfStorageTooltip>Sets default storage on shelves to be empty and priority to be normal.</MV_EnableClearShelfStorageTooltip>
+
+    <MV_EnableClearBookcaseStorage>Clear Default Bookcase Storage</MV_EnableClearBookcaseStorage>
+    <MV_EnableClearBookcaseStorageTooltip>Sets default storage on bookcases to be empty and priority to be normal.</MV_EnableClearBookcaseStorageTooltip>
+
+    <MV_EnableClearOutfitStandStorage>Clear Default Outfit Stand Storage</MV_EnableClearOutfitStandStorage>
+    <MV_EnableClearOutfitStandStorageTooltip>Sets default storage on outfit stands to be empty and priority to be normal.</MV_EnableClearOutfitStandStorageTooltip>
+
+    <MV_EnableClearHopperStorage>Clear Default Hopper Storage</MV_EnableClearHopperStorage>
+    <MV_EnableClearHopperStorageTooltip>Sets default storage on hoppers to be empty and priority to be normal.</MV_EnableClearHopperStorageTooltip>
+
+    <MV_DisableRottenShelfStorage>Disable Storing Rotten Items on Shelves</MV_DisableRottenShelfStorage>
+    <MV_DisableRottenShelfStorageTooltip>Sets default storage for rotten items on shelves to be false.</MV_DisableRottenShelfStorageTooltip>
+
+    <MV_DisableDeadmansShelfStorage>Disable Storing Tainted Items on Shelves</MV_DisableDeadmansShelfStorage>
+    <MV_DisableDeadmansShelfStorageTooltip>Sets default storage for tainted items on shelves and outfit stands to be false</MV_DisableDeadmansShelfStorageTooltip>
+
+    <MV_DisableBiocodedShelfStorage>Disable Storing Biocoded Items on Shelves</MV_DisableBiocodedShelfStorage>
+    <MV_DisableBiocodedShelfStorageTooltip>Sets default storage for biocoded items (weapons and apparel) on shelves and outfit stands to be false.</MV_DisableBiocodedShelfStorageTooltip>
+
+    <MV_DisableRottenStockpileStorage>Disable Storing Rotten Items in Stockpiles</MV_DisableRottenStockpileStorage>
+    <MV_DisableRottenStockpileStorageTooltip>Sets default storage for rotten items in stockpiles to be false.</MV_DisableRottenStockpileStorageTooltip>
+
+    <MV_DisableDeadmansStockpileStorage>Disable Storing Tainted Items in Stockpiles</MV_DisableDeadmansStockpileStorage>
+    <MV_DisableDeadmansStockpileStorageTooltip>Sets default storage for tainted items in stockpiles to be false.</MV_DisableDeadmansStockpileStorageTooltip>
+
+    <MV_DisableBiocodedStockpileStorage>Disable Storing Biocoded Items in Stockpiles</MV_DisableBiocodedStockpileStorage>
+    <MV_DisableBiocodedStockpileStorageTooltip>Sets default storage for biocoded items (weapons and apparel) in stockpiles to be false.</MV_DisableBiocodedStockpileStorageTooltip>
+
+    <MV_DisableRottenDumpingStockpileStorage>Disable Storing Rotten Items in Dumping Stockpiles</MV_DisableRottenDumpingStockpileStorage>
+    <MV_DisableRottenDumpingStockpileStorageTooltip>Sets default storage for rotten items in dumping stockpiles to be false. This can be useful to prevent pawns from bringing random rotting animal corpses to dumping stockpiles.</MV_DisableRottenDumpingStockpileStorageTooltip>
+
+</LanguageData>

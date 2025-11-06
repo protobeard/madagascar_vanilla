@@ -42,6 +42,7 @@
         </Reference>
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System" />
+        <Reference Include="System.Xml" />
         <Reference Include="UnityEngine">
           <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.dll</HintPath>
         </Reference>
@@ -60,13 +61,11 @@
         <Reference Include="UnityEngine.TextRenderingModule">
           <HintPath>..\..\..\..\..\Library\Application Support\Steam\steamapps\common\RimWorld\RimWorldMac.app\Contents\Resources\Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
-        <Reference Include="XmlExtensions">
-          <HintPath>..\..\resources\Frameworks\XML Extensions - 2574315206\1.6\Assemblies\XmlExtensions.dll</HintPath>
-        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Alerts\AlertSleepingAlone.cs" />
         <Compile Include="ClassExtensions\Pawn.cs" />
+        <Compile Include="ClassExtensions\Rect.cs" />
         <Compile Include="ClassExtensions\ThingDef.cs" />
         <Compile Include="DefOfs\GeneDefOf.cs" />
         <Compile Include="DefOfs\PawnTableDefOf.cs" />
@@ -86,6 +85,7 @@
         <Compile Include="Patches\BillProductionPatches.cs" />
         <Compile Include="Patches\DistantOdysseyQuestsPatch.cs" />
         <Compile Include="Patches\DontRemoveApparelWhileBleeding.cs" />
+        <Compile Include="Patches\GauranlenTreePatch.cs" />
         <Compile Include="Patches\LearningHelperPatch.cs" />
         <Compile Include="Patches\MilkableDisplayPatch.cs" />
         <Compile Include="Patches\NewGamePlaysettingsPatch.cs" />
@@ -100,9 +100,21 @@
         <Compile Include="Patches\StandYourGroundPatch.cs" />
         <Compile Include="Patches\AreasPatch.cs" />
         <Compile Include="Patches\StockpileSpecialFiltersPatches.cs" />
+        <Compile Include="PatchOperations\OptionalPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Settings\MedicalDefaults.cs" />
-        <Compile Include="Settings\ScheduleDefaults.cs" />
+        <Compile Include="Settings\AreaSettings.cs" />
+        <Compile Include="Settings\ProductionBillSettings.cs" />
+        <Compile Include="Settings\BugFixSettings.cs" />
+        <Compile Include="Settings\MechanitorSettings.cs" />
+        <Compile Include="Settings\NewGameConfigurationSettings.cs" />
+        <Compile Include="Settings\OdysseyQuestSettings.cs" />
+        <Compile Include="Settings\Persistables.cs" />
+        <Compile Include="Settings\PlantSettings.cs" />
+        <Compile Include="Settings\PolicyPersistanceSettings.cs" />
+        <Compile Include="Settings\PrisonerSettings.cs" />
+        <Compile Include="Settings\ScheduleSettings.cs" />
+        <Compile Include="Settings\StorageDefaultSettings.cs" />
+        <Compile Include="Settings\UISettings.cs" />
         <Compile Include="WorldComponent.cs" />
     </ItemGroup>
     <ItemGroup>

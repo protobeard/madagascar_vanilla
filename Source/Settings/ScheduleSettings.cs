@@ -1,56 +1,68 @@
 using System;
 using System.Collections.Generic;
+using MadagascarVanilla;
+using MadagascarVanilla.Settings;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using XmlExtensions.Action;
-using XmlExtensions.Setting;
 using PawnTableDefOf = MadagascarVanilla.DefOfs.PawnTableDefOf;
 
 namespace MadagascarVanilla.Settings
 {
-    public class ScheduleDefaults : SettingContainer
+    public partial class MadagascarVanillaPersistables
     {
-        private const float HeaderHeight = 35;
-        private const float RowSpacing = 5f;
-        private const float RowHeight = 20 + RowSpacing;
-        private const float BottomBufferSpacing = 5f;
+        private const float ScheduleHeaderHeight = 35;
+        private const float ScheduleRowSpacing = 5f;
+        private const float ScheduleRowHeight = 20 + ScheduleRowSpacing;
         
         private const int TimeAssignmentSelectorWidth = 191;
         private const int TimeAssignmentSelectorHeight = 65;
-
-        protected override float CalculateHeight(float width)
-        {
-            // One header row, 4 schedule type rows
-            int rows = 5;
-            return TimeAssignmentSelectorHeight + (rows * RowHeight) + BottomBufferSpacing + GetDefaultSpacing();
-        }
         
-        protected override void DrawSettingContents(Rect rect)
+        private void DoScheduleSettingsContent(Rect rect, Listing_Standard listingStandard)
         {
+            // Listing_Standard listingStandard = new Listing_Standard();
+            // listingStandard.Begin(rect);
+            
+            listingStandard.Label("MV_ScheduleSettingsTitle".Translate());
+            listingStandard.Label("MV_ScheduleSettingsDescription".Translate());
+            
+            listingStandard.CheckboxLabeled("MV_EnableBodyMasterySchedule".Translate(), ref EnableBodyMasterySchedule, "MV_EnableBodyMasteryScheduleTooltip".Translate());
+            listingStandard.CheckboxLabeled("MV_EnableNeverSleepGeneSchedule".Translate(), ref EnableNeverSleepGeneSchedule, "MV_EnableNeverSleepGeneScheduleTooltip".Translate());
+            listingStandard.CheckboxLabeled("MV_EnableNightOwlSchedule".Translate(), ref EnableNightOwlSchedule, "MV_EnableNightOwlScheduleTooltip".Translate());
+            listingStandard.CheckboxLabeled("MV_EnableUVSensitiveSchedule".Translate(), ref EnableUVSensitiveSchedule, "MV_EnableUVSensitiveScheduleTooltip".Translate());
+            listingStandard.CheckboxLabeled("MV_EnableSleepyGeneSchedule".Translate(), ref EnableSleepyGeneSchedule, "MV_EnableSleepyGeneScheduleTooltip".Translate());
+            listingStandard.CheckboxLabeled("MV_EnableInitialSchedule".Translate(), ref EnableInitialSchedule, "MV_EnableInitialScheduleTooltip".Translate());
+
+            // FIXME: reset schedule button
+            
             float yOffset = 0;
             List<Pawn> schedulePawns = SchedulePawns();
             float scheduleTypeLabelWidth = 100f;
             
             // lets us select what kind of schedule restriction to paint
-            TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid(new Rect(rect.x, rect.y, TimeAssignmentSelectorWidth, TimeAssignmentSelectorHeight));
+            TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid(new Rect(rect.x, listingStandard.CurHeight, TimeAssignmentSelectorWidth, TimeAssignmentSelectorHeight));
             yOffset += TimeAssignmentSelectorHeight/2f;
             
-            PawnTable table = new PawnTable(PawnTableDefOf.DefaultSchedules, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)rect.width, (int)(rect.height - yOffset));
+            PawnTable table = new PawnTable(PawnTableDefOf.DefaultSchedules, (Func<IEnumerable<Pawn>>)(() => schedulePawns), (int)rect.width, (int)(listingStandard.CurHeight - yOffset));
             
-            PawnColumnWorker_DefaultTimetable pcwdt = new PawnColumnWorker_DefaultTimetable();
+            PawnColumnWorkerDefaultTimetable pcwdt = new PawnColumnWorkerDefaultTimetable();
             
-            pcwdt.DoHeader(new Rect(rect.x + scheduleTypeLabelWidth, rect.y + yOffset, rect.width - scheduleTypeLabelWidth, HeaderHeight), table);
-            yOffset += HeaderHeight;
+            pcwdt.DoHeader(new Rect(rect.x + scheduleTypeLabelWidth, listingStandard.CurHeight + yOffset, rect.width - scheduleTypeLabelWidth, ScheduleHeaderHeight), table);
+            yOffset += ScheduleHeaderHeight;
 
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
             foreach (Pawn pawn in schedulePawns)
             {
-                Widgets.Label(new Rect(rect.x, rect.y + yOffset, scheduleTypeLabelWidth, RowHeight), pawn.Name.ToString().Translate());
-                pcwdt.DoCell(new Rect(rect.x + scheduleTypeLabelWidth, rect.y + yOffset, rect.width - scheduleTypeLabelWidth, RowHeight), pawn, table);
-                yOffset += RowHeight;
+                Widgets.Label(new Rect(rect.x, listingStandard.CurHeight + yOffset, scheduleTypeLabelWidth, ScheduleRowHeight), pawn.Name.ToString().Translate());
+                pcwdt.DoCell(new Rect(rect.x + scheduleTypeLabelWidth, listingStandard.CurHeight + yOffset, rect.width - scheduleTypeLabelWidth, ScheduleRowHeight), pawn, table);
+                yOffset += ScheduleRowHeight;
             }
+            
+            // FIXME: this is a hack.
+            listingStandard.GetRect(yOffset);
+            
+            // listingStandard.End();
         }
         
         // Set pawn schedules:
@@ -60,23 +72,23 @@ namespace MadagascarVanilla.Settings
         // The constructor in Pawn_TimetableTracker:
         // for (int index = 0; index < 24; ++index)
         //    this.times.Add(index <= 5 || index > 21 ? TimeAssignmentDefOf.Sleep : TimeAssignmentDefOf.Anything);
-        public static void SetSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
+        public static void SetSchedule(Pawn pawn, ScheduleType type = ScheduleType.DayShift)
         {
             List<TimeAssignmentDef> timeAssigments = new List<TimeAssignmentDef>();
 
             switch (type)
             {
-                case MadagascarVanillaPersistables.ScheduleType.DayShift:
-                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.DayShift];
+                case ScheduleType.DayShift:
+                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[ScheduleType.DayShift];
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.NightShift: 
-                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.NightShift];
+                case ScheduleType.NightShift: 
+                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[ScheduleType.NightShift];
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.NeverSleep:
-                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.NeverSleep];
+                case ScheduleType.NeverSleep:
+                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[ScheduleType.NeverSleep];
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.Biphasic:
-                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[MadagascarVanillaPersistables.ScheduleType.Biphasic];
+                case ScheduleType.Biphasic:
+                    timeAssigments = MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[ScheduleType.Biphasic];
                     break;
                 default:
                     Log.Error("Unknown schedule type: " + type);
@@ -91,16 +103,16 @@ namespace MadagascarVanilla.Settings
             }
         }
         
-        public static void SetDefaultSchedule(Pawn pawn, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
+        public static void SetDefaultSchedule(Pawn pawn, ScheduleType type = ScheduleType.DayShift)
         {
             SetDefaultSchedule(pawn.timetable, type);
         }
 
-        public static void SetDefaultSchedule(Pawn_TimetableTracker timetable, MadagascarVanillaPersistables.ScheduleType type = MadagascarVanillaPersistables.ScheduleType.DayShift)
+        public static void SetDefaultSchedule(Pawn_TimetableTracker timetable, ScheduleType type = ScheduleType.DayShift)
         {
             switch (type)
             {
-                case MadagascarVanillaPersistables.ScheduleType.DayShift:
+                case ScheduleType.DayShift:
                     timetable.times.Clear();
             
                     for (int index = 0; index < 24; ++index)
@@ -115,7 +127,7 @@ namespace MadagascarVanilla.Settings
                             timetable.times.Add(TimeAssignmentDefOf.Sleep);
                     }
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.NightShift:
+                case ScheduleType.NightShift:
                     timetable.times.Clear();
                         
                     for (int index = 0; index < 24; ++index)
@@ -130,7 +142,7 @@ namespace MadagascarVanilla.Settings
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
                     }
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.NeverSleep:
+                case ScheduleType.NeverSleep:
                     timetable.times.Clear();
                     
                     for (int index = 0; index < 24; ++index)
@@ -143,7 +155,7 @@ namespace MadagascarVanilla.Settings
                             timetable.times.Add(TimeAssignmentDefOf.Anything);
                     }
                     break;
-                case MadagascarVanillaPersistables.ScheduleType.Biphasic:
+                case ScheduleType.Biphasic:
                     timetable.times.Clear();
                     
                     for (int index = 0; index < 24; ++index)
@@ -183,7 +195,7 @@ namespace MadagascarVanilla.Settings
         private List<Pawn> SchedulePawns()
         {
             List<Pawn> pawns = new List<Pawn>();
-            foreach ((MadagascarVanillaPersistables.ScheduleType type, List<TimeAssignmentDef> timeAssignments) in MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary)
+            foreach ((ScheduleType type, List<TimeAssignmentDef> timeAssignments) in MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary)
             {
                 Pawn pawn = new Pawn();
                 pawn.Name = new NameSingle(type.ToString());
@@ -195,8 +207,9 @@ namespace MadagascarVanilla.Settings
             return pawns;
         }
     }
-    
-    public class PawnColumnWorker_DefaultTimetable : PawnColumnWorker_Timetable
+}
+
+public class PawnColumnWorkerDefaultTimetable : PawnColumnWorker_Timetable
     {
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
@@ -216,15 +229,15 @@ namespace MadagascarVanilla.Settings
         }
     }
     
+// FIXME: reset schedules button
     // Clear the schedulesDictionary, then regenerate the defaults by accessing it.
-    public class ResetSchedulesAction : ActionContainer
-    {
-        protected override bool ApplyAction()
-        {
-            MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary = null;
-            MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary.GetHashCode();
-            MadagascarVanillaMod.Instance.WriteSettings();
-            return true;
-        }
-    }
-}
+    // public class ResetSchedulesAction : ActionContainer
+    // {
+    //     protected override bool ApplyAction()
+    //     {
+    //         MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary = null;
+    //         MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary.GetHashCode();
+    //         MadagascarVanillaMod.Instance.WriteSettings();
+    //         return true;
+    //     }
+    // }

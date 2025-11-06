@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_AreaSettingsTitle>Areas</MV_AreaSettingsTitle>
+
+    <MV_DisableAutoHomeArea>Disable Automatic Expanding Home</MV_DisableAutoHomeArea>
+    <MV_DisableAutoHomeAreaTooltip>Disable automatically expanding the Home area.</MV_DisableAutoHomeAreaTooltip>
+
+    <MV_EnableAutoRebuildInHomeArea>Enable Auto Rebuild in Home</MV_EnableAutoRebuildInHomeArea>
+    <MV_EnableAutoRebuildInHomeAreaTooltip>Automatically rebuild buildings in the Home area which get destroyed.</MV_EnableAutoRebuildInHomeAreaTooltip>
+
+    <MV_StartingAreasList>Starting Areas:</MV_StartingAreasList>
+    <MV_StartingAreasListTooltip>Comma separated list of areas to start a new game with (e.g., "Ship, Ship+, Work, Inside, Safe, Clean, Slaughter"). Enter up to 10 areas, or leave field blank to use RimwWorld's default of "Area 1." If you area using a mod like Areas Unlimted or TD Enhancement Pack's unlimited areas option, enter as many areas as you would like.</MV_StartingAreasListTooltip>
+
+</LanguageData>

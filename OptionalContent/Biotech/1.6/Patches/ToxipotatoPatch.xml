@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-    <Operation Class="XmlExtensions.OptionalPatch">
-        <modId>com.protobeard.madagascarvanilla</modId>
-        <key>falloutImmuneToxipotatos</key>
-        <defaultValue>false</defaultValue>
-        <caseTrue>
+    <Operation Class="MadagascarVanilla.PatchOperations.OptionalPatch">
+        <key>EnableFalloutImmuneToxipotatos</key>
+        <match Class="PatchOperationAdd">
 
-            <Operation Class="PatchOperationAdd">
-                <xpath>/Defs/ThingDef[defName="Plant_Toxipotato"]/plant</xpath>
-                <value>
-                    <dieFromToxicFallout>False</dieFromToxicFallout>
-                </value>
-            </Operation>
+            <xpath>/Defs/ThingDef[defName="Plant_Toxipotato"]/plant</xpath>
+            <value>
+                <dieFromToxicFallout>False</dieFromToxicFallout>
+            </value>
 
-        </caseTrue>
+        </match>
     </Operation>
 
 </Patch>

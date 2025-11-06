@@ -1,7 +1,6 @@
 using RimWorld;
 using Verse;
 using HarmonyLib;
-using XmlExtensions;
 
 namespace MadagascarVanilla.Patches
 {
@@ -11,8 +10,6 @@ namespace MadagascarVanilla.Patches
     [HarmonyPatch(MethodType.Getter)]
     public static class MoreGravshipSubquestsPatch
     {
-        private const string AllowAdditionalGravshipSubquestsKey = "allowXAdditionalGravshipSubquests";
-        
         // Recheck pendingSubQuestCount against the user specified maxAllowedGravshipSubquests
         // and modify the return value of CanGenerateSubquest if there are fewer subquests, enough
         // time has passed, and the player has a Gravship.
@@ -21,8 +18,6 @@ namespace MadagascarVanilla.Patches
         // better to do a couple rechecks than a Prefix patch which completely duplicates the original code.
         public static void Postfix(QuestPart_SubquestGenerator_Gravcores __instance, float ___lastSubquestTick, ref bool __result)
         {
-            int maxAllowedGravshipSubquests = int.Parse(SettingsManager.GetSetting(MadagascarVanillaMod.ModId, AllowAdditionalGravshipSubquestsKey));
-            
             // If the original method returned false
             if (!__result)
             {
@@ -31,7 +26,7 @@ namespace MadagascarVanilla.Patches
                 int minTime = traverse.Property("MinTime").GetValue<int>();
                 
                 // If there are fewer pending subquests than our new max
-                if (pendingSubquestCount < maxAllowedGravshipSubquests)
+                if (pendingSubquestCount < MadagascarVanillaMod.Persistables.AllowXGravshipSubquests)
                 {
                     // If not enough time has elapsed since the last quest was given
                     if (Find.TickManager.TicksGame - ___lastSubquestTick < minTime)

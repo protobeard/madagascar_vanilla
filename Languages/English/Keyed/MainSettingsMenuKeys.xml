@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <MV_MadagascarVanilla>Madagascar Vanilla</MV_MadagascarVanilla>
+    <MV_MadagascarVanillaRestartWarning>Many changes require a restart to take effect.</MV_MadagascarVanillaRestartWarning>
+
+    <MV_VerboseModeLabel>Verbose Mode</MV_VerboseModeLabel>
+    <MV_VerboseModeTooltip>Print lots of log messages. Useful for debugging.</MV_VerboseModeTooltip>
+
+</LanguageData>
