@@ -80,7 +80,7 @@ Note: everything is set to RimWorld defaults and must be enabled in the mod sett
 
 This mod only contains strict quality of life features. By that I mean that I don't believe any reasonable person could argue that any feature included in this mod gives the player any advantage. Most options simply reduce tedious tasks that must be done each new game, or make tasks which are possible simpler to execute (e.g., the "Inspired Pawn Only" option on production bills -- this can be accomplished manually in vanilla by waiting until a pawn is inspired, then assigning the bill to that pawn. My feature just makes that process a bit less tedious.).
 
-Please let me know if you disagree about any feature.
+Please let me know if you disagree about any feature. We may agree to disagree, but that's life.
 
 Also, note that I have nothing against mods which give the player advantages, I just want *this* mod to be focused on things that don't. Please see my mod House Rules for options that range a bit further outside quality of life.
 
@@ -94,7 +94,6 @@ This means that this mod attempted to load up the persisted storyteller and coul
 
 This will occur when any mod which adds custom content that has been persisted is removed: foods in food policies, apparel/weapons in apparel policies, drugs in drug policies, books in reading policies, custom storytellers, custom factions, etc.
 
-* Pretty much non-existant localization support
 
 ## Great Minds Think Alike
 
@@ -107,15 +106,17 @@ This will occur when any mod which adds custom content that has been persisted i
 * Can be added to and removed from existing saves.
 * Not extensively tested. Likely compatible with most content mods; likely incompatible with most "tweak" mods. As I use several of those mods myself, I am planning to add better compatibility support.
 
-## License
-
-* [Unlicense][license] -- feel free to use as you see fit, including not honoring the following requests. If you want to include this mod in a mod pack, or base a larger mod off of it, I'd appreciate a heads up. Please don't upload standalone translated versions on Steam; if you wish to translate it, please create a pull request on GitHub and I'll merge it in.
-
 ## Thanks To
 
 * Pardeike for [Harmony][harmonylib]
 * Marnador for [RimWorld Font][font]
 * The community in the RimWorld mod development discord server.
+
+## License
+
+* [Unlicense][license] -- feel free to use as you see fit. Go ahead and make a copy, cross out my name, write in yours, and publish it. Go wild, but remember to follow the [RimWorld TOS][rimworld_tos].
+
+Portions of the materials used to create this content/mod are trademarks and/or copyrighted works of Ludeon Studios Inc. All rights reserved by Ludeon. This content/mod is not official and is not endorsed by Ludeon.
 
 ## Authors
 
@@ -127,6 +128,7 @@ This will occur when any mod which adds custom content that has been persisted i
 * [GitHub][github]
 
 [license]: https://github.com/protobeard/madagascar_vanilla/blob/master/UNLICENSE
+[rimworld_tos]: https://store.steampowered.com/eula/294100_eula_1
 [harmonylib]: https://github.com/pardeike/Harmony
 [font]: https://ludeon.com/forums/index.php?topic=11022.0
 
