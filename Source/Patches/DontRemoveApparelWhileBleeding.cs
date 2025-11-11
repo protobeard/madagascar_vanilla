@@ -1,5 +1,6 @@
 using RimWorld;
 using HarmonyLib;
+using MadagascarVanilla.ClassExtensions;
 using Verse;
 using Verse.AI;
 
@@ -12,6 +13,8 @@ namespace MadagascarVanilla.Patches
     {
         public static bool Prefix(Pawn pawn, ref Job __result)
         {
+            if (MadagascarVanillaMod.Verbose()) Log.Message($"TryGiveJobPatch");
+            
             if (!MadagascarVanillaMod.Persistables.DisableRemovingApparelWhileBleeding)
                 return true;
             

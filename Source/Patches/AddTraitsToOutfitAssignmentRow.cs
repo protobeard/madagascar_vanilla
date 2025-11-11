@@ -15,8 +15,7 @@ namespace MadagascarVanilla.Patches
     // This is a copy of DoCell
     // All returns have been changed to return false
     // Actual patch is marked inline.
-    // It might be better to do a Transpiler, but...
-    //
+    // FIXME: should be a Transpiler
     [HarmonyPatch(typeof(PawnColumnWorker_Outfit))]
     [HarmonyPatch(nameof(PawnColumnWorker_Outfit.DoCell))]
     public static class AddTraitsToOutfitAssignmentRowPatch

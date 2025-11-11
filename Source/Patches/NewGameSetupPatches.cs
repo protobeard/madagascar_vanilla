@@ -111,12 +111,12 @@ namespace MadagascarVanilla.Patches
             
             Traverse traverse = Traverse.Create(__instance);
             
-            SetValueOfField<StorytellerDef>(traverse, "storyteller", MadagascarVanillaMod.Persistables.StorytellerDef);
+            if (MadagascarVanillaMod.Persistables.StorytellerDef != null)
+                SetValueOfField<StorytellerDef>(traverse, "storyteller", MadagascarVanillaMod.Persistables.StorytellerDef);
 
-            DifficultyDef difficultyDef = MadagascarVanillaMod.Persistables.DifficultyDef;
-            if (difficultyDef != null && DefDatabase<DifficultyDef>.AllDefsListForReading.Contains(difficultyDef))
+            if (MadagascarVanillaMod.Persistables.DifficultyDef != null)
             {
-                SetValueOfField<DifficultyDef>(traverse, "difficulty", difficultyDef);
+                SetValueOfField<DifficultyDef>(traverse, "difficulty", MadagascarVanillaMod.Persistables.DifficultyDef);
                 SetValueOfField(traverse, "difficultyValues", MadagascarVanillaMod.Persistables.Difficulty);
             }
             
@@ -212,21 +212,9 @@ namespace MadagascarVanilla.Patches
             Traverse traverse = Traverse.Create(__instance);
             
             List<FactionDef> factions = MadagascarVanillaMod.Persistables.Factions;
-            List<FactionDef> validFactions = new List<FactionDef>();
             if (factions != null)
             {
-                foreach (FactionDef faction in factions)
-                {
-                    if (MadagascarVanillaMod.Verbose()) Log.Message($"Page_CreateWorldParams processing: {faction.defName}");
-                    
-                    if (!FactionGenerator.ConfigurableFactions.Contains(faction))
-                    {
-                        if (MadagascarVanillaMod.Verbose()) Log.Message($"Madagascar Vanilla: Unknown faction ({faction.defName})), skipping.");
-                        continue;
-                    }
-                    validFactions.Add(faction);
-                }
-                traverse.Field("factions").SetValue(validFactions);
+                traverse.Field("factions").SetValue(factions);
             }
             else
             {

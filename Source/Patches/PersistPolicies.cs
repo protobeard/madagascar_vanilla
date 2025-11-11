@@ -1,3 +1,4 @@
+using System.Linq;
 using HarmonyLib;
 using Verse;
 using RimWorld;
@@ -19,17 +20,17 @@ namespace MadagascarVanilla.Patches
                 // case Dialog_MedicalDefaults dialogMedicalDefaults:
                 //     DialogMedicalDefaultsClosePostfix();
                 //     break;
-                case Dialog_ManagePolicies<ApparelPolicy> dialogManagePolicies:
-                    DialogApparelPolicyPostfix(dialogManagePolicies);
+                case Dialog_ManagePolicies<ApparelPolicy>:
+                    DialogApparelPolicyPostfix();
                     break;
-                case Dialog_ManagePolicies<DrugPolicy> dialogManagePolicies:
-                    DialogDrugPolicyPostfix(dialogManagePolicies);
+                case Dialog_ManagePolicies<DrugPolicy>:
+                    DialogDrugPolicyPostfix();
                     break;
-                case Dialog_ManagePolicies<FoodPolicy> dialogManagePolicies:
-                    DialogFoodPolicyPostfix(dialogManagePolicies);
+                case Dialog_ManagePolicies<FoodPolicy>:
+                    DialogFoodPolicyPostfix();
                     break;
-                case Dialog_ManagePolicies<ReadingPolicy> dialogManagePolicies:
-                    DialogReadingPolicyPostfix(dialogManagePolicies);
+                case Dialog_ManagePolicies<ReadingPolicy>:
+                    DialogReadingPolicyPostfix();
                     break;
                 default:
                     if (MadagascarVanillaMod.Verbose())
@@ -38,7 +39,7 @@ namespace MadagascarVanilla.Patches
             }
         }
 
-        private static void DialogApparelPolicyPostfix(Window __instance)
+        private static void DialogApparelPolicyPostfix()
         {
             if (!MadagascarVanillaMod.Persistables.EnablePersistingApparelPolicies)
                 return;
@@ -54,7 +55,7 @@ namespace MadagascarVanilla.Patches
             MadagascarVanillaMod.Instance.WriteSettings();
         }
         
-        private static void DialogDrugPolicyPostfix(Window __instance)
+        private static void DialogDrugPolicyPostfix()
         {
             if (!MadagascarVanillaMod.Persistables.EnablePersistingDrugPolicies)
                 return;
@@ -63,14 +64,17 @@ namespace MadagascarVanilla.Patches
                 Log.Message("Save Drug Polices into Persistables");
             
             MadagascarVanillaMod.Persistables.DrugPolicies.Clear();
-            
+
             foreach (DrugPolicy drugPolicy in Current.Game.drugPolicyDatabase.AllPolicies)
+            {
+                Log.Message($"DrugDialog: adding {drugPolicy.label} into DrugPolicies.");
                 MadagascarVanillaMod.Persistables.DrugPolicies.Add(drugPolicy);
-            
+            }
+
             MadagascarVanillaMod.Instance.WriteSettings();
         }
         
-        private static void DialogFoodPolicyPostfix(Window __instance)
+        private static void DialogFoodPolicyPostfix()
         {
             if (!MadagascarVanillaMod.Persistables.EnablePersistingFoodPolicies)
                 return;
@@ -86,7 +90,7 @@ namespace MadagascarVanilla.Patches
             MadagascarVanillaMod.Instance.WriteSettings();
         }
         
-        private static void DialogReadingPolicyPostfix(Window __instance)
+        private static void DialogReadingPolicyPostfix()
         {
             if (!MadagascarVanillaMod.Persistables.EnablePersistingFoodPolicies)
                 return;
@@ -109,12 +113,14 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(OutfitDatabase __instance)
         {
             // Bail if persisting apparel policies is disabled, or there are no policies to load
-            if (!MadagascarVanillaMod.Persistables.EnablePersistingApparelPolicies || MadagascarVanillaMod.Persistables.ApparelPolicies == null || !MadagascarVanillaMod.Persistables.ApparelPolicies.Any()) 
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingApparelPolicies || 
+                MadagascarVanillaMod.Persistables.ApparelPolicies == null || 
+                !MadagascarVanillaMod.Persistables.ApparelPolicies.Any()) 
                 return;
             
             if (MadagascarVanillaMod.Verbose())
                 Log.Message("Loading Apparel Policies into Database");
-            
+
             __instance.AllOutfits.Clear();
             foreach (ApparelPolicy apparelPolicy in MadagascarVanillaMod.Persistables.ApparelPolicies)
                 __instance.AllOutfits.Add(apparelPolicy);
@@ -127,7 +133,9 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(DrugPolicyDatabase __instance)
         {
             // Bail if persisting drug policies is disabled, or there are no policies to load
-            if (!MadagascarVanillaMod.Persistables.EnablePersistingDrugPolicies || MadagascarVanillaMod.Persistables.DrugPolicies == null || !MadagascarVanillaMod.Persistables.DrugPolicies.Any()) 
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingDrugPolicies || 
+                MadagascarVanillaMod.Persistables.DrugPolicies == null || 
+                !MadagascarVanillaMod.Persistables.DrugPolicies.Any()) 
                 return;
             
             if (MadagascarVanillaMod.Verbose())
@@ -135,7 +143,14 @@ namespace MadagascarVanilla.Patches
 
             __instance.AllPolicies.Clear();
             foreach (DrugPolicy drugPolicy in MadagascarVanillaMod.Persistables.DrugPolicies)
+            {
+                Log.Message($"DrugPolicyDatabase: loading {drugPolicy.label} from DrugPolicies");
                 __instance.AllPolicies.Add(drugPolicy);
+            }
+            //Log.Message($"default drug policy: {__instance.DefaultDrugPolicy().label}");
+            //__instance.SetDefault(MadagascarVanillaMod.Persistables.DrugPolicies.First());
+            //Log.Message($"default drug policy: {__instance.DefaultDrugPolicy().label}");
+            
         }
         
         // Note: first policy in the FoodRestrictionDatabase list is the default, so I shouldn't need to do anything
@@ -145,7 +160,9 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(FoodRestrictionDatabase __instance)
         {
             // Bail if persisting food policies is disabled, or there are no policies to load
-            if (!MadagascarVanillaMod.Persistables.EnablePersistingFoodPolicies || MadagascarVanillaMod.Persistables.FoodPolicies == null || !MadagascarVanillaMod.Persistables.FoodPolicies.Any()) 
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingFoodPolicies || 
+                MadagascarVanillaMod.Persistables.FoodPolicies == null || 
+                !MadagascarVanillaMod.Persistables.FoodPolicies.Any()) 
                 return;
             
             if (MadagascarVanillaMod.Verbose())
@@ -163,7 +180,9 @@ namespace MadagascarVanilla.Patches
         public static void Postfix(ReadingPolicyDatabase __instance)
         {
             // Bail if persisting reading policies is disabled, or there are no policies to load
-            if (!MadagascarVanillaMod.Persistables.EnablePersistingReadingPolicies || MadagascarVanillaMod.Persistables.ReadingPolicies == null || !MadagascarVanillaMod.Persistables.ReadingPolicies.Any()) 
+            if (!MadagascarVanillaMod.Persistables.EnablePersistingReadingPolicies || 
+                MadagascarVanillaMod.Persistables.ReadingPolicies == null || 
+                !MadagascarVanillaMod.Persistables.ReadingPolicies.Any()) 
                 return;
             
             if (MadagascarVanillaMod.Verbose())

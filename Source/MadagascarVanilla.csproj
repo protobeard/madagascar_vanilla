@@ -67,6 +67,7 @@
         <Compile Include="ClassExtensions\Pawn.cs" />
         <Compile Include="ClassExtensions\Rect.cs" />
         <Compile Include="ClassExtensions\ThingDef.cs" />
+        <Compile Include="ClassExtensions\ThingFilter.cs" />
         <Compile Include="DefOfs\GeneDefOf.cs" />
         <Compile Include="DefOfs\PawnTableDefOf.cs" />
         <Compile Include="DefOfs\PreceptDefOf.cs" />
@@ -97,6 +98,11 @@
         <Compile Include="Patches\AreasPatch.cs" />
         <Compile Include="Patches\StockpileSpecialFiltersPatches.cs" />
         <Compile Include="PatchOperations\OptionalPatch.cs" />
+        <Compile Include="Persistables\PersistableDictionary.cs" />
+        <Compile Include="Persistables\PersistableDifficulty.cs" />
+        <Compile Include="Persistables\PersistableDrugPolicy.cs" />
+        <Compile Include="Persistables\PersistableDrugPolicyEntry.cs" />
+        <Compile Include="Persistables\PersistableThingFilter.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="Settings\AreaSettings.cs" />
         <Compile Include="Settings\ProductionBillSettings.cs" />
@@ -117,7 +123,7 @@
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <PropertyGroup>
-      <PostBuildEvent>ruby ../../../../../artisan/artisan.rb install --name madagascar_vanilla --verbose</PostBuildEvent>
+      <PostBuildEvent>ruby ../../../../../artisan/artisan.rb install --name madagascar_vanilla --verbose --configuration $(ConfigurationName)</PostBuildEvent>
     </PropertyGroup>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

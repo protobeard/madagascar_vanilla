@@ -207,9 +207,8 @@ namespace MadagascarVanilla.Settings
             return pawns;
         }
     }
-}
-
-public class PawnColumnWorkerDefaultTimetable : PawnColumnWorker_Timetable
+    
+    public class PawnColumnWorkerDefaultTimetable : PawnColumnWorker_Timetable
     {
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
@@ -224,12 +223,10 @@ public class PawnColumnWorkerDefaultTimetable : PawnColumnWorker_Timetable
             MadagascarVanillaMod.Persistables.DefaultSchedulesDictionary[scheduleType] = pawn.timetable.times;
             
             base.DoCell(rect, pawn, table);
-            
-            MadagascarVanillaMod.Instance.WriteSettings();
         }
     }
     
-// FIXME: reset schedules button
+    // FIXME: reset schedules button
     // Clear the schedulesDictionary, then regenerate the defaults by accessing it.
     // public class ResetSchedulesAction : ActionContainer
     // {
@@ -241,3 +238,5 @@ public class PawnColumnWorkerDefaultTimetable : PawnColumnWorker_Timetable
     //         return true;
     //     }
     // }
+}
+

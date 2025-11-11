@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 using PreceptDefOf = MadagascarVanilla.DefOfs.PreceptDefOf;
@@ -23,6 +25,21 @@ namespace MadagascarVanilla.ClassExtensions
         public static bool HasTrait(this Pawn pawn, TraitDef trait)
         {
             return pawn.story.traits.HasTrait(trait);
+        }
+        
+        public static ThingFilter ThingFilterOfWornApparel(this Pawn pawn)
+        {
+            ThingFilter filter = pawn.outfits.CurrentApparelPolicy.filter;
+            IEnumerable<ThingDef> apparelDefs = pawn.apparel.WornApparel.Select(apparel => apparel.def);
+            
+            IEnumerable<SpecialThingFilterDef> specialThingFilterDefs = DefDatabase<SpecialThingFilterDef>.AllDefs
+                .Where(filterDef => !pawn.outfits.CurrentApparelPolicy.filter.Allows(filterDef));
+            
+            ThingFilter newFilter = new ThingFilter();
+            newFilter.CopyAllowancesFrom(filter);
+            newFilter.SetDisallowAll(apparelDefs, specialThingFilterDefs);
+            
+            return newFilter;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Xml;
+using MadagascarVanilla.Settings;
 using Verse;
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
@@ -12,14 +13,11 @@ namespace MadagascarVanilla.PatchOperations
 
         protected override bool ApplyWorker(XmlDocument xml)
         {
-            //bool apply = (bool) MadagascarVanillaMod.Persistables.GetType().GetField(key).GetValue(MadagascarVanillaMod.Persistables);
-            bool apply = true;
-            
+            bool apply = (bool) MadagascarVanillaMod.Persistables.GetType().GetField(key).GetValue(MadagascarVanillaMod.Persistables);
             if (apply && match != null)
             {
                 return match.Apply(xml);
             }
-
             return true;
         }
     }

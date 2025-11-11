@@ -2,6 +2,7 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using MadagascarVanilla.Settings;
+using MadagascarVanilla.ClassExtensions;
 using GeneDefOf = MadagascarVanilla.DefOfs.GeneDefOf;
 using TraitDefOf = MadagascarVanilla.DefOfs.TraitDefOf;
 
@@ -43,7 +44,7 @@ namespace MadagascarVanilla.Patches
             // Bail if pawn does not exist or doesn't have a story yet (won't have traits).
             if (pawn?.story == null)
                 return;
-
+            
             bool initialSchedule = MadagascarVanillaMod.Persistables.EnableInitialSchedule;
             bool initialNightOwlSchedule = MadagascarVanillaMod.Persistables.EnableNightOwlSchedule;
             bool initialBodyMasterySchedule = MadagascarVanillaMod.Persistables.EnableBodyMasterySchedule;

@@ -144,7 +144,8 @@ namespace MadagascarVanilla.Settings
             }
             Text.Anchor = TextAnchor.UpperLeft;
             
-            listingStandard.GetRect(y2);
+            // FIXME: this is a hack
+            listingStandard.GetRect(y2/2);
             
             //listingStandard.End();
         }
