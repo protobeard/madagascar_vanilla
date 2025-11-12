@@ -112,7 +112,7 @@ This will occur when any mod which adds custom content that has been persisted i
 * [4M Mehni's Misc Modifications (Continued)][mehni_misc] by Mlie and Mehni
 * [TD Enhancement Pack (Continued)][td_enhancement_pack] by MemeGoddess and Uuugggg
     * If mod is active, Madagascar Vanilla will defer to it: setting for Disable Learning Helper Button will do nothing.
-* [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]]:[kv_save_storage] by firshpear, KiameV, and Taranchuk
+* [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]][kv_save_storage] by firshpear, KiameV, and Taranchuk
     * An excellent mod with a terrible name.
 
 ### Specifically Incompatible With
