@@ -108,6 +108,8 @@ Also, note that I have nothing against mods which give the player advantages, I 
     * If mod is active, Madagascar Vanilla will defer to it: setting for Disable Learning Helper Button will do nothing.
 * [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]][kv_save_storage] by firshpear, Taranchuk, and KiameV
     * An excellent mod with a terrible name.
+* [Tweaks Galore][[tweaks_galore]] by Neronix17
+    * If mod is active, Madagascar Vanilla will defer to it: setting for Display Correct Milk Type will do nothing.
 
 ### Specifically Incompatible With
 
@@ -159,3 +161,4 @@ Portions of the materials used to create this content/mod are trademarks and/or 
 [mehni_misc]: https://steamcommunity.com/sharedfiles/filedetails/?id=3352204451
 [td_enhancement_pack]: https://steamcommunity.com/sharedfiles/filedetails/?id=3525414162
 [kv_save_storage]: https://steamcommunity.com/sharedfiles/filedetails/?id=3222246658
+[tweaks_galore]: https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414

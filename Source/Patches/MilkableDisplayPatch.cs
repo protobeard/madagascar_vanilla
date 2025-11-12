@@ -6,6 +6,7 @@ using Verse;
 namespace MadagascarVanilla.Patches
 {
     
+    [HarmonyPatchCategory("MilkFix")]
     [HarmonyPatch(typeof(CompMilkable))]
     [HarmonyPatch(nameof(CompMilkable.CompInspectStringExtra))]
     public static class MilkableDisplayPatch

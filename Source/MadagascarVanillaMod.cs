@@ -27,9 +27,7 @@ namespace MadagascarVanilla
             if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("EnableMechRepair", out packageIds))
             {
                 foreach (string packageId in packageIds)
-                {
                     Log.Message($"{packageId} detected: skipping Madagascar Vanilla's AutoRepair patch category");
-                }
             }
             else
             {
@@ -53,20 +51,27 @@ namespace MadagascarVanilla
                     }
                 }
             }
-            
+
             if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("DisableLearningHelperButton", out packageIds))
             {
                 foreach (string packageId in packageIds)
-                {
                     Log.Message($"{packageId} detected: skipping Madagascar Vanilla's LearningHelper patch category");
-                }
             }
             else
             {
                 harmony.PatchCategory("LearningHelper");
             }
-            
-            
+
+            if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("EnableCompMilkableDisplayProperItem", out packageIds))
+            {
+                foreach (string packageId in packageIds)
+                    Log.Message($"{packageId} detected: skipping Madagascar Vanilla's MilkFix patch category");
+            }
+            else
+            {
+                harmony.PatchCategory("MilkFix");
+            }
+
         }
     }
     
@@ -92,6 +97,7 @@ namespace MadagascarVanilla
             _modCompatibilityManager.Add("lecht.AutoRepairOn", "EnableMechRepair", () => ModsConfig.IsActive("lecht.AutoRepairOn"));
             _modCompatibilityManager.Add("Mlie.XNDTinyTweaks", "EnableNightOwlSchedule", () => ModsConfig.IsActive("Mlie.XNDTinyTweaks"));
             _modCompatibilityManager.Add("MemeGoddess.TDPack", "DisableLearningHelperButton", () => ModsConfig.IsActive("MemeGoddess.TDPack"));
+            _modCompatibilityManager.Add("Neronix17.TweaksGalore", "EnableCompMilkableDisplayProperItem", () => ModsConfig.IsActive("Neronix17.TweaksGalore"));
         }
         
         public override string SettingsCategory()
