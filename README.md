@@ -106,6 +106,20 @@ This will occur when any mod which adds custom content that has been persisted i
 * Can be added to and removed from existing saves.
 * Not extensively tested. Likely compatible with most content mods; likely incompatible with most "tweak" mods. As I use several of those mods myself, I am planning to add better compatibility support.
 
+### Specifically Tested Compatible With
+
+* [Auto-Repair On][auto_repair_on] by Lecht
+    * If Auto-Repair On is active, this mod will defer to it (setting for Enabling Mech Repair will do nothing).
+* [Tiny Tweaks (Continued)][tiny_tweaks] by Mlie and XeoNovaDan
+    * The Auto Night Owl feature of Tiny Tweaks is disabled in favor of this mods more flexible Night Shift schedule.
+* [4M Mehni's Misc Modifications (Continued)][mehni_misc] by Mlie and Mehni
+* [TD Enhancement Pack (Continued)][td_enhancement_pack] by MemeGoddess and Uuugggg
+
+### Specifically Incompatible With
+
+* [Automatic Night Owl][auto_night_owl] by Ben
+    * Conflicts with Night Shift schedule feature. This is a great mod that I used for years, but I wanted something more flexible.
+
 ## Thanks To
 
 * Pardeike for [Harmony][harmonylib]
@@ -140,3 +154,8 @@ Portions of the materials used to create this content/mod are trademarks and/or 
 [quality_of_life_collection]: https://steamcommunity.com/sharedfiles/filedetails/?id=3592953821
 [new_game_plus]: https://steamcommunity.com/sharedfiles/filedetails/?id=2909126210
 [export_agency]: https://steamcommunity.com/sharedfiles/filedetails/?id=1467209473
+[auto_repair_on]: https://steamcommunity.com/sharedfiles/filedetails/?id=3312319778
+[tiny_tweaks]: https://steamcommunity.com/sharedfiles/filedetails/?id=2270049772
+[auto_night_owl]: https://steamcommunity.com/sharedfiles/filedetails/?id=2056012179
+[mehni_misc]: https://steamcommunity.com/sharedfiles/filedetails/?id=3352204451
+[td_enhancement_pack]: https://steamcommunity.com/sharedfiles/filedetails/?id=3525414162

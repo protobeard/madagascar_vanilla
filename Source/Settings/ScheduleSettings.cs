@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MadagascarVanilla;
 using MadagascarVanilla.Settings;
 using RimWorld;
@@ -28,7 +29,13 @@ namespace MadagascarVanilla.Settings
             
             listingStandard.CheckboxLabeled("MV_EnableBodyMasterySchedule".Translate(), ref EnableBodyMasterySchedule, "MV_EnableBodyMasteryScheduleTooltip".Translate());
             listingStandard.CheckboxLabeled("MV_EnableNeverSleepGeneSchedule".Translate(), ref EnableNeverSleepGeneSchedule, "MV_EnableNeverSleepGeneScheduleTooltip".Translate());
+
+            if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("EnableNightOwlSchedule", out List<string> packageIds))
+            {
+                listingStandard.Label("MV_SettingWillTakePrecedence".Translate(packageIds.First()));
+            }
             listingStandard.CheckboxLabeled("MV_EnableNightOwlSchedule".Translate(), ref EnableNightOwlSchedule, "MV_EnableNightOwlScheduleTooltip".Translate());
+            
             listingStandard.CheckboxLabeled("MV_EnableUVSensitiveSchedule".Translate(), ref EnableUVSensitiveSchedule, "MV_EnableUVSensitiveScheduleTooltip".Translate());
             listingStandard.CheckboxLabeled("MV_EnableSleepyGeneSchedule".Translate(), ref EnableSleepyGeneSchedule, "MV_EnableSleepyGeneScheduleTooltip".Translate());
             listingStandard.CheckboxLabeled("MV_EnableInitialSchedule".Translate(), ref EnableInitialSchedule, "MV_EnableInitialScheduleTooltip".Translate());

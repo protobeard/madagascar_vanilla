@@ -1,5 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using MadagascarVanilla.Settings;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -11,19 +16,51 @@ namespace MadagascarVanilla
     {
         static MadagascarVanillaPatches()
         {
+            List<string> packageIds;
             Harmony harmony = new Harmony(MadagascarVanillaMod.ModId);
             Harmony.DEBUG = false;
-            harmony.PatchAll();
-            Log.Message("Initializing Madagascar Vanilla");
+            // Patch everything that isn't in a specific compatibility category
+            harmony.PatchAllUncategorized();
             
-            // Force RimWorld to load in our Persistables
-            //MadagascarVanillaMod.Persistables.GetHashCode();
+            // !LoadedModManager.RunningMods.Select(mod => mod.PackageId).Contains("lecht.AutoRepairOn")
+            //if (Type.GetType("AutoRepairOn.CompMechRepairableOn, AutoRepairOn") == null)
+            if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("EnableMechRepair", out packageIds))
+            {
+                foreach (string packageId in packageIds)
+                {
+                    Log.Message($"{packageId} detected: skipping Madagascar Vanilla's AutoRepair patch category");
+                }
+            }
+            else
+            {
+                harmony.PatchCategory("AutoRepairMechs");
+            }
+            
+            if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("EnableNightOwlSchedule", out packageIds))
+            {
+                foreach (string packageId in packageIds)
+                {
+                    Log.Message($"{packageId} detected: Removing patches that conflict with EnableNightOwlSchedule setting.");
+                    
+                    if (packageId == ("Mlie.XNDTinyTweaks"))
+                    {
+                        // Unpatch the AutoOwl feature as ours in more flexible
+                        MethodInfo originalSetFaction = typeof(Pawn).GetMethod("SetFaction");
+                        MethodInfo originalSpawnSetup = typeof(Thing).GetMethod("SpawnSetup");
+                        
+                        harmony.Unpatch(originalSetFaction, HarmonyPatchType.Postfix, "XeoNovaDan.TinyTweaks");
+                        harmony.Unpatch(originalSpawnSetup, HarmonyPatchType.Postfix, "XeoNovaDan.TinyTweaks");
+                    }
+                }
+            }
         }
     }
     
     public class MadagascarVanillaMod : Mod
     {
         public const string ModId = "com.protobeard.madagascarvanilla";
+        private ModCompatibilityManager _modCompatibilityManager;
+        public ModCompatibilityManager CompatibilityManager => _modCompatibilityManager;
         
         // We're using "settings" to mean things that we want to save to disk. For more traditional
         // settings we're using the XML Extensions mod's settings features.
@@ -37,6 +74,11 @@ namespace MadagascarVanilla
         
         public MadagascarVanillaMod(ModContentPack content) : base(content) {
             Instance = this;
+            _modCompatibilityManager = new ModCompatibilityManager();
+            _modCompatibilityManager.Add("lecht.AutoRepairOn", "EnableMechRepair", () => ModsConfig.IsActive("lecht.AutoRepairOn"));
+            _modCompatibilityManager.Add("Mlie.XNDTinyTweaks", "EnableNightOwlSchedule", () => ModsConfig.IsActive("Mlie.XNDTinyTweaks"));
+            // FIXME: do we really need this one?
+            //_modCompatibilityManager.Add("Mlie.XNDTinyTweaks", "EnablePersistingNewGameSetup", () => ModsConfig.IsActive("Mlie.XNDTinyTweaks"));
         }
         
         public override string SettingsCategory()

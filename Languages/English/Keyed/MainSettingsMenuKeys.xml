@@ -7,4 +7,12 @@
     <MV_VerboseModeLabel>Verbose Mode</MV_VerboseModeLabel>
     <MV_VerboseModeTooltip>Print lots of log messages. Useful for debugging.</MV_VerboseModeTooltip>
 
+
+    <!-- Defer to other mod -->
+    <MV_SettingWillBeIgnored>Another mod ({0}) has been detected which interacts with this feature. The setting will be ignored in favor of allowing that mod to do its thing.</MV_SettingWillBeIgnored>
+
+    <!-- Disable other mod's feature. -->
+    <MV_SettingWillTakePrecedence>Another mod ({0}) has been detected which interacts with this feature. That mods feature will be disabled in favor of using this setting.</MV_SettingWillTakePrecedence>
+
+
 </LanguageData>

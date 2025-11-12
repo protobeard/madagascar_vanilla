@@ -13,6 +13,9 @@
         <li>Ludeon.RimWorld.Anomaly</li>
         <li>Ludeon.RimWorld.Odyssey</li>
     </loadAfter>
+    <incompatibleWith>
+        <li>ben.automaticnightowl</li>
+    </incompatibleWith>
     <description>
         Adds a bunch of quality of life settings. Please see the README for details.
     </description>
