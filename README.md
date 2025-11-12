@@ -86,13 +86,7 @@ Also, note that I have nothing against mods which give the player advantages, I 
 
 ## Known Issues
 
-* Errors will be thrown on game launch if mods which add persisted items have been removed. For example, if persist storytellers is enabled and a custom storyteller such as Perry Persistent is selected, then the mod which adds that custom storyteller is removed, on next game launch you will see an error like:
-
-`Could not load reference to RimWorld.StorytellerDef named VSE_PerryPersistent`
-
-This means that this mod attempted to load up the persisted storyteller and couldn't find it (since the mod which adds it has been removed). When a new game is setup, the default RimWorld values for storyteller will be used.
-
-This will occur when any mod which adds custom content that has been persisted is removed: foods in food policies, apparel/weapons in apparel policies, drugs in drug policies, books in reading policies, custom storytellers, custom factions, etc.
+* The UI in the settings menu can be wonky.
 
 ## Great Minds Think Alike
 
@@ -112,7 +106,7 @@ This will occur when any mod which adds custom content that has been persisted i
 * [4M Mehni's Misc Modifications (Continued)][mehni_misc] by Mlie and Mehni
 * [TD Enhancement Pack (Continued)][td_enhancement_pack] by MemeGoddess and Uuugggg
     * If mod is active, Madagascar Vanilla will defer to it: setting for Disable Learning Helper Button will do nothing.
-* [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]][kv_save_storage] by firshpear, KiameV, and Taranchuk
+* [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]][kv_save_storage] by firshpear, Taranchuk, and KiameV
     * An excellent mod with a terrible name.
 
 ### Specifically Incompatible With
@@ -120,9 +114,9 @@ This will occur when any mod which adds custom content that has been persisted i
 * [Automatic Night Owl][auto_night_owl] by Ben
     * Conflicts with Night Shift schedule feature. This is a great mod that I used for years, but I wanted something more flexible.
 * [New Game Plus][new_game_plus] by Boundir
-    * Another great mod with just too many overlapping features. Honestly, by the time I knew this mod existed, I had already duplicated about 90 percent of it in Madagascar Vanilla.
+    * Another great mod with just too many overlapping features. Honestly, by the time I knew this mod existed I had already duplicated about 90 percent of it in Madagascar Vanilla.
 * [Export Agency][export_agency]
-    * A long standing mod for persisting apparel and drug policies, as well as allowing export of bills and stockpiles. Madagascar Vanilla persists apparel, drug, food, and reading policies, but does *not* support exporting bills or stockpiles. If you want to use Madagascar Vanilla and export bills, try [KV Save Storage][kv_save_storage].
+    * A long standing mod for persisting apparel and drug policies as well as allowing export of bills and stockpiles. Madagascar Vanilla persists apparel, drug, food, and reading policies, but does *not* support exporting bills or stockpiles. If you want to use Madagascar Vanilla and export bills, try [\[KV\] Save Storage][kv_save_storage].
 
 
 ## Thanks To
