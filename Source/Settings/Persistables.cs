@@ -171,7 +171,7 @@ namespace MadagascarVanilla.Settings
             set
             {
                 _factionDefs = value;
-                _factionDefNames = value?.Select(faction => faction.defName).ToList();
+                _factionDefNames = value?.Select(faction => faction?.defName).ToList();
             }
         }
         
@@ -249,7 +249,7 @@ namespace MadagascarVanilla.Settings
             set
             {
                 _styleCategoryDefs = value;
-                _styleCategoryDefNames = value?.Select(styleCategory => styleCategory.defName).ToList();
+                _styleCategoryDefNames = value?.Select(styleCategory => styleCategory?.defName).ToList();
             }
         }
 

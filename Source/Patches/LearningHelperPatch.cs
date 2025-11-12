@@ -8,6 +8,7 @@ using HarmonyLib;
 namespace MadagascarVanilla.Patches
 {
     
+    [HarmonyPatchCategory("LearningHelper")]
     [HarmonyPatch(typeof(PlaySettings))]
     [HarmonyPatch("DoMapControls")]
     public static class LearningHelperPatch

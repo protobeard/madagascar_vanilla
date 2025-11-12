@@ -53,6 +53,20 @@ namespace MadagascarVanilla
                     }
                 }
             }
+            
+            if (MadagascarVanillaMod.Instance.CompatibilityManager.Check("DisableLearningHelperButton", out packageIds))
+            {
+                foreach (string packageId in packageIds)
+                {
+                    Log.Message($"{packageId} detected: skipping Madagascar Vanilla's LearningHelper patch category");
+                }
+            }
+            else
+            {
+                harmony.PatchCategory("LearningHelper");
+            }
+            
+            
         }
     }
     
@@ -77,8 +91,7 @@ namespace MadagascarVanilla
             _modCompatibilityManager = new ModCompatibilityManager();
             _modCompatibilityManager.Add("lecht.AutoRepairOn", "EnableMechRepair", () => ModsConfig.IsActive("lecht.AutoRepairOn"));
             _modCompatibilityManager.Add("Mlie.XNDTinyTweaks", "EnableNightOwlSchedule", () => ModsConfig.IsActive("Mlie.XNDTinyTweaks"));
-            // FIXME: do we really need this one?
-            //_modCompatibilityManager.Add("Mlie.XNDTinyTweaks", "EnablePersistingNewGameSetup", () => ModsConfig.IsActive("Mlie.XNDTinyTweaks"));
+            _modCompatibilityManager.Add("MemeGoddess.TDPack", "DisableLearningHelperButton", () => ModsConfig.IsActive("MemeGoddess.TDPack"));
         }
         
         public override string SettingsCategory()

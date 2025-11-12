@@ -14,6 +14,8 @@
         <li>Ludeon.RimWorld.Odyssey</li>
     </loadAfter>
     <incompatibleWith>
+        <li>Boundir.NewGamePlus</li>
+        <li>erdelf.ExportAgency</li>
         <li>ben.automaticnightowl</li>
     </incompatibleWith>
     <description>
