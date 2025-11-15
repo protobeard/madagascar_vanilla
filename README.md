@@ -99,17 +99,21 @@ Also, note that I have nothing against mods which give the player advantages, I 
 
 ### Specifically Tested Compatible With
 
+* [4M Mehni's Misc Modifications (Continued)][mehni_misc] by Mlie and Mehni
+* [Common Sense][common_sense] by avil
 * [Auto-Repair On][auto_repair_on] by Lecht
    * If mod is active, Madagascar Vanilla will defer to it: setting for Enabling Mech Repair will do nothing.
 * [Tiny Tweaks (Continued)][tiny_tweaks] by Mlie and XeoNovaDan
     * The Auto Night Owl feature of Tiny Tweaks is disabled in favor of this mods more flexible Night Shift schedule.
-* [4M Mehni's Misc Modifications (Continued)][mehni_misc] by Mlie and Mehni
 * [TD Enhancement Pack (Continued)][td_enhancement_pack] by MemeGoddess and Uuugggg
     * If mod is active, Madagascar Vanilla will defer to it: setting for Disable Learning Helper Button will do nothing.
 * [\[KV\] Save Storage, Outfit, Crafting, Drug & Operation Settings \[1.5/1.6\]][kv_save_storage] by firshpear, Taranchuk, and KiameV
     * An excellent mod with a terrible name.
 * [Tweaks Galore][[tweaks_galore]] by Neronix17
     * If mod is active, Madagascar Vanilla will defer to it: setting for Display Correct Milk Type will do nothing.
+* [Rimworld QoL Tweaks][rimworld_qol_tweaks] by TinyGrox
+    * Confirmed modified world gen sizes are persisted. Please note that these additional world sizes are only made available by Rimworld QoL Tweaks if dev mode is disabled.
+
 
 ### Specifically Incompatible With
 
@@ -119,7 +123,8 @@ Also, note that I have nothing against mods which give the player advantages, I 
     * Another great mod with just too many overlapping features. Honestly, by the time I knew this mod existed I had already duplicated about 90 percent of it in Madagascar Vanilla.
 * [Export Agency][export_agency]
     * A long standing mod for persisting apparel and drug policies as well as allowing export of bills and stockpiles. Madagascar Vanilla persists apparel, drug, food, and reading policies, but does *not* support exporting bills or stockpiles. If you want to use Madagascar Vanilla and export bills, try [\[KV\] Save Storage][kv_save_storage].
-
+* [Niilo's QoL][niilos_qol] by nikos
+    * Just a massive mod with too many features that overlap with Madagascar Vanilla. I might consider looking into adding compatibility in the future as there is a lot of cool stuff in Niilo's QoL, but not currently compatible.
 
 ## Thanks To
 
@@ -162,3 +167,6 @@ Portions of the materials used to create this content/mod are trademarks and/or 
 [td_enhancement_pack]: https://steamcommunity.com/sharedfiles/filedetails/?id=3525414162
 [kv_save_storage]: https://steamcommunity.com/sharedfiles/filedetails/?id=3222246658
 [tweaks_galore]: https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414
+[rimworld_qol_tweaks]: https://steamcommunity.com/sharedfiles/filedetails/?id=3521875853
+[niilos_qol]: https://steamcommunity.com/sharedfiles/filedetails/?id=2633406344
+[common_sense]: https://steamcommunity.com/sharedfiles/filedetails/?id=1561769193
